@@ -19,9 +19,9 @@
 #include "firm_types.h"
 #include "xmalloc.h"
 
-#define HashSet          ir_nodeset_t
-#define HashSetIterator  ir_nodeset_iterator_t
-#define ValueType        ir_node*
+#define HashSet ir_nodeset_t
+#define HashSetIterator ir_nodeset_iterator_t
+#define ValueType ir_node *
 #define DO_REHASH
 
 #include "hashset.h"
@@ -31,7 +31,7 @@
 #undef HashSetIterator
 #undef HashSet
 
-typedef struct ir_nodeset_t          ir_nodeset_t;
+typedef struct ir_nodeset_t ir_nodeset_t;
 typedef struct ir_nodeset_iterator_t ir_nodeset_iterator_t;
 
 /**
@@ -45,13 +45,14 @@ void ir_nodeset_init(ir_nodeset_t *nodeset);
  * Initializes a nodeset
  *
  * @param nodeset             Pointer to allocated space for the nodeset
- * @param expected_elements   Number of elements expected in the nodeset (roughly)
+ * @param expected_elements   Number of elements expected in the nodeset
+ * (roughly)
  */
 void ir_nodeset_init_size(ir_nodeset_t *nodeset, size_t expected_elements);
 
 /**
- * Destroys a nodeset and frees the memory allocated for hashtable. The memory of
- * the nodeset itself is not freed.
+ * Destroys a nodeset and frees the memory allocated for hashtable. The memory
+ * of the nodeset itself is not freed.
  *
  * @param nodeset   Pointer to the nodeset
  */
@@ -60,21 +61,22 @@ void ir_nodeset_destroy(ir_nodeset_t *nodeset);
 /**
  * Allocates memory for a nodeset and initializes the set.
  *
- * @param expected_elements   Number of elements expected in the nodeset (roughly)
+ * @param expected_elements   Number of elements expected in the nodeset
+ * (roughly)
  * @return The initialized nodeset
  */
 static inline ir_nodeset_t *ir_nodeset_new(size_t expected_elements) {
-	ir_nodeset_t *res = XMALLOC(ir_nodeset_t);
-	ir_nodeset_init_size(res, expected_elements);
-	return res;
+  ir_nodeset_t *res = XMALLOC(ir_nodeset_t);
+  ir_nodeset_init_size(res, expected_elements);
+  return res;
 }
 
 /**
  * Destroys a nodeset and frees the memory of the nodeset itself.
  */
 static inline void ir_nodeset_del(ir_nodeset_t *nodeset) {
-	ir_nodeset_destroy(nodeset);
-	free(nodeset);
+  ir_nodeset_destroy(nodeset);
+  free(nodeset);
 }
 
 /**
@@ -86,7 +88,6 @@ static inline void ir_nodeset_del(ir_nodeset_t *nodeset) {
  *                  false if it was already there
  */
 bool ir_nodeset_insert(ir_nodeset_t *nodeset, ir_node *node);
-
 
 /**
  * Removes a node from a nodeset. Does nothing if the nodeset doesn't contain
@@ -143,17 +144,17 @@ ir_node *ir_nodeset_iterator_next(ir_nodeset_iterator_t *iterator);
 void ir_nodeset_remove_iterator(ir_nodeset_t *nodeset,
                                 const ir_nodeset_iterator_t *iterator);
 
-static inline ir_node *ir_nodeset_first(ir_nodeset_t const *const nodeset)
-{
-	ir_nodeset_iterator_t iter;
-	ir_nodeset_iterator_init(&iter, nodeset);
-	return ir_nodeset_iterator_next(&iter);
+static inline ir_node *ir_nodeset_first(ir_nodeset_t const *const nodeset) {
+  ir_nodeset_iterator_t iter;
+  ir_nodeset_iterator_init(&iter, nodeset);
+  return ir_nodeset_iterator_next(&iter);
 }
 
-#define foreach_ir_nodeset(nodeset, irn, iter) \
-	for (bool irn##__once = true; irn##__once;) \
-		for (ir_nodeset_iterator_t iter; irn##__once;) \
-			for (ir_node *irn; irn##__once; irn##__once = false) \
-				for (ir_nodeset_iterator_init(&iter, nodeset); (irn = ir_nodeset_iterator_next(&iter));)
+#define foreach_ir_nodeset(nodeset, irn, iter)              \
+  for (bool irn##__once = true; irn##__once;)               \
+    for (ir_nodeset_iterator_t iter; irn##__once;)          \
+      for (ir_node * irn; irn##__once; irn##__once = false) \
+        for (ir_nodeset_iterator_init(&iter, nodeset);      \
+             (irn = ir_nodeset_iterator_next(&iter));)
 
 #endif

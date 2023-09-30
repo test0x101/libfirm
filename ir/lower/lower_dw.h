@@ -20,17 +20,17 @@
  * we need some store to hold the replacement:
  */
 typedef struct lower64_entry_t {
-	ir_node *low_word;    /**< the low word */
-	ir_node *high_word;   /**< the high word */
+  ir_node *low_word;  /**< the low word */
+  ir_node *high_word; /**< the high word */
 } lower64_entry_t;
 
 /**
  * The lowering parameter description.
  */
 typedef struct lwrdw_param_t {
-	ir_mode        *word_unsigned;    /**< mode for unsigned word */
-	ir_mode        *word_signed;      /**< mode for signed word */
-	unsigned short  doubleword_size;  /**< bitsize of the doubleword mode */
+  ir_mode *word_unsigned;         /**< mode for unsigned word */
+  ir_mode *word_signed;           /**< mode for signed word */
+  unsigned short doubleword_size; /**< bitsize of the doubleword mode */
 } lwrdw_param_t;
 
 /**
@@ -72,14 +72,12 @@ ir_mode *get_node_high_mode(ir_node *node);
  */
 lower64_entry_t *get_node_entry(ir_node *node);
 
-static inline ir_node *get_lowered_low(ir_node *node)
-{
-	return get_node_entry(node)->low_word;
+static inline ir_node *get_lowered_low(ir_node *node) {
+  return get_node_entry(node)->low_word;
 }
 
-static inline ir_node *get_lowered_high(ir_node *node)
-{
-	return get_node_entry(node)->high_word;
+static inline ir_node *get_lowered_high(ir_node *node) {
+  return get_node_entry(node)->high_word;
 }
 
 void ir_default_lower_dw_Conv(ir_node *node);

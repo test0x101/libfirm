@@ -24,20 +24,19 @@
  */
 ir_node **be_get_cfgpostorder(ir_graph *irg);
 
-static inline bool is_tls_entity(const ir_entity *const ent)
-{
-	return get_entity_owner(ent) == get_tls_type();
+static inline bool is_tls_entity(const ir_entity *const ent) {
+  return get_entity_owner(ent) == get_tls_type();
 }
 
 /**
- * Insert a Perm which permutes all (non-ignore) live values of a given register class
- * before a certain instruction.
+ * Insert a Perm which permutes all (non-ignore) live values of a given register
+ * class before a certain instruction.
  * @param lv        Liveness Information.
  * @param irn       The node to insert the Perm before.
  * @return          The Perm or NULL if nothing was live before @p irn.
  */
 ir_node *insert_Perm_before(ir_graph *irg, const arch_register_class_t *cls,
-						   ir_node *irn);
+                            ir_node *irn);
 
 /**
  * Removes dead nodes from schedule

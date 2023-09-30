@@ -27,20 +27,22 @@
  *
  * @return  1 if the elements are identically, zero else
  */
-typedef int (*cpset_cmp_function) (const void *p1, const void *p2);
+typedef int (*cpset_cmp_function)(const void *p1, const void *p2);
 
 /**
  * The type of a cpset hash function.
  */
-typedef unsigned (*cpset_hash_function) (const void *obj);
+typedef unsigned (*cpset_hash_function)(const void *obj);
 
 /** @cond PRIVATE */
 
-#define HashSet          cpset_t
-#define HashSetIterator  cpset_iterator_t
-#define HashSetEntry     cpset_hashset_entry_t
-#define ValueType        void*
-#define ADDITIONAL_DATA  cpset_cmp_function cmp_function; cpset_hash_function hash_function;
+#define HashSet cpset_t
+#define HashSetIterator cpset_iterator_t
+#define HashSetEntry cpset_hashset_entry_t
+#define ValueType void *
+#define ADDITIONAL_DATA            \
+  cpset_cmp_function cmp_function; \
+  cpset_hash_function hash_function;
 #include "hashset.h"
 #undef ADDITIONAL_DATA
 #undef ValueType
@@ -51,7 +53,7 @@ typedef unsigned (*cpset_hash_function) (const void *obj);
 /** @endcond */
 
 /** a pointer set with custom compare function */
-typedef struct cpset_t          cpset_t;
+typedef struct cpset_t cpset_t;
 /** iterator over a pointer set with custom compare function
  * @see #cpset_t */
 typedef struct cpset_iterator_t cpset_iterator_t;
@@ -75,8 +77,7 @@ void cpset_init(cpset_t *cpset, cpset_hash_function hash_function,
  * @param expected_elements  Number of elements expected in the cpset (roughly)
  */
 void cpset_init_size(cpset_t *cpset, cpset_hash_function hash_function,
-                     cpset_cmp_function cmp_function,
-                     size_t expected_elements);
+                     cpset_cmp_function cmp_function, size_t expected_elements);
 
 /**
  * Destroys a cpset and frees the memory allocated for hashtable. The memory of
@@ -93,11 +94,11 @@ void cpset_destroy(cpset_t *cpset);
  * @param obj     Element to insert into the cpset
  * @returns       The element itself or a pointer to an existing element
  */
-void* cpset_insert(cpset_t *cpset, void *obj);
+void *cpset_insert(cpset_t *cpset, void *obj);
 
 /**
- * Removes an element from a cpset. Does nothing if the cpset doesn't contain the
- * element.
+ * Removes an element from a cpset. Does nothing if the cpset doesn't contain
+ * the element.
  *
  * @param cpset   Pointer to the cpset
  * @param obj     Pointer to remove from the cpset

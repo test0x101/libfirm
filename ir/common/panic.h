@@ -23,4 +23,4 @@ FIRM_NORETURN print_panic(char const *file, int line, char const *func,
 
 #define TODO(node) panic("%+F in function '%F': TODO", node, get_irn_irg(node))
 
-# endif
+#endif

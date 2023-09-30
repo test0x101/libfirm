@@ -35,8 +35,8 @@
  * Additional flags for the lowering.
  */
 typedef enum compound_call_lowering_flags {
-	LF_NONE                 = 0,      /**< no additional flags */
-	LF_RETURN_HIDDEN        = 1 << 0, /**< return the hidden address instead of void */
+  LF_NONE = 0,               /**< no additional flags */
+  LF_RETURN_HIDDEN = 1 << 0, /**< return the hidden address instead of void */
 } compound_call_lowering_flags;
 ENUM_BITSET(compound_call_lowering_flags)
 
@@ -64,8 +64,8 @@ ENUM_BITSET(compound_call_lowering_flags)
  * argument or result.
  */
 typedef struct aggregate_spec_t {
-	unsigned  length;
-	ir_mode  *modes[MAX_REGS_PER_AGGREGATE];
+  unsigned length;
+  ir_mode *modes[MAX_REGS_PER_AGGREGATE];
 } aggregate_spec_t;
 
 /**

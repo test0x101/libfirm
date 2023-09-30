@@ -17,9 +17,9 @@
 typedef struct pbqp_matrix_t pbqp_matrix_t;
 
 struct pbqp_matrix_t {
-	unsigned rows;
-	unsigned cols;
-	num entries[];
+  unsigned rows;
+  unsigned cols;
+  num entries[];
 };
 
 #endif

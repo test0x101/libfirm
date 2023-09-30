@@ -5,7 +5,8 @@
 
 /**
  * @file
- * @brief       A data structure to treat nodes and node-proj collections uniformly.
+ * @brief       A data structure to treat nodes and node-proj collections
+ * uniformly.
  * @author      Sebastian Hack
  */
 #ifndef FIRM_BE_BEINSN_T_H
@@ -15,21 +16,23 @@
 #include "bechordal.h"
 #include "raw_bitset.h"
 
-typedef struct be_operand_t  be_operand_t;
-typedef struct be_insn_t     be_insn_t;
+typedef struct be_operand_t be_operand_t;
+typedef struct be_insn_t be_insn_t;
 
 struct be_operand_t {
-	ir_node        *carrier; /**< node representing the operand value (Proj or the node itself for defs, the used value for uses) */
-	be_operand_t   *partner; /**< used in bechordal later... (TODO what does it do?) */
-	unsigned const *regs;    /**< admissible register bitset */
+  ir_node *carrier; /**< node representing the operand value (Proj or the node
+                       itself for defs, the used value for uses) */
+  be_operand_t
+      *partner; /**< used in bechordal later... (TODO what does it do?) */
+  unsigned const *regs; /**< admissible register bitset */
 };
 
 struct be_insn_t {
-	be_operand_t *ops;       /**< the values used and defined by the insn */
-	int           n_ops;     /**< length of the ops array */
-	int           use_start; /**< entries [0-use_start) in ops are defs,
-	                              [use_start-n_ops) uses */
-	ir_node      *irn;       /**< ir_node of the instruction */
+  be_operand_t *ops; /**< the values used and defined by the insn */
+  int n_ops;         /**< length of the ops array */
+  int use_start;     /**< entries [0-use_start) in ops are defs,
+                          [use_start-n_ops) uses */
+  ir_node *irn;      /**< ir_node of the instruction */
 };
 
 /**

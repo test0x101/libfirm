@@ -45,30 +45,30 @@
  * the behaviour of the entities in them.
  */
 typedef enum ir_segment_t {
-	IR_SEGMENT_FIRST,
-	/** "normal" global data */
-	IR_SEGMENT_GLOBAL = IR_SEGMENT_FIRST,
-	/** thread local storage segment */
-	IR_SEGMENT_THREAD_LOCAL,
-	/**
-	 * the constructors segment. Contains pointers to functions which are
-	 * executed on module initialization (program start or when a library is
-	 * dynamically loaded)
-	 */
-	IR_SEGMENT_CONSTRUCTORS,
-	/** like constructors, but functions are executed on module exit */
-	IR_SEGMENT_DESTRUCTORS,
-	/** java class registry */
-	IR_SEGMENT_JCR,
+  IR_SEGMENT_FIRST,
+  /** "normal" global data */
+  IR_SEGMENT_GLOBAL = IR_SEGMENT_FIRST,
+  /** thread local storage segment */
+  IR_SEGMENT_THREAD_LOCAL,
+  /**
+   * the constructors segment. Contains pointers to functions which are
+   * executed on module initialization (program start or when a library is
+   * dynamically loaded)
+   */
+  IR_SEGMENT_CONSTRUCTORS,
+  /** like constructors, but functions are executed on module exit */
+  IR_SEGMENT_DESTRUCTORS,
+  /** java class registry */
+  IR_SEGMENT_JCR,
 
-	IR_SEGMENT_LAST = IR_SEGMENT_JCR
+  IR_SEGMENT_LAST = IR_SEGMENT_JCR
 } ir_segment_t;
 ENUM_COUNTABLE(ir_segment_t)
 
 /**
  * A variable pointing to the current irp (program or module).
- * This variable should be considered constant. Moreover, one should use get_irp()
- * to get access the the irp.
+ * This variable should be considered constant. Moreover, one should use
+ * get_irp() to get access the the irp.
  *
  * @note Think of the irp as the "handle" of a program.
  */
@@ -78,16 +78,16 @@ FIRM_API ir_prog *irp;
  * Resources usable by algorithms modifying the program
  */
 typedef enum irp_resources_t {
-	IRP_RESOURCE_NONE         = 0,      /**< no resource */
-	/** irg link field @see set_irg_link(), get_irg_link() */
-	IRP_RESOURCE_IRG_LINK     = 1 << 0,
-	/** entity link field @see set_entity_link(), get_entity_link() */
-	IRP_RESOURCE_ENTITY_LINK  = 1 << 1,
-	/** type visited field @see type_visited(), mark_type_visited(),
-	 *  inc_master_type_visited() */
-	IRP_RESOURCE_TYPE_VISITED = 1 << 2,
-	/** type link field @see set_type_link(), get_type_link() */
-	IRP_RESOURCE_TYPE_LINK    = 1 << 3,
+  IRP_RESOURCE_NONE = 0, /**< no resource */
+  /** irg link field @see set_irg_link(), get_irg_link() */
+  IRP_RESOURCE_IRG_LINK = 1 << 0,
+  /** entity link field @see set_entity_link(), get_entity_link() */
+  IRP_RESOURCE_ENTITY_LINK = 1 << 1,
+  /** type visited field @see type_visited(), mark_type_visited(),
+   *  inc_master_type_visited() */
+  IRP_RESOURCE_TYPE_VISITED = 1 << 2,
+  /** type link field @see set_type_link(), get_type_link() */
+  IRP_RESOURCE_TYPE_LINK = 1 << 3,
 } irp_resources_t;
 ENUM_BITSET(irp_resources_t)
 

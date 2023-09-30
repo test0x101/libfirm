@@ -139,8 +139,8 @@ FIRM_API void set_irn_pinned(ir_node *node, int pinned);
  * @param in    An array of arity predecessor nodes.
  */
 FIRM_API ir_node *new_ir_node(dbg_info *db, ir_graph *irg, ir_node *block,
-                              ir_op *op, ir_mode *mode,
-                              int arity, ir_node *const *in);
+                              ir_op *op, ir_mode *mode, int arity,
+                              ir_node *const *in);
 
 /**
  * Creates an exact copy of @p node with same inputs and attributes in the
@@ -263,7 +263,8 @@ FIRM_API int is_Const_null(const ir_node *node);
 /** Returns non-zero if the given Const node represents the 1 constant. */
 FIRM_API int is_Const_one(const ir_node *node);
 
-/** Returns non-zero if the given Const node represents the constant with all bits set. */
+/** Returns non-zero if the given Const node represents the constant with all
+ * bits set. */
 FIRM_API int is_Const_all_one(const ir_node *node);
 
 /** @} */
@@ -282,7 +283,6 @@ FIRM_API int is_Const_all_one(const ir_node *node);
 FIRM_API ir_entity *get_Call_callee(const ir_node *call);
 
 /** @} */
-
 
 /** Returns a human readable string for the ir_builtin_kind. */
 FIRM_API const char *get_builtin_kind_name(ir_builtin_kind kind);
@@ -423,7 +423,8 @@ FIRM_API int is_irn_const_memory(const ir_node *node);
  * temporary or calculated information like visited flags or results of
  * dominance or loop calculations.
  */
-FIRM_API void copy_node_attr(ir_graph *irg, const ir_node *old_node, ir_node *new_node);
+FIRM_API void copy_node_attr(ir_graph *irg, const ir_node *old_node,
+                             ir_node *new_node);
 
 /** Returns the type attribute of a node n (TypeConst, Call, Alloc, Free)
  *  or NULL.*/
@@ -527,7 +528,8 @@ FIRM_API unsigned ir_switch_table_get_pn(const ir_switch_table *table,
                                          size_t entry);
 
 /** Duplicates switch table @p table on obstack of @p irg */
-FIRM_API ir_switch_table *ir_switch_table_duplicate(ir_graph *irg, const ir_switch_table *table);
+FIRM_API ir_switch_table *ir_switch_table_duplicate(
+    ir_graph *irg, const ir_switch_table *table);
 /** @} */
 
 /** @} */

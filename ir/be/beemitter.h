@@ -19,15 +19,12 @@
 #include "obst.h"
 
 /* don't use the following vars directly, they're only here for the inlines */
-extern struct obstack  emit_obst;
+extern struct obstack emit_obst;
 
 /**
  * Emit a character to the (assembler) output.
  */
-static inline void be_emit_char(char c)
-{
-	obstack_1grow(&emit_obst, c);
-}
+static inline void be_emit_char(char c) { obstack_1grow(&emit_obst, c); }
 
 /**
  * Emit a string to the (assembler) output.
@@ -35,9 +32,8 @@ static inline void be_emit_char(char c)
  * @param str  the string
  * @param l    the length of the given string
  */
-static inline void be_emit_string_len(const char *str, size_t l)
-{
-	obstack_grow(&emit_obst, str, l);
+static inline void be_emit_string_len(const char *str, size_t l) {
+  obstack_grow(&emit_obst, str, l);
 }
 
 /**
@@ -45,10 +41,9 @@ static inline void be_emit_string_len(const char *str, size_t l)
  *
  * @param str  the null-terminated string
  */
-static inline void be_emit_string(const char *str)
-{
-	size_t len = strlen(str);
-	be_emit_string_len(str, len);
+static inline void be_emit_string(const char *str) {
+  size_t len = strlen(str);
+  be_emit_string_len(str, len);
 }
 
 /**
@@ -56,8 +51,7 @@ static inline void be_emit_string(const char *str)
  *
  * @param str  the null-terminated string constant
  */
-#define be_emit_cstring(str) \
-	be_emit_string_len(str, sizeof(str) - 1)
+#define be_emit_cstring(str) be_emit_string_len(str, sizeof(str) - 1)
 
 /**
  * Initializes an emitter environment.
@@ -91,9 +85,8 @@ void be_emit_irvprintf(const char *fmt, va_list args);
 void be_emit_write_line(void);
 
 /** Return column in current line. Counting starts at 0. */
-static inline size_t be_emit_get_column(void)
-{
-	return obstack_object_size(&emit_obst);
+static inline size_t be_emit_get_column(void) {
+  return obstack_object_size(&emit_obst);
 }
 
 #endif

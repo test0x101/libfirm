@@ -24,22 +24,21 @@
 /** @cond PRIVATE */
 
 #define _FIRM_FNV_OFFSET_BASIS 2166136261U
-#define _FIRM_FNV_FNV_PRIME    16777619U
+#define _FIRM_FNV_FNV_PRIME 16777619U
 
 /** @endcond */
 
 /**
  * Returns a hash value for a block of data.
  */
-static inline unsigned hash_data(unsigned char const *data, size_t bytes)
-{
-	unsigned hash = _FIRM_FNV_OFFSET_BASIS;
-	for (size_t i = 0; i < bytes; ++i) {
-		hash *= _FIRM_FNV_FNV_PRIME;
-		hash ^= data[i];
-	}
+static inline unsigned hash_data(unsigned char const *data, size_t bytes) {
+  unsigned hash = _FIRM_FNV_OFFSET_BASIS;
+  for (size_t i = 0; i < bytes; ++i) {
+    hash *= _FIRM_FNV_FNV_PRIME;
+    hash ^= data[i];
+  }
 
-	return hash;
+  return hash;
 }
 
 /**
@@ -47,15 +46,14 @@ static inline unsigned hash_data(unsigned char const *data, size_t bytes)
  * @param str The string (can be const).
  * @return A hash value for the string.
  */
-static inline unsigned hash_str(char const *const str)
-{
-	unsigned hash = _FIRM_FNV_OFFSET_BASIS;
-	for(char const *c = str; *c != '\0'; ++c) {
-		hash *= _FIRM_FNV_FNV_PRIME;
-		hash ^= *c;
-	}
+static inline unsigned hash_str(char const *const str) {
+  unsigned hash = _FIRM_FNV_OFFSET_BASIS;
+  for (char const *c = str; *c != '\0'; ++c) {
+    hash *= _FIRM_FNV_FNV_PRIME;
+    hash ^= *c;
+  }
 
-	return hash;
+  return hash;
 }
 
 /**
@@ -63,9 +61,8 @@ static inline unsigned hash_str(char const *const str)
  * Pointer addresses are mostly aligned to 4 or 8 bytes. So we remove the
  * lowest 3 bits.
  */
-static inline unsigned hash_ptr(void const *const ptr)
-{
-	return (unsigned)(((char const *)ptr - (char const *)0) >> 3);
+static inline unsigned hash_ptr(void const *const ptr) {
+  return (unsigned)(((char const *)ptr - (char const *)0) >> 3);
 }
 
 /**
@@ -74,14 +71,13 @@ static inline unsigned hash_ptr(void const *const ptr)
  * @param y Another hash value.
  * @return  A hash value computed from both.
  */
-static inline unsigned hash_combine(unsigned const x, unsigned const y)
-{
-	unsigned hash = _FIRM_FNV_OFFSET_BASIS;
-	hash *= _FIRM_FNV_FNV_PRIME;
-	hash ^= x;
-	hash *= _FIRM_FNV_FNV_PRIME;
-	hash ^= y;
-	return hash;
+static inline unsigned hash_combine(unsigned const x, unsigned const y) {
+  unsigned hash = _FIRM_FNV_OFFSET_BASIS;
+  hash *= _FIRM_FNV_FNV_PRIME;
+  hash ^= x;
+  hash *= _FIRM_FNV_FNV_PRIME;
+  hash ^= y;
+  return hash;
 }
 
 /** @} */

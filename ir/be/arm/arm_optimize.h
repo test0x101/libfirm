@@ -23,9 +23,9 @@
 void arm_peephole_optimization(ir_graph *irg);
 
 typedef struct arm_vals {
-	unsigned ops;
-	uint8_t values[4];
-	uint8_t rors[4];
+  unsigned ops;
+  uint8_t values[4];
+  uint8_t rors[4];
 } arm_vals;
 
 /**

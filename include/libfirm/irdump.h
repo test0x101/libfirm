@@ -215,20 +215,24 @@ FIRM_API void dump_type_to_file(FILE *out, const ir_type *type);
 
 /** Verbosity for text dumpers */
 typedef enum {
-	dump_verbosity_onlynames         = 0x00000001,   /**< Only dump names. Turns off all other
-	                                                      flags up to 0x00010000. */
-	dump_verbosity_fields            = 0x00000002,   /**< Dump types and fields (like a type declaration). */
-	dump_verbosity_methods           = 0x00000004,   /**< Dump types and methods (like a type declaration). */
-	dump_verbosity_nostatic          = 0x00000040,   /**< Dump types and dynamic allocated fields (like a
-	                                                      type declaration). This excludes methods and
-	                                                      static, polymorphic fields. */
-	dump_verbosity_typeattrs         = 0x00000008,   /**< Dump all type attributes. */
-	dump_verbosity_entattrs          = 0x00000010,   /**< Dump all entity attributes. */
-	dump_verbosity_entconsts         = 0x00000020,   /**< Dump entity constants. */
+  dump_verbosity_onlynames = 0x00000001, /**< Only dump names. Turns off all
+                                            other flags up to 0x00010000. */
+  dump_verbosity_fields =
+      0x00000002, /**< Dump types and fields (like a type declaration). */
+  dump_verbosity_methods =
+      0x00000004, /**< Dump types and methods (like a type declaration). */
+  dump_verbosity_nostatic =
+      0x00000040, /**< Dump types and dynamic allocated fields (like a
+                       type declaration). This excludes methods and
+                       static, polymorphic fields. */
+  dump_verbosity_typeattrs = 0x00000008, /**< Dump all type attributes. */
+  dump_verbosity_entattrs = 0x00000010,  /**< Dump all entity attributes. */
+  dump_verbosity_entconsts = 0x00000020, /**< Dump entity constants. */
 
-	dump_verbosity_accessStats       = 0x00000100,   /**< Dump entity access statistics. */
+  dump_verbosity_accessStats =
+      0x00000100, /**< Dump entity access statistics. */
 
-	dump_verbosity_max                = 0x4FF00FBE   /**< Turn everything on */
+  dump_verbosity_max = 0x4FF00FBE /**< Turn everything on */
 } ir_dump_verbosity_t;
 ENUM_BITSET(ir_dump_verbosity_t)
 
@@ -243,46 +247,46 @@ FIRM_API ir_dump_verbosity_t ir_get_dump_verbosity(void);
  * graphs.
  */
 typedef enum {
-	/** dump basic blocks as subgraphs which contain the nodes in the block */
-	ir_dump_flag_blocks_as_subgraphs   = 1U <<  0,
-	/** dump (parts of) typegraph along with nodes */
-	ir_dump_flag_with_typegraph        = 1U <<  1,
-	/** Sets the vcg flag "display_edge_labels" to no.
-	 * This is necessary as xvcg fails to display graphs
-	 * with self-edges if these edges have labels. */
-	ir_dump_flag_disable_edge_labels   = 1U <<  2,
-	/** If set constants will be replicated for every use. In non blocked view
-	 * edges from constant to block are skipped.  Vcg then layouts the graphs
-	 * more compact, this makes them better readable. */
-	ir_dump_flag_consts_local          = 1U <<  3,
-	/** if set node idx will be added to node labels */
-	ir_dump_flag_idx_label             = 1U <<  4,
-	/** if set node number will be added to node labels */
-	ir_dump_flag_number_label          = 1U <<  5,
-	/** show keepalive edges from the end node */
-	ir_dump_flag_keepalive_edges       = 1U <<  6,
-	/** dump out edges */
-	ir_dump_flag_out_edges             = 1U <<  7,
-	/** if set dumps edges from blocks to their immediate dominator */
-	ir_dump_flag_dominance             = 1U <<  8,
-	/** If set the dumper dumps loop nodes and edges from these nodes to the
-	 * contained ir nodes. */
-	ir_dump_flag_loops                 = 1U <<  9,
-	/** if set (and backedge info is computed) dump backedges */
-	ir_dump_flag_back_edges            = 1U << 10,
-	/** dump backedges from iredges.h */
-	ir_dump_flag_iredges               = 1U << 11,
-	/** dump all anchor nodes, even the unused ones */
-	ir_dump_flag_all_anchors           = 1U << 12,
-	/** dumps marked blocks with an asterisk in the label */
-	ir_dump_flag_show_marks            = 1U << 13,
+  /** dump basic blocks as subgraphs which contain the nodes in the block */
+  ir_dump_flag_blocks_as_subgraphs = 1U << 0,
+  /** dump (parts of) typegraph along with nodes */
+  ir_dump_flag_with_typegraph = 1U << 1,
+  /** Sets the vcg flag "display_edge_labels" to no.
+   * This is necessary as xvcg fails to display graphs
+   * with self-edges if these edges have labels. */
+  ir_dump_flag_disable_edge_labels = 1U << 2,
+  /** If set constants will be replicated for every use. In non blocked view
+   * edges from constant to block are skipped.  Vcg then layouts the graphs
+   * more compact, this makes them better readable. */
+  ir_dump_flag_consts_local = 1U << 3,
+  /** if set node idx will be added to node labels */
+  ir_dump_flag_idx_label = 1U << 4,
+  /** if set node number will be added to node labels */
+  ir_dump_flag_number_label = 1U << 5,
+  /** show keepalive edges from the end node */
+  ir_dump_flag_keepalive_edges = 1U << 6,
+  /** dump out edges */
+  ir_dump_flag_out_edges = 1U << 7,
+  /** if set dumps edges from blocks to their immediate dominator */
+  ir_dump_flag_dominance = 1U << 8,
+  /** If set the dumper dumps loop nodes and edges from these nodes to the
+   * contained ir nodes. */
+  ir_dump_flag_loops = 1U << 9,
+  /** if set (and backedge info is computed) dump backedges */
+  ir_dump_flag_back_edges = 1U << 10,
+  /** dump backedges from iredges.h */
+  ir_dump_flag_iredges = 1U << 11,
+  /** dump all anchor nodes, even the unused ones */
+  ir_dump_flag_all_anchors = 1U << 12,
+  /** dumps marked blocks with an asterisk in the label */
+  ir_dump_flag_show_marks = 1U << 13,
 
-	/** turns of dumping of constant entity values in typegraphs */
-	ir_dump_flag_no_entity_values      = 1U << 14,
-	/** dumps ld_names of entities instead of their names */
-	ir_dump_flag_ld_names              = 1U << 15,
-	/** dump entities in class hierarchies */
-	ir_dump_flag_entities_in_hierarchy = 1U << 16,
+  /** turns of dumping of constant entity values in typegraphs */
+  ir_dump_flag_no_entity_values = 1U << 14,
+  /** dumps ld_names of entities instead of their names */
+  ir_dump_flag_ld_names = 1U << 15,
+  /** dump entities in class hierarchies */
+  ir_dump_flag_entities_in_hierarchy = 1U << 16,
 } ir_dump_flags_t;
 ENUM_BITSET(ir_dump_flags_t)
 
@@ -300,7 +304,8 @@ FIRM_API ir_dump_flags_t ir_get_dump_flags(void);
  * If this function returns zero, the default attributes are added, else
  * removed.
  */
-typedef int (*dump_node_vcgattr_func)(FILE *out, const ir_node *node, const ir_node *local);
+typedef int (*dump_node_vcgattr_func)(FILE *out, const ir_node *node,
+                                      const ir_node *local);
 
 /**
  * This hook is called to dump the vcg attributes of an edge to a file.
@@ -345,7 +350,7 @@ FIRM_API void set_dump_block_edge_hook(dump_node_edge_func func);
 FIRM_API dump_node_edge_func get_dump_block_edge_hook(void);
 
 /** A node info dumper callback. */
-typedef void (dump_node_info_cb_t)(void *data, FILE *out, const ir_node *n);
+typedef void(dump_node_info_cb_t)(void *data, FILE *out, const ir_node *n);
 
 /**
  * Adds a new node info dumper callback. It is possible to add an unlimited
@@ -359,7 +364,8 @@ typedef void (dump_node_info_cb_t)(void *data, FILE *out, const ir_node *n);
  *
  * @note This functionality is only available, if Firm hooks are enabled.
  */
-FIRM_API hook_entry_t *dump_add_node_info_callback(dump_node_info_cb_t *cb, void *data);
+FIRM_API hook_entry_t *dump_add_node_info_callback(dump_node_info_cb_t *cb,
+                                                   void *data);
 
 /**
  * Removes a previously added info dumper callback.

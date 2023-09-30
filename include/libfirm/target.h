@@ -95,7 +95,8 @@ FIRM_API ir_mode *ir_target_float_arithmetic_mode(void);
  * what happens when a float value is converted to an integer and
  * overflow occurs.
  */
-FIRM_API float_int_conversion_overflow_style_t ir_target_float_int_overflow_style(void);
+FIRM_API float_int_conversion_overflow_style_t
+ir_target_float_int_overflow_style(void);
 
 /**
  * @}
@@ -118,15 +119,15 @@ FIRM_API float_int_conversion_overflow_style_t ir_target_float_int_overflow_styl
  * unsigned types.
  */
 typedef enum ir_platform_type_t {
-	IR_TYPE_BOOL,
-	IR_TYPE_CHAR,
-	IR_TYPE_SHORT,
-	IR_TYPE_INT,
-	IR_TYPE_LONG,
-	IR_TYPE_LONG_LONG,
-	IR_TYPE_FLOAT,
-	IR_TYPE_DOUBLE,
-	IR_TYPE_LONG_DOUBLE
+  IR_TYPE_BOOL,
+  IR_TYPE_CHAR,
+  IR_TYPE_SHORT,
+  IR_TYPE_INT,
+  IR_TYPE_LONG,
+  IR_TYPE_LONG_LONG,
+  IR_TYPE_FLOAT,
+  IR_TYPE_DOUBLE,
+  IR_TYPE_LONG_DOUBLE
 } ir_platform_type_t;
 
 typedef struct ir_platform_define_t ir_platform_define_t;
@@ -153,7 +154,7 @@ FIRM_API int ir_platform_supports_thread_local_storage(void);
  * to.
  */
 FIRM_API char const *ir_platform_define_value(
-		ir_platform_define_t const *define);
+    ir_platform_define_t const *define);
 
 /**
  * Returns the C type corresponding to wchar_t.
@@ -203,16 +204,15 @@ FIRM_API ir_platform_define_t const *ir_platform_define_first(void);
  * defines or NULL if @p define is the last element.
  */
 FIRM_API ir_platform_define_t const *ir_platform_define_next(
-		ir_platform_define_t const *define);
+    ir_platform_define_t const *define);
 
 /** Returns the name of the preprocessor define @p define. */
 FIRM_API char const *ir_platform_define_name(
-		ir_platform_define_t const *define);
+    ir_platform_define_t const *define);
 
 /**
  * @}
  */
-
 
 /**
  * @ingroup target
@@ -259,7 +259,7 @@ FIRM_API char const *ir_platform_define_name(
  * structure.
  */
 FIRM_API ir_machine_triple_t *ir_parse_machine_triple(
-		const char *triple_string);
+    const char *triple_string);
 
 /**
  * Creates a machine triple matching the host machine. Always succeeds
@@ -272,11 +272,11 @@ FIRM_API const char *ir_triple_get_cpu_type(const ir_machine_triple_t *triple);
 
 /** Returns the manufacturer part of machine triple @p triple. */
 FIRM_API const char *ir_triple_get_manufacturer(
-		const ir_machine_triple_t *triple);
+    const ir_machine_triple_t *triple);
 
 /** Returns the operating system part of machine triple @p triple. */
 FIRM_API const char *ir_triple_get_operating_system(
-		const ir_machine_triple_t *triple);
+    const ir_machine_triple_t *triple);
 
 /** Changes CPU type of @p triple to @p cpu_type. */
 FIRM_API void ir_triple_set_cpu_type(ir_machine_triple_t *triple,

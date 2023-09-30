@@ -20,7 +20,7 @@
  *              and all things have a fixed column... :-0
  * s_mps_free:  mps where whitespace is a seperator :-)
  */
-typedef enum {s_mps_fixed, s_mps_free} lpp_mps_style_t;
+typedef enum { s_mps_fixed, s_mps_free } lpp_mps_style_t;
 
 /**
  * Writes the description of a lp problem object (lpp)

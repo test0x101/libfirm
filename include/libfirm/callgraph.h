@@ -39,10 +39,12 @@
 
 /** Flag to indicate state of callgraph. */
 typedef enum {
-	irp_callgraph_none,                   /**< No callgraph allocated. */
-	irp_callgraph_consistent,             /**< Callgraph constistent but calltree is inconsistent */
-	irp_callgraph_inconsistent,           /**< Callgraph is allocated but inconsistent. */
-	irp_callgraph_and_calltree_consistent /**< Both callgraph and calltree are consistent. */
+  irp_callgraph_none,         /**< No callgraph allocated. */
+  irp_callgraph_consistent,   /**< Callgraph constistent but calltree is
+                                 inconsistent */
+  irp_callgraph_inconsistent, /**< Callgraph is allocated but inconsistent. */
+  irp_callgraph_and_calltree_consistent /**< Both callgraph and calltree are
+                                           consistent. */
 } irp_callgraph_state;
 
 /** Returns the callgraph state of the program representation. */
@@ -57,7 +59,8 @@ FIRM_API size_t get_irg_n_callers(const ir_graph *irg);
 /** Returns the caller at position pos. */
 FIRM_API ir_graph *get_irg_caller(const ir_graph *irg, size_t pos);
 
-/** Returns non-zero if the caller at position pos is "a backedge", i.e. a recursion. */
+/** Returns non-zero if the caller at position pos is "a backedge", i.e. a
+ * recursion. */
 FIRM_API int is_irg_caller_backedge(const ir_graph *irg, size_t pos);
 
 /** Returns non-zero if the irg has a backedge caller. */
@@ -72,7 +75,8 @@ FIRM_API size_t get_irg_n_callees(const ir_graph *irg);
 /** Returns the callee at position pos. */
 FIRM_API ir_graph *get_irg_callee(const ir_graph *irg, size_t pos);
 
-/** Returns non-zero if the callee at position pos is "a backedge", i.e. a recursion. */
+/** Returns non-zero if the callee at position pos is "a backedge", i.e. a
+ * recursion. */
 FIRM_API int is_irg_callee_backedge(const ir_graph *irg, size_t pos);
 
 /** Returns non-zero if the irg has a backedge callee. */
@@ -94,7 +98,6 @@ FIRM_API void compute_callgraph(void);
 /** Destruct the callgraph. */
 FIRM_API void free_callgraph(void);
 
-
 /** A function type for functions passed to the callgraph walker. */
 typedef void callgraph_walk_func(ir_graph *g, void *env);
 
@@ -109,8 +112,10 @@ typedef void callgraph_walk_func(ir_graph *g, void *env);
  * The void* env can be used to pass status information between the
  * pre and post functions.
  *
- * @param pre  - walker function, executed before the predecessor of a node are visited
- * @param post - walker function, executed after the predecessor of a node are visited
+ * @param pre  - walker function, executed before the predecessor of a node are
+ * visited
+ * @param post - walker function, executed after the predecessor of a node are
+ * visited
  * @param env  - environment, passed to pre and post
  */
 FIRM_API void callgraph_walk(callgraph_walk_func *pre,
@@ -135,11 +140,12 @@ FIRM_API void analyse_loop_nesting_depth(void);
 
 /** The state of loop nesting depth. */
 typedef enum {
-	loop_nesting_depth_none,         /**< Loop nesting depths are not computed, no memory is
-	                                      allocated, access fails. */
-	loop_nesting_depth_consistent,   /**< Loop nesting depth information is computed and correct. */
-	loop_nesting_depth_inconsistent  /**< Loop nesting depth is computed but the graphs have been
-	                                      changed since. */
+  loop_nesting_depth_none, /**< Loop nesting depths are not computed, no memory
+                              is allocated, access fails. */
+  loop_nesting_depth_consistent, /**< Loop nesting depth information is computed
+                                    and correct. */
+  loop_nesting_depth_inconsistent /**< Loop nesting depth is computed but the
+                                     graphs have been changed since. */
 } loop_nesting_depth_state;
 
 /** Returns the nesting depth state of the program representation. */
@@ -148,7 +154,8 @@ FIRM_API loop_nesting_depth_state get_irp_loop_nesting_depth_state(void);
 /** Sets the nesting depth state of the program representation. */
 FIRM_API void set_irp_loop_nesting_depth_state(loop_nesting_depth_state s);
 
-/** Marks the nesting depth state of the program representation as inconsistent. */
+/** Marks the nesting depth state of the program representation as inconsistent.
+ */
 FIRM_API void set_irp_loop_nesting_depth_state_inconsistent(void);
 
 /** @} */

@@ -16,7 +16,7 @@
 #include "jit.h"
 
 enum {
-	IA32_RELOCATION_RELJUMP = 128,
+  IA32_RELOCATION_RELJUMP = 128,
 };
 
 ir_jit_function_t *ia32_emit_jit(ir_jit_segment_t *segment, ir_graph *irg);

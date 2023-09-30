@@ -37,12 +37,12 @@ FIRM_API void exchange(ir_node *old, ir_node *nw);
 FIRM_API void turn_into_tuple(ir_node *node, int arity, ir_node *const in[]);
 
 /** Walks over the passed IR graph and collects all Phi nodes as a
-  * list in their corresponding block (using get_Block_phis() API).
-  * Further it collects all Proj nodes in a list of the node producing
-  * the tuple. In case of nested tuples the Projs are collected in the
-  * node producing the outermost Tuple.
-  * All other link fields are cleared afterwards.
-  */
+ * list in their corresponding block (using get_Block_phis() API).
+ * Further it collects all Proj nodes in a list of the node producing
+ * the tuple. In case of nested tuples the Projs are collected in the
+ * node producing the outermost Tuple.
+ * All other link fields are cleared afterwards.
+ */
 FIRM_API void collect_phiprojs_and_start_block_nodes(ir_graph *irg);
 
 /** Introduce a new node with "start_block_placed" attribute. It is necesary

@@ -17,27 +17,27 @@
 #include "strcalc.h"
 
 typedef enum {
-	FC_DEC,
-	FC_HEX,
+  FC_DEC,
+  FC_HEX,
 } fc_base_t;
 
 /** IEEE-754 Rounding modes. */
 typedef enum {
-	FC_TONEAREST,   /**< if unsure, to the nearest even */
-	FC_TOPOSITIVE,  /**< to +oo */
-	FC_TONEGATIVE,  /**< to -oo */
-	FC_TOZERO       /**< to 0 */
+  FC_TONEAREST,  /**< if unsure, to the nearest even */
+  FC_TOPOSITIVE, /**< to +oo */
+  FC_TONEGATIVE, /**< to -oo */
+  FC_TOZERO      /**< to 0 */
 } fc_rounding_mode_t;
 
 /**
  * possible float states
  */
 typedef enum {
-	FC_NORMAL,       /**< normal representation, implicit 1 */
-	FC_ZERO,         /**< +/-0 */
-	FC_SUBNORMAL,    /**< denormals, implicit 0 */
-	FC_INF,          /**< +/-oo */
-	FC_NAN,          /**< Not A Number */
+  FC_NORMAL,    /**< normal representation, implicit 1 */
+  FC_ZERO,      /**< +/-0 */
+  FC_SUBNORMAL, /**< denormals, implicit 0 */
+  FC_INF,       /**< +/-oo */
+  FC_NAN,       /**< Not A Number */
 } value_class_t;
 
 struct fp_value;
@@ -91,8 +91,8 @@ void fc_cast(const fp_value *val, const float_descriptor_t *desc,
 
 /*@{*/
 /** build a special float value
- * This function builds a representation for a special float value, as indicated by the
- * function's suffix.
+ * This function builds a representation for a special float value, as indicated
+ * by the function's suffix.
  *
  * @param desc    The floating point descriptor
  * @param result  A buffer to hold the value built.
@@ -133,10 +133,10 @@ int fc_print(const fp_value *a, char *buf, size_t buflen, fc_base_t base);
 ir_relation fc_comp(const fp_value *a, const fp_value *b);
 
 typedef enum flt2int_result_t {
-	FLT2INT_OK,
-	FLT2INT_POSITIVE_OVERFLOW,
-	FLT2INT_NEGATIVE_OVERFLOW,
-	FLT2INT_BAD
+  FLT2INT_OK,
+  FLT2INT_POSITIVE_OVERFLOW,
+  FLT2INT_NEGATIVE_OVERFLOW,
+  FLT2INT_BAD
 } flt2int_result_t;
 
 /**

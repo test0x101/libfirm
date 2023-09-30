@@ -5,7 +5,8 @@
 
 /**
  * @file
- * @brief       Various verify routines that check a scheduled graph for correctness.
+ * @brief       Various verify routines that check a scheduled graph for
+ * correctness.
  * @author      Matthias Braun
  * @date        05.05.2006
  */
@@ -26,7 +27,7 @@
  * @return           true if the pressure is valid, false otherwise.
  */
 bool be_verify_register_pressure(ir_graph *irg,
-                                 const arch_register_class_t* cls);
+                                 const arch_register_class_t *cls);
 
 /**
  * Does some sanity checks on the schedule.

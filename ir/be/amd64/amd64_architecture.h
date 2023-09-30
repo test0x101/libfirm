@@ -12,10 +12,10 @@
 #include "irarch.h"
 
 typedef struct {
-	/** gcc compatibility */
-	bool use_red_zone:1;
-	/** use FMA3 instructions */
-	bool use_scalar_fma3:1;
+  /** gcc compatibility */
+  bool use_red_zone : 1;
+  /** use FMA3 instructions */
+  bool use_scalar_fma3 : 1;
 } amd64_code_gen_config_t;
 
 extern amd64_code_gen_config_t amd64_cg_config;

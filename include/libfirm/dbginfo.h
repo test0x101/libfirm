@@ -43,33 +43,40 @@
  * An enumeration indicating the action performed by a transformation.
  */
 typedef enum {
-	dbg_error = 0,
-	dbg_opt_ssa,           /**< Optimization of the SSA representation, e.g. removal of superfluent Phi nodes. */
-	dbg_opt_auxnode,       /**< Removal of unnecessary auxiliary nodes. */
-	dbg_const_eval,        /**< A Firm subgraph was evaluated to a single constant. */
-	dbg_opt_cse,           /**< A Firm node was replaced due to common subexpression elimination. */
-	dbg_straightening,     /**< A Firm subgraph was replaced by a single, existing block. */
-	dbg_if_simplification, /**< The control flow of an if is changed as either the
-	                                  else, the then or both blocks are empty. */
-	dbg_algebraic_simplification, /**< A Firm subgraph was replaced because of an algebraic
-	                                   simplification. */
-	dbg_write_after_write,        /**< A Firm subgraph was replaced because of a write
-	                                   after write optimization. */
-	dbg_write_after_read,         /**< A Firm subgraph was replaced because of a write
-	                                   after read optimization. */
-	dbg_read_after_write,         /**< A Firm subgraph was replaced because of a read
-	                                   after write optimization. */
-	dbg_read_after_read,          /**< A Firm subgraph was replaced because of a read
-	                                   after read optimization. */
-	dbg_read_a_const,             /**< A Firm subgraph was replaced because of a read
-	                                   a constant optimization. */
-	dbg_dead_code,                /**< Removing unreachable code, i.e. blocks that are never executed. */
-	dbg_opt_confirm,              /**< A Firm subgraph was replace because of a Confirmation. */
-	dbg_gvn_pre,                  /**< A Firm node was replace because of the GVN-PRE algorithm. */
-	dbg_combo,                    /**< A Firm node was replace because of the combo algorithm. */
-	dbg_jumpthreading,            /**< A Firm node was replace because of the jumpthreading algorithm. */
-	dbg_backend,                  /**< A Firm subgraph was replaced because of a Backend transformation */
-	dbg_max                       /**< Maximum value. */
+  dbg_error = 0,
+  dbg_opt_ssa,     /**< Optimization of the SSA representation, e.g. removal of
+                      superfluent Phi nodes. */
+  dbg_opt_auxnode, /**< Removal of unnecessary auxiliary nodes. */
+  dbg_const_eval,  /**< A Firm subgraph was evaluated to a single constant. */
+  dbg_opt_cse,     /**< A Firm node was replaced due to common subexpression
+                      elimination. */
+  dbg_straightening,     /**< A Firm subgraph was replaced by a single, existing
+                            block. */
+  dbg_if_simplification, /**< The control flow of an if is changed as either the
+                                    else, the then or both blocks are empty. */
+  dbg_algebraic_simplification, /**< A Firm subgraph was replaced because of an
+                                   algebraic simplification. */
+  dbg_write_after_write, /**< A Firm subgraph was replaced because of a write
+                              after write optimization. */
+  dbg_write_after_read,  /**< A Firm subgraph was replaced because of a write
+                              after read optimization. */
+  dbg_read_after_write,  /**< A Firm subgraph was replaced because of a read
+                              after write optimization. */
+  dbg_read_after_read,   /**< A Firm subgraph was replaced because of a read
+                              after read optimization. */
+  dbg_read_a_const,      /**< A Firm subgraph was replaced because of a read
+                              a constant optimization. */
+  dbg_dead_code,   /**< Removing unreachable code, i.e. blocks that are never
+                      executed. */
+  dbg_opt_confirm, /**< A Firm subgraph was replace because of a Confirmation.
+                    */
+  dbg_gvn_pre, /**< A Firm node was replace because of the GVN-PRE algorithm. */
+  dbg_combo,   /**< A Firm node was replace because of the combo algorithm. */
+  dbg_jumpthreading, /**< A Firm node was replace because of the jumpthreading
+                        algorithm. */
+  dbg_backend,       /**< A Firm subgraph was replaced because of a Backend
+                        transformation */
+  dbg_max            /**< Maximum value. */
 } dbg_action;
 
 /**
@@ -88,7 +95,8 @@ FIRM_API const char *dbg_action_2_str(dbg_action a);
  *
  * @see dbg_init()
  */
-typedef void merge_pair_func(ir_node *new_node, ir_node *old_node, dbg_action action);
+typedef void merge_pair_func(ir_node *new_node, ir_node *old_node,
+                             dbg_action action);
 
 /**
  * The type of the debug info merge sets function.
@@ -121,10 +129,10 @@ typedef void merge_sets_func(ir_node *const *new_node_array,
  *     semantics.
  *   - dbg_info_merge_sets() is called in the following situation:
  *     The optimization replaced a subgraph by another subgraph.  There is no
- *     obviously mapping between single nodes in both subgraphs.  The optimization
- *     simply passes two lists to the debug module, one containing the nodes in
- *     the old subgraph, the other containing the nodes in the new subgraph.
- *     The same node can be in both lists.
+ *     obviously mapping between single nodes in both subgraphs.  The
+ * optimization simply passes two lists to the debug module, one containing the
+ * nodes in the old subgraph, the other containing the nodes in the new
+ * subgraph. The same node can be in both lists.
  *
  *   Further both functions pass an enumeration indicating the action
  *   performed by the transformation, e.g. the kind of optimization performed.
@@ -134,9 +142,9 @@ FIRM_API void dbg_init(merge_pair_func *dbg_info_merge_pair,
 
 /** A sourcecode location */
 typedef struct src_loc_t {
-	char const *file;    /**< the name of the source (usually a file) */
-	unsigned    line;    /**< line number (starting at 1; 0 if unknown) */
-	unsigned    column;  /**< column number (starting at 1; 0 if unknown) */
+  char const *file; /**< the name of the source (usually a file) */
+  unsigned line;    /**< line number (starting at 1; 0 if unknown) */
+  unsigned column;  /**< column number (starting at 1; 0 if unknown) */
 } src_loc_t;
 
 /**

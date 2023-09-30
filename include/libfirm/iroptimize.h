@@ -37,7 +37,7 @@ FIRM_API void optimize_cf(ir_graph *irg);
  *
  * @param irg  the graph
  */
-FIRM_API void opt_jumpthreading(ir_graph* irg);
+FIRM_API void opt_jumpthreading(ir_graph *irg);
 
 /**
  * Simplifies boolean expression in the given ir graph.
@@ -204,12 +204,12 @@ FIRM_API void opt_frame_irg(ir_graph *irg);
 
 /** Possible flags for the Operator Scalar Replacement. */
 typedef enum osr_flags {
-	osr_flag_none               = 0,  /**< no additional flags */
-	osr_flag_lftr_with_ov_check = 1,  /**< do linear function test replacement
-	                                       only if no overflow can occur. */
-	osr_flag_ignore_x86_shift   = 2,  /**< ignore Multiplications by 2, 4, 8 */
-	osr_flag_keep_reg_pressure  = 4   /**< do NOT increase register pressure by introducing new
-	                                       induction variables. */
+  osr_flag_none = 0,               /**< no additional flags */
+  osr_flag_lftr_with_ov_check = 1, /**< do linear function test replacement
+                                        only if no overflow can occur. */
+  osr_flag_ignore_x86_shift = 2,   /**< ignore Multiplications by 2, 4, 8 */
+  osr_flag_keep_reg_pressure = 4   /**< do NOT increase register pressure by
+                                      introducing new   induction variables. */
 } osr_flags;
 
 /** default setting */
@@ -497,10 +497,10 @@ FIRM_API void dead_node_elimination(ir_graph *irg);
 FIRM_API void place_code(ir_graph *irg);
 
 /**
- * This optimization finds values where the bits are either constant or irrelevant
- * and exchanges them for a corresponding constant.
+ * This optimization finds values where the bits are either constant or
+ * irrelevant and exchanges them for a corresponding constant.
  */
-FIRM_API void occult_consts(ir_graph*);
+FIRM_API void occult_consts(ir_graph *);
 
 /**
  * Returns true if the value @p n is known not be zero/null.

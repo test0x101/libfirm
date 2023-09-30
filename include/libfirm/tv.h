@@ -454,7 +454,8 @@ FIRM_API ir_tarval *tarval_mod(ir_tarval const *a, ir_tarval const *b);
  *
  * @param a        the first tarval
  * @param b        the second tarval
- * @param mod_res  after return, contains the remainder result, a % b or tarval_bad
+ * @param mod_res  after return, contains the remainder result, a % b or
+ * tarval_bad
  *
  * @return a / b or tarval_bad
  */
@@ -594,7 +595,8 @@ FIRM_API ir_tarval *tarval_shrs_unsigned(ir_tarval const *a, unsigned b);
  *   The result of this function is undefined if the mode is neither integer
  *   nor float.
  */
-FIRM_API unsigned char get_tarval_sub_bits(ir_tarval const *tv, unsigned byte_ofs);
+FIRM_API unsigned char get_tarval_sub_bits(ir_tarval const *tv,
+                                           unsigned byte_ofs);
 
 /**
  * Returns the number of set bits in a given (integer) tarval.
@@ -646,7 +648,8 @@ FIRM_API int tarval_get_exponent(ir_tarval const *tv);
  * @param tv    the tarval
  * @param mode  the mode to convert to
  */
-FIRM_API int tarval_ieee754_can_conv_lossless(ir_tarval const *tv, const ir_mode *mode);
+FIRM_API int tarval_ieee754_can_conv_lossless(ir_tarval const *tv,
+                                              const ir_mode *mode);
 
 /**
  * Returns non-zero if the result of the last IEEE-754 operation was exact.

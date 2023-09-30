@@ -24,7 +24,9 @@
  *
  * @return Whether the handler resolved the constraint violation
  */
-typedef bool be_handle_2addr_callback_t(ir_node *node, arch_register_req_t const *req, arch_register_t const *reg);
+typedef bool be_handle_2addr_callback_t(ir_node *node,
+                                        arch_register_req_t const *req,
+                                        arch_register_t const *reg);
 
 /**
  * Generic handler to detect and handle 2-address code constraint violations.

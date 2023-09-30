@@ -21,17 +21,16 @@ typedef unsigned long long timing_ticks_t;
  * The time is relative to an unspecified start, so it can only be used to
  * measure relative time/timespans.
  */
-static inline timing_ticks_t timing_ticks(void)
-{
+static inline timing_ticks_t timing_ticks(void) {
 #if defined(__i386__) || defined(_M_IX86) || defined(_M_X64)
-	unsigned h;
-	unsigned l;
-	__asm__ volatile("rdtsc" : "=a" (l), "=d" (h));
-	return (timing_ticks_t)h << 32 | l;
+  unsigned h;
+  unsigned l;
+  __asm__ volatile("rdtsc" : "=a"(l), "=d"(h));
+  return (timing_ticks_t)h << 32 | l;
 #else
-	struct timeval tval;
-	gettimeofday(&tval, NULL);
-	return (unsigned long) (tval.tv_usec + 1000000 * tval.tv_sec);
+  struct timeval tval;
+  gettimeofday(&tval, NULL);
+  return (unsigned long)(tval.tv_usec + 1000000 * tval.tv_sec);
 #endif
 }
 

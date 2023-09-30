@@ -16,14 +16,16 @@
 #include "list.h"
 
 typedef struct ir_valueset_entry_t {
-	ir_node     *value;  /**< the represented value */
-	ir_node     *expr;   /**< the leader expression for the value in the current set */
-	list_head   list;    /**< link field for the list iterator */
+  ir_node *value; /**< the represented value */
+  ir_node *expr;  /**< the leader expression for the value in the current set */
+  list_head list; /**< link field for the list iterator */
 } ir_valueset_entry_t;
 
-#define HashSet          ir_valueset_t
-#define ValueType        ir_valueset_entry_t
-#define ADDITIONAL_DATA  list_head elem_list; list_head all_iters;
+#define HashSet ir_valueset_t
+#define ValueType ir_valueset_entry_t
+#define ADDITIONAL_DATA \
+  list_head elem_list;  \
+  list_head all_iters;
 #undef DO_REHASH
 
 #include "hashset.h"
@@ -34,8 +36,8 @@ typedef struct ir_valueset_entry_t {
 
 typedef struct ir_valueset_t ir_valueset_t;
 typedef struct ir_valueset_iterator_t {
-	list_head           *iter;       /**< points to the list head of the last element */
-	const ir_valueset_t *valueset;   /**< the value set of this iterator. */
+  list_head *iter; /**< points to the list head of the last element */
+  const ir_valueset_t *valueset; /**< the value set of this iterator. */
 } ir_valueset_iterator_t;
 
 /**
@@ -49,13 +51,14 @@ void ir_valueset_init(ir_valueset_t *valueset);
  * Initializes a value set.
  *
  * @param valueset            Pointer to allocated space for the value set
- * @param expected_elements   Number of elements expected in the value set (roughly)
+ * @param expected_elements   Number of elements expected in the value set
+ * (roughly)
  */
 void ir_valueset_init_size(ir_valueset_t *valueset, size_t expected_elements);
 
 /**
- * Destroys a value set and frees the memory allocated for hashtable. The memory of
- * the value set itself is not freed.
+ * Destroys a value set and frees the memory allocated for hashtable. The memory
+ * of the value set itself is not freed.
  *
  * @param valueset   Pointer to the value set
  */
@@ -64,26 +67,27 @@ void ir_valueset_destroy(ir_valueset_t *valueset);
 /**
  * Allocates memory for a value set and initializes it.
  *
- * @param expected_elements   Number of elements expected in the value set (roughly)
+ * @param expected_elements   Number of elements expected in the value set
+ * (roughly)
  * @return The initialized value set
  */
 static inline ir_valueset_t *ir_valueset_new(size_t expected_elements) {
-	ir_valueset_t *res = XMALLOC(ir_valueset_t);
-	ir_valueset_init_size(res, expected_elements);
-	return res;
+  ir_valueset_t *res = XMALLOC(ir_valueset_t);
+  ir_valueset_init_size(res, expected_elements);
+  return res;
 }
 
 /**
  * Destroys a value set and frees the memory of the set itself.
  */
 static inline void ir_valueset_del(ir_valueset_t *valueset) {
-	ir_valueset_destroy(valueset);
-	free(valueset);
+  ir_valueset_destroy(valueset);
+  free(valueset);
 }
 
 /**
- * Inserts a (value, expression) pair into a valueset if the value is not already
- * known, else does nothing.
+ * Inserts a (value, expression) pair into a valueset if the value is not
+ * already known, else does nothing.
  *
  * @param valueset  Pointer to the value set
  * @param value     the value to insert into the value set
@@ -94,8 +98,8 @@ static inline void ir_valueset_del(ir_valueset_t *valueset) {
 int ir_valueset_insert(ir_valueset_t *valueset, ir_node *value, ir_node *expr);
 
 /**
- * Inserts a (value, expression) pair into a valueset if the value is not already
- * known, else replace the expression for the given value.
+ * Inserts a (value, expression) pair into a valueset if the value is not
+ * already known, else replace the expression for the given value.
  *
  * @param valueset  Pointer to the value set
  * @param value     the value to insert into the value set
@@ -115,8 +119,8 @@ int ir_valueset_replace(ir_valueset_t *valueset, ir_node *value, ir_node *expr);
 void *ir_valueset_lookup(const ir_valueset_t *valueset, const ir_node *value);
 
 /**
- * Removes a value from a value set. Does nothing if the value set doesn't contain
- * the value.
+ * Removes a value from a value set. Does nothing if the value set doesn't
+ * contain the value.
  *
  * @param valueset  Pointer to the value set
  * @param value     value to remove from the values set
@@ -132,8 +136,8 @@ void ir_valueset_remove(ir_valueset_t *valueset, const ir_node *value);
 size_t ir_valueset_size(const ir_valueset_t *valueset);
 
 /**
- * Initializes a value set iterator. Sets the iterator before the first element in
- * the value set.
+ * Initializes a value set iterator. Sets the iterator before the first element
+ * in the value set.
  *
  * @param iterator   Pointer to already allocated iterator memory
  * @param valueset   Pointer to the value set
@@ -144,14 +148,16 @@ void ir_valueset_iterator_init(ir_valueset_iterator_t *iterator,
 /**
  * Advances the iterator and returns the current element or NULL if all elements
  * in the value set have been processed.
- * @note It is not allowed to use ir_valueset_insert() or ir_valueset_remove() while
- *            iterating over a nodemap.
+ * @note It is not allowed to use ir_valueset_insert() or ir_valueset_remove()
+ * while iterating over a nodemap.
  *
  * @param iterator  Pointer to the value set iterator.
- * @param expr      After return contains the associated expression for the value or NULL
+ * @param expr      After return contains the associated expression for the
+ * value or NULL
  * @returns         Next element in the value set or NULL
  */
-ir_node *ir_valueset_iterator_next(ir_valueset_iterator_t *iterator, ir_node **expr);
+ir_node *ir_valueset_iterator_next(ir_valueset_iterator_t *iterator,
+                                   ir_node **expr);
 
 /**
  * Removes the element the iterator currently points to.
@@ -159,9 +165,11 @@ ir_node *ir_valueset_iterator_next(ir_valueset_iterator_t *iterator, ir_node **e
  * @param valueset  Pointer to the value set
  * @param iterator  Pointer to the value set iterator.
  */
-void ir_valueset_remove_iterator(ir_valueset_t *valueset, ir_valueset_iterator_t *iterator);
+void ir_valueset_remove_iterator(ir_valueset_t *valueset,
+                                 ir_valueset_iterator_t *iterator);
 
 #define foreach_valueset(valueset, value, expr, iter) \
-	for (ir_valueset_iterator_init(&iter, valueset); (value = ir_valueset_iterator_next(&iter, &expr));)
+  for (ir_valueset_iterator_init(&iter, valueset);    \
+       (value = ir_valueset_iterator_next(&iter, &expr));)
 
 #endif

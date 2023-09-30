@@ -27,7 +27,8 @@
  *        transformations in several algorithms on/off.
  * -# Normalization flags.
  *    These flags steer transformations of the ir that improve it, as removing
- *    dump Phi nodes (one predecessor, all predecessors are equal ...), Ids, Tuples ...
+ *    dump Phi nodes (one predecessor, all predecessors are equal ...), Ids,
+ *Tuples ...
  * -# Verbosity flags.
  *    -# Flags to steer the level of the information.
  *    -# Flags to steer in which phase information should be dumped.
@@ -87,9 +88,9 @@ FIRM_API int get_opt_cse(void);
  * If opt_global_cse == 1 and opt_cse == 1 perform intra procedure
  * constant subexpression elimination for floating nodes.  Intra
  * procedure cse gets the graph into state "floating".  It is necessary
- * to run pre/code motion to get the graph back into state "op_pin_state_pinned".
- * right after a call to local_optimize with global cse turned on.
- * Default: opt_global_cse == 0.
+ * to run pre/code motion to get the graph back into state
+ * "op_pin_state_pinned". right after a call to local_optimize with global cse
+ * turned on. Default: opt_global_cse == 0.
  */
 FIRM_API void set_opt_global_cse(int value);
 

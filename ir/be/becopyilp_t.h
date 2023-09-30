@@ -32,19 +32,21 @@
 
 typedef struct ilp_env_t ilp_env_t;
 
-typedef void (*ilp_callback)(ilp_env_t*);
+typedef void (*ilp_callback)(ilp_env_t *);
 
 struct ilp_env_t {
-	copy_opt_t const *co;          /**< the copy opt problem */
-	ir_node         **col_suff;    /**< Coloring suffix for size reduction. A PEO prefix. */
-	ir_nodeset_t      all_removed; /**< All nodes removed during problem size reduction */
-	lpp_t            *lp;          /**< the linear programming problem */
-	void             *env;
-	ilp_callback      build;
-	ilp_callback      apply;
+  copy_opt_t const *co; /**< the copy opt problem */
+  ir_node **col_suff; /**< Coloring suffix for size reduction. A PEO prefix. */
+  ir_nodeset_t
+      all_removed; /**< All nodes removed during problem size reduction */
+  lpp_t *lp;       /**< the linear programming problem */
+  void *env;
+  ilp_callback build;
+  ilp_callback apply;
 };
 
-ilp_env_t *new_ilp_env(copy_opt_t *co, ilp_callback build, ilp_callback apply, void *env);
+ilp_env_t *new_ilp_env(copy_opt_t *co, ilp_callback build, ilp_callback apply,
+                       void *env);
 
 lpp_sol_state_t ilp_go(ilp_env_t *ienv);
 
@@ -53,14 +55,13 @@ void free_ilp_env(ilp_env_t *ienv);
 /**
  * Checks if a node has already been removed
  */
-static inline bool sr_is_removed(ilp_env_t const *const ienv, ir_node const *const irn)
-{
-	return ir_nodeset_contains(&ienv->all_removed, irn);
+static inline bool sr_is_removed(ilp_env_t const *const ienv,
+                                 ir_node const *const irn) {
+  return ir_nodeset_contains(&ienv->all_removed, irn);
 }
 
-static inline unsigned get_irn_col(ir_node const *const node)
-{
-	return arch_get_irn_register(node)->index;
+static inline unsigned get_irn_col(ir_node const *const node) {
+  return arch_get_irn_register(node)->index;
 }
 
 #endif

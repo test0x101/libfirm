@@ -70,8 +70,9 @@ FIRM_API const ir_edge_t *get_irn_out_edge_next(const ir_node *irn,
  * @param edge An ir_edge_t pointer which shall be set to the current
  * edge.
  */
-#define foreach_out_edge_kind(irn, edge, kind) \
-	for (ir_edge_t const *edge = get_irn_out_edge_first_kind(irn, kind); edge; edge = get_irn_out_edge_next(irn, edge, kind))
+#define foreach_out_edge_kind(irn, edge, kind)                               \
+  for (ir_edge_t const *edge = get_irn_out_edge_first_kind(irn, kind); edge; \
+       edge = get_irn_out_edge_next(irn, edge, kind))
 
 /**
  * A convenience iteration macro over all out edges of a node, which is safe
@@ -81,29 +82,36 @@ FIRM_API const ir_edge_t *get_irn_out_edge_next(const ir_node *irn,
  * @param edge An ir_edge_t pointer which shall be set to the current edge.
  * @param kind The kind of the edge.
  */
-#define foreach_out_edge_kind_safe(irn, edge, kind) \
-	for (ir_edge_t const *edge = get_irn_out_edge_first_kind((irn), (kind)), *edge##__next; edge; edge = edge##__next) \
-		if (edge##__next = get_irn_out_edge_next((irn), edge, (kind)), 0) {} else
+#define foreach_out_edge_kind_safe(irn, edge, kind)                        \
+  for (ir_edge_t const *edge = get_irn_out_edge_first_kind((irn), (kind)), \
+                       *edge##__next;                                      \
+       edge; edge = edge##__next)                                          \
+    if (edge##__next = get_irn_out_edge_next((irn), edge, (kind)), 0) {    \
+    } else
 
 /**
  * Convenience macro for normal out edges.
  */
-#define foreach_out_edge(irn, edge)       foreach_out_edge_kind(irn, edge, EDGE_KIND_NORMAL)
+#define foreach_out_edge(irn, edge) \
+  foreach_out_edge_kind(irn, edge, EDGE_KIND_NORMAL)
 
 /**
  * Convenience macro for normal out edges.
  */
-#define foreach_out_edge_safe(irn, edge)  foreach_out_edge_kind_safe(irn, edge, EDGE_KIND_NORMAL)
+#define foreach_out_edge_safe(irn, edge) \
+  foreach_out_edge_kind_safe(irn, edge, EDGE_KIND_NORMAL)
 
 /**
  * A convenience iteration macro for all control flow edges.
  */
-#define foreach_block_succ(bl, edge)      foreach_out_edge_kind(bl, edge, EDGE_KIND_BLOCK)
+#define foreach_block_succ(bl, edge) \
+  foreach_out_edge_kind(bl, edge, EDGE_KIND_BLOCK)
 
 /**
  * A convenience iteration macro for all control flow edges.
  */
-#define foreach_block_succ_safe(bl, edge) foreach_out_edge_kind_safe(bl, edge, EDGE_KIND_BLOCK)
+#define foreach_block_succ_safe(bl, edge) \
+  foreach_out_edge_kind_safe(bl, edge, EDGE_KIND_BLOCK)
 
 /**
  * Returns the source node of an edge.
@@ -172,7 +180,8 @@ FIRM_API void edges_deactivate_kind(ir_graph *irg, ir_edge_kind_t kind);
  * @param nw    the new node
  * @param kind  the edge kind
  */
-FIRM_API void edges_reroute_kind(ir_node *old, ir_node *nw, ir_edge_kind_t kind);
+FIRM_API void edges_reroute_kind(ir_node *old, ir_node *nw,
+                                 ir_edge_kind_t kind);
 
 /**
  * Reroutes edges of EDGE_KIND_NORMAL from an old node to a new one.

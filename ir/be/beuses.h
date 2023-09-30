@@ -20,23 +20,21 @@
  * Describes a use of a value.
  */
 typedef struct be_next_use_t {
-	unsigned       time;
-	unsigned       outermost_loop;
-	/* point of the next use is at the beginning of this node. */
-	const ir_node *before;
+  unsigned time;
+  unsigned outermost_loop;
+  /* point of the next use is at the beginning of this node. */
+  const ir_node *before;
 } be_next_use_t;
 
-#define USES_INFINITY  10000000
-#define USES_PENDING   9999999
+#define USES_INFINITY 10000000
+#define USES_PENDING 9999999
 
-static inline bool USES_IS_INFINITE(unsigned time)
-{
-	return time >= USES_INFINITY;
+static inline bool USES_IS_INFINITE(unsigned time) {
+  return time >= USES_INFINITY;
 }
 
-static inline bool USES_IS_PENDING(unsigned time)
-{
-	return time == USES_PENDING;
+static inline bool USES_IS_PENDING(unsigned time) {
+  return time == USES_PENDING;
 }
 
 typedef struct be_uses_t be_uses_t;

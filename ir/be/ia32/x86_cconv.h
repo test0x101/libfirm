@@ -16,34 +16,32 @@
 #include "benode.h"
 
 /** Information about a single function parameter or result */
-typedef struct reg_or_stackslot_t
-{
-	const arch_register_t *reg;
-	/** Type of parameter if it is transfered on the stack, otherwise NULL. */
-	ir_type               *type;
-	/** Offset of parameter relative to the stackpointer immediately before the
-	 * call. Undefined if a register is used. */
-	unsigned               offset;
-	ir_entity             *entity; /**< entity in frame type */
+typedef struct reg_or_stackslot_t {
+  const arch_register_t *reg;
+  /** Type of parameter if it is transfered on the stack, otherwise NULL. */
+  ir_type *type;
+  /** Offset of parameter relative to the stackpointer immediately before the
+   * call. Undefined if a register is used. */
+  unsigned offset;
+  ir_entity *entity; /**< entity in frame type */
 } reg_or_stackslot_t;
 
 /** The calling convention info for one call site. */
-typedef struct x86_cconv_t
-{
-	bool                omit_fp;          /**< do not use frame pointer (and no
-	                                           save/restore) */
-	unsigned            sp_delta;
-	reg_or_stackslot_t *parameters;       /**< parameter info. */
-	unsigned            n_parameters;     /**< number of parameters */
-	unsigned            param_stacksize;  /**< stack size for parameters */
-	unsigned            n_param_regs;     /**< number of values passed in a
-	                                           register (gp + xmm) */
-	unsigned            n_xmm_regs;       /**< number of xmm registers used */
-	reg_or_stackslot_t *results;          /**< result info. */
-	unsigned            n_reg_results;
-	unsigned           *caller_saves;     /**< bitset: caller saved registers */
-	unsigned           *callee_saves;     /**< bitset: callee saved registers */
-	ir_entity          *va_start_addr;
+typedef struct x86_cconv_t {
+  bool omit_fp; /**< do not use frame pointer (and no
+                     save/restore) */
+  unsigned sp_delta;
+  reg_or_stackslot_t *parameters; /**< parameter info. */
+  unsigned n_parameters;          /**< number of parameters */
+  unsigned param_stacksize;       /**< stack size for parameters */
+  unsigned n_param_regs;          /**< number of values passed in a
+                                       register (gp + xmm) */
+  unsigned n_xmm_regs;            /**< number of xmm registers used */
+  reg_or_stackslot_t *results;    /**< result info. */
+  unsigned n_reg_results;
+  unsigned *caller_saves; /**< bitset: caller saved registers */
+  unsigned *callee_saves; /**< bitset: callee saved registers */
+  ir_entity *va_start_addr;
 } x86_cconv_t;
 
 /**

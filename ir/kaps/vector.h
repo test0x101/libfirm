@@ -32,8 +32,10 @@ void vector_set_description(vector_t *vec, unsigned index, const char *name);
 
 void vector_add_value(vector_t *vec, num value);
 
-void vector_add_matrix_col(vector_t *vec, pbqp_matrix_t *mat, unsigned col_index);
-void vector_add_matrix_row(vector_t *vec, pbqp_matrix_t *mat, unsigned row_index);
+void vector_add_matrix_col(vector_t *vec, pbqp_matrix_t *mat,
+                           unsigned col_index);
+void vector_add_matrix_row(vector_t *vec, pbqp_matrix_t *mat,
+                           unsigned row_index);
 
 num vector_get_min(vector_t *vec);
 unsigned vector_get_min_index(vector_t *vec);

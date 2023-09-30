@@ -8,7 +8,8 @@
  * @brief     Construct and access dominator tree.
  * @author    Goetz Lindenmaier
  * @date      2.2002
- * @brief     This file contains routines to construct and access dominator information.
+ * @brief     This file contains routines to construct and access dominator
+ * information.
  */
 #ifndef FIRM_ANA_IRDOM_H
 #define FIRM_ANA_IRDOM_H
@@ -102,7 +103,8 @@ FIRM_API ir_node *get_Block_postdominated_first(const ir_node *bl);
  */
 FIRM_API ir_node *get_Block_dominated_next(const ir_node *node);
 /**
- * Returns the next node in a list of nodes which are postdominated by another node
+ * Returns the next node in a list of nodes which are postdominated by another
+ * node
  */
 FIRM_API ir_node *get_Block_postdominated_next(const ir_node *node);
 
@@ -123,8 +125,8 @@ FIRM_API ir_node *ir_deepest_common_dominator(ir_node *block0, ir_node *block1);
  * @param post The post-visitor callback.
  * @param env Some custom data passed to the visitors.
  */
-FIRM_API void dom_tree_walk(ir_node *n, irg_walk_func *pre,
-                            irg_walk_func *post, void *env);
+FIRM_API void dom_tree_walk(ir_node *n, irg_walk_func *pre, irg_walk_func *post,
+                            void *env);
 
 /**
  * Visit all nodes in the post dominator subtree of a given node.

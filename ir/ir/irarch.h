@@ -18,13 +18,13 @@
  * The Multiplication replacement can consist of the following instructions.
  */
 typedef enum insn_kind {
-	LEA,   /**< the LEA instruction */
-	SHIFT, /**< the SHIFT instruction */
-	SUB,   /**< the SUB instruction */
-	ADD,   /**< the ADD instruction */
-	ZERO,  /**< creates a ZERO constant */
-	MUL,   /**< the original MUL instruction */
-	ROOT   /**< the ROOT value that is multiplied */
+  LEA,   /**< the LEA instruction */
+  SHIFT, /**< the SHIFT instruction */
+  SUB,   /**< the SUB instruction */
+  ADD,   /**< the ADD instruction */
+  ZERO,  /**< creates a ZERO constant */
+  MUL,   /**< the original MUL instruction */
+  ROOT   /**< the ROOT value that is multiplied */
 } insn_kind;
 
 /**
@@ -36,28 +36,32 @@ typedef enum insn_kind {
  *
  * @return the costs of this instruction
  */
-typedef int (*evaluate_costs_func)(insn_kind kind, const ir_mode *mode, ir_tarval *tv);
+typedef int (*evaluate_costs_func)(insn_kind kind, const ir_mode *mode,
+                                   ir_tarval *tv);
 
 /**
  * A parameter structure that drives the machine dependent Firm
  * optimizations.
  */
 typedef struct ir_settings_arch_dep_t {
-	bool replace_muls  : 1;
-	bool replace_divs  : 1;
-	bool replace_mods  : 1;
-	bool allow_mulhs   : 1;  /**< Use Mulhs for division by constant */
-	bool allow_mulhu   : 1;  /**< Use Mulhu for division by constant */
-	bool also_use_subs : 1;  /**< Use Subs when resolving Muls to shifts */
-	unsigned maximum_shifts;       /**< The maximum number of shifts that shall be inserted for a mul. */
-	unsigned highest_shift_amount; /**< The highest shift amount you want to
-	                                    tolerate. Muls which would require a higher
-	                                    shift constant are left. */
-	evaluate_costs_func evaluate;  /**< Evaluate the costs of a generated instruction. */
+  bool replace_muls : 1;
+  bool replace_divs : 1;
+  bool replace_mods : 1;
+  bool allow_mulhs : 1;          /**< Use Mulhs for division by constant */
+  bool allow_mulhu : 1;          /**< Use Mulhu for division by constant */
+  bool also_use_subs : 1;        /**< Use Subs when resolving Muls to shifts */
+  unsigned maximum_shifts;       /**< The maximum number of shifts that shall be
+                                    inserted for a mul. */
+  unsigned highest_shift_amount; /**< The highest shift amount you want to
+                                      tolerate. Muls which would require a
+                                    higher shift constant are left. */
+  evaluate_costs_func
+      evaluate; /**< Evaluate the costs of a generated instruction. */
 
-	/* Div/Mod optimization */
-	unsigned max_bits_for_mulh;    /**< Maximum number of bits the Mulh operation can take.
-	                                    Modes with higher amount of bits will use Mulh */
+  /* Div/Mod optimization */
+  unsigned max_bits_for_mulh; /**< Maximum number of bits the Mulh operation can
+                                 take. Modes with higher amount of bits will use
+                                 Mulh */
 } ir_settings_arch_dep_t;
 
 /**

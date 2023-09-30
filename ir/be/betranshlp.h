@@ -22,7 +22,7 @@
 /**
  * A callback to pre-transform some nodes before the transformation starts.
  */
-typedef void (arch_pretrans_nodes)(ir_graph*);
+typedef void(arch_pretrans_nodes)(ir_graph *);
 
 /**
  * The type of a transform function.
@@ -109,14 +109,14 @@ bool be_pattern_is_rotl(const ir_node *node, ir_node **left, ir_node **right);
  * runtime call.
  */
 void be_map_exc_node_to_runtime_call(ir_node *node, ir_mode *res_mode,
-                                     ir_entity *runtime_entity,
-                                     long pn_M, long pn_X_regular,
-                                     long pn_X_except, long pn_res);
+                                     ir_entity *runtime_entity, long pn_M,
+                                     long pn_X_regular, long pn_X_except,
+                                     long pn_res);
 
 typedef struct be_stack_change_t be_stack_change_t;
 
 typedef struct be_stack_env_t {
-	be_stack_change_t *changes;
+  be_stack_change_t *changes;
 } be_stack_env_t;
 
 /**
@@ -142,7 +142,8 @@ void be_stack_init(be_stack_env_t *env);
  * @param after   The stack value produced by this change, or NULL for the last
  *                change, e.g. return.
  */
-void be_stack_record_chain(be_stack_env_t *env, ir_node *before, unsigned pos, ir_node *after);
+void be_stack_record_chain(be_stack_env_t *env, ir_node *before, unsigned pos,
+                           ir_node *after);
 
 /**
  * Wire all recorded stack change chains within each block and free all recorded
@@ -188,9 +189,8 @@ ir_node *be_make_Sync(ir_node *block, int arity, ir_node **ins);
 /**
  * Returns true if mode should be stored in a general purpose register
  */
-static inline bool be_mode_needs_gp_reg(ir_mode *const mode)
-{
-	return get_mode_arithmetic(mode) == irma_twos_complement;
+static inline bool be_mode_needs_gp_reg(ir_mode *const mode) {
+  return get_mode_arithmetic(mode) == irma_twos_complement;
 }
 
 /**

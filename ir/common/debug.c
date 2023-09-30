@@ -36,11 +36,10 @@ struct firm_dbg_module_t {
 /**
  * Compares two modules by comparing their names
  */
-static int module_cmp(const void *p1, const void *p2, size_t size)
-{
-  const firm_dbg_module_t *m1 = (const firm_dbg_module_t*)p1;
-  const firm_dbg_module_t *m2 = (const firm_dbg_module_t*)p2;
-  (void) size;
+static int module_cmp(const void *p1, const void *p2, size_t size) {
+  const firm_dbg_module_t *m1 = (const firm_dbg_module_t *)p1;
+  const firm_dbg_module_t *m2 = (const firm_dbg_module_t *)p2;
+  (void)size;
 
   return strcmp(m1->name, m2->name);
 }
@@ -48,37 +47,32 @@ static int module_cmp(const void *p1, const void *p2, size_t size)
 /**
  * initialize the debug module
  */
-static void firm_dbg_init(void)
-{
+static void firm_dbg_init(void) {
   obstack_init(&dbg_obst);
   module_set = new_set(module_cmp, 16);
 }
 
-firm_dbg_module_t *firm_dbg_register(const char *name)
-{
+firm_dbg_module_t *firm_dbg_register(const char *name) {
   firm_dbg_module_t mod;
   mod.mask = 0;
   mod.name = name;
   mod.file = stderr;
 
-  if (!module_set)
-    firm_dbg_init();
+  if (!module_set) firm_dbg_init();
 
-  return set_insert(firm_dbg_module_t, module_set, &mod, sizeof(mod), hash_str(name));
+  return set_insert(firm_dbg_module_t, module_set, &mod, sizeof(mod),
+                    hash_str(name));
 }
 
-void firm_dbg_set_mask(firm_dbg_module_t *module, unsigned mask)
-{
+void firm_dbg_set_mask(firm_dbg_module_t *module, unsigned mask) {
   module->mask = mask;
 }
 
-unsigned firm_dbg_get_mask(const firm_dbg_module_t *module)
-{
+unsigned firm_dbg_get_mask(const firm_dbg_module_t *module) {
   return module->mask;
 }
 
-void firm_dbg_set_file(firm_dbg_module_t *module, FILE *file)
-{
+void firm_dbg_set_file(firm_dbg_module_t *module, FILE *file) {
   module->file = file;
 }
 
@@ -94,8 +88,8 @@ typedef struct msg_info_t {
  * Formats a message given by a printf-like format and a va_list argument,
  * puts the test on an obstack and return a msg_info.
  */
-static void *make_msg_info(const firm_dbg_module_t *mod, const char *fmt, va_list args)
-{
+static void *make_msg_info(const firm_dbg_module_t *mod, const char *fmt,
+                           va_list args) {
   static const char msg_header[] = "%s(%d) %s: ";
   msg_info_t *res = OALLOC(&dbg_obst, msg_info_t);
 
@@ -103,13 +97,13 @@ static void *make_msg_info(const firm_dbg_module_t *mod, const char *fmt, va_lis
   ir_obst_vprintf(&dbg_obst, fmt, args);
   obstack_1grow(&dbg_obst, '\0');
 
-  res->msg = (const char*)obstack_finish(&dbg_obst);
+  res->msg = (const char *)obstack_finish(&dbg_obst);
   res->mod = mod;
   return res;
 }
 
-void *_firm_dbg_make_msg(const firm_dbg_module_t *mod, unsigned mask, const char *fmt, ...)
-{
+void *_firm_dbg_make_msg(const firm_dbg_module_t *mod, unsigned mask,
+                         const char *fmt, ...) {
   void *res = NULL;
 
   if (mask == 0 || (mod->mask & mask)) {
@@ -122,24 +116,24 @@ void *_firm_dbg_make_msg(const firm_dbg_module_t *mod, unsigned mask, const char
   return res;
 }
 
-void _firm_dbg_print_msg(const char *filename, int line, const char *func, void *mi_ptr)
-{
-  msg_info_t *mi = (msg_info_t*)mi_ptr;
+void _firm_dbg_print_msg(const char *filename, int line, const char *func,
+                         void *mi_ptr) {
+  msg_info_t *mi = (msg_info_t *)mi_ptr;
   if (mi) {
     fprintf(mi->mod->file, mi->msg, filename, line, func);
     obstack_free(&dbg_obst, mi);
   }
 }
 
-void _firm_dbg_print(const firm_dbg_module_t *mod, unsigned mask, const char *fmt, ...)
-{
+void _firm_dbg_print(const firm_dbg_module_t *mod, unsigned mask,
+                     const char *fmt, ...) {
   if (mask == 0 || (mod->mask & mask)) {
     va_list args;
     char *res;
     va_start(args, fmt);
     ir_obst_vprintf(&dbg_obst, fmt, args);
     obstack_1grow(&dbg_obst, '\0');
-    res = (char*)obstack_finish(&dbg_obst);
+    res = (char *)obstack_finish(&dbg_obst);
     fprintf(mod->file, "%s", res);
     obstack_free(&dbg_obst, res);
     va_end(args);

@@ -17,12 +17,12 @@
 #include "irnode_t.h"
 #include "irloop.h"
 
-#define is_ir_loop(thing)         _is_ir_loop(thing)
-#define set_irg_loop(irg, loop)   _set_irg_loop(irg, loop)
-#define get_irg_loop(irg)         _get_irg_loop(irg)
+#define is_ir_loop(thing) _is_ir_loop(thing)
+#define set_irg_loop(irg, loop) _set_irg_loop(irg, loop)
+#define get_irg_loop(irg) _get_irg_loop(irg)
 #define get_loop_outer_loop(loop) _get_loop_outer_loop(loop)
-#define get_loop_depth(loop)      _get_loop_depth(loop)
-#define get_irn_loop(n)           _get_irn_loop(n)
+#define get_loop_depth(loop) _get_loop_depth(loop)
+#define get_irn_loop(n) _get_irn_loop(n)
 
 /**
  * The loops data structure.
@@ -38,14 +38,15 @@
  * nodes in the loop.
  */
 struct ir_loop {
-	firm_kind       kind;             /**< A type tag, set to k_ir_loop. */
-	unsigned        depth;            /**< Nesting depth */
-	struct ir_loop *outer_loop;       /**< The outer loop */
-	loop_element   *children;         /**< Mixed flexible array: Contains sons and loop_nodes */
-	void *link;                       /**< link field. */
+  firm_kind kind;             /**< A type tag, set to k_ir_loop. */
+  unsigned depth;             /**< Nesting depth */
+  struct ir_loop *outer_loop; /**< The outer loop */
+  loop_element
+      *children; /**< Mixed flexible array: Contains sons and loop_nodes */
+  void *link;    /**< link field. */
 #ifdef DEBUG_libfirm
-	long loop_nr;                     /**< A unique node number for each loop node to make output
-	                                       readable. */
+  long loop_nr; /**< A unique node number for each loop node to make output
+                     readable. */
 #endif
 };
 
@@ -75,39 +76,31 @@ void mature_loops(ir_loop *loop, struct obstack *obst);
 
 /* -------- inline functions -------- */
 
-static inline int _is_ir_loop(const void *thing)
-{
-	return get_kind(thing) == k_ir_loop;
+static inline int _is_ir_loop(const void *thing) {
+  return get_kind(thing) == k_ir_loop;
 }
 
-static inline void _set_irg_loop(ir_graph *irg, ir_loop *loop)
-{
-	assert(irg);
-	irg->loop = loop;
+static inline void _set_irg_loop(ir_graph *irg, ir_loop *loop) {
+  assert(irg);
+  irg->loop = loop;
 }
 
-static inline ir_loop *_get_irg_loop(const ir_graph *irg)
-{
-	assert(irg);
-	return irg->loop;
+static inline ir_loop *_get_irg_loop(const ir_graph *irg) {
+  assert(irg);
+  return irg->loop;
 }
 
-static inline ir_loop *_get_loop_outer_loop(const ir_loop *loop)
-{
-	assert(_is_ir_loop(loop));
-	return loop->outer_loop;
+static inline ir_loop *_get_loop_outer_loop(const ir_loop *loop) {
+  assert(_is_ir_loop(loop));
+  return loop->outer_loop;
 }
 
-static inline unsigned _get_loop_depth(const ir_loop *loop)
-{
-	assert(_is_ir_loop(loop));
-	return loop->depth;
+static inline unsigned _get_loop_depth(const ir_loop *loop) {
+  assert(_is_ir_loop(loop));
+  return loop->depth;
 }
 
 /* Uses temporary information to get the loop */
-static inline ir_loop *_get_irn_loop(const ir_node *n)
-{
-	return n->loop;
-}
+static inline ir_loop *_get_irn_loop(const ir_node *n) { return n->loop; }
 
 #endif

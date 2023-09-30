@@ -16,13 +16,13 @@
 #include "firm_types.h"
 
 typedef struct ir_nodehashmap_entry_t {
-	ir_node *node;
-	void    *data;
+  ir_node *node;
+  void *data;
 } ir_nodehashmap_entry_t;
 
-#define HashSet          ir_nodehashmap_t
-#define HashSetIterator  ir_nodehashmap_iterator_t
-#define ValueType        ir_nodehashmap_entry_t
+#define HashSet ir_nodehashmap_t
+#define HashSetIterator ir_nodehashmap_iterator_t
+#define ValueType ir_nodehashmap_entry_t
 #define DO_REHASH
 #include "hashset.h"
 #undef DO_REHASH
@@ -30,8 +30,8 @@ typedef struct ir_nodehashmap_entry_t {
 #undef HashSetIterator
 #undef HashSet
 
-typedef struct ir_nodehashmap_t           ir_nodehashmap_t;
-typedef struct ir_nodehashmap_iterator_t  ir_nodehashmap_iterator_t;
+typedef struct ir_nodehashmap_t ir_nodehashmap_t;
+typedef struct ir_nodehashmap_iterator_t ir_nodehashmap_iterator_t;
 
 /**
  * Initializes a nodehashmap with default size.
@@ -87,7 +87,8 @@ void ir_nodehashmap_remove(ir_nodehashmap_t *nodehashmap, const ir_node *node);
 void *ir_nodehashmap_get(const ir_nodehashmap_t *nodehashmap,
                          const ir_node *node);
 
-#define ir_nodehashmap_get(type, self, node) ((type*)ir_nodehashmap_get((self), (node)))
+#define ir_nodehashmap_get(type, self, node) \
+  ((type *)ir_nodehashmap_get((self), (node)))
 
 /**
  * Returns the number of pointers contained in the nodehashmap
@@ -117,7 +118,7 @@ void ir_nodehashmap_iterator_init(ir_nodehashmap_iterator_t *iterator,
  * @returns         Next element in the nodehashmap or NULL
  */
 ir_nodehashmap_entry_t ir_nodehashmap_iterator_next(
-		ir_nodehashmap_iterator_t *iterator);
+    ir_nodehashmap_iterator_t *iterator);
 
 /**
  * Removes the element the iterator currently points to
@@ -129,6 +130,7 @@ void ir_nodehashmap_remove_iterator(ir_nodehashmap_t *nodehashmap,
                                     const ir_nodehashmap_iterator_t *iterator);
 
 #define foreach_ir_nodehashmap(nodehashmap, entry, iter) \
-	for (ir_nodehashmap_iterator_init(&iter, nodehashmap); (entry = ir_nodehashmap_iterator_next(&iter)).node;)
+  for (ir_nodehashmap_iterator_init(&iter, nodehashmap); \
+       (entry = ir_nodehashmap_iterator_next(&iter)).node;)
 
 #endif

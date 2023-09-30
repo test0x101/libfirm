@@ -14,8 +14,8 @@
 #include "be_types.h"
 
 typedef struct parameter_dbg_info_t {
-	const ir_entity       *entity;
-	const arch_register_t *reg;
+  const ir_entity *entity;
+  const arch_register_t *reg;
 } parameter_dbg_info_t;
 
 /** initialize and open debug handle */

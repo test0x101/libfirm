@@ -28,105 +28,89 @@
 #include "panic.h"
 
 typedef struct pqueue_el_t {
-	void *data;
-	int   priority;
+  void *data;
+  int priority;
 } pqueue_el_t;
 
 struct pqueue_t {
-	pqueue_el_t *elems;
+  pqueue_el_t *elems;
 };
 
 /**
  * Enforces the heap characteristics if the queue
  * starting from element at position @p pos.
  */
-static void pqueue_heapify(pqueue_t *q, size_t pos)
-{
-	size_t len = ARR_LEN(q->elems);
-	while (pos * 2 < len) {
-		size_t exchange = pos;
-		if (q->elems[exchange].priority < q->elems[pos * 2].priority)
-			exchange = pos * 2;
+static void pqueue_heapify(pqueue_t *q, size_t pos) {
+  size_t len = ARR_LEN(q->elems);
+  while (pos * 2 < len) {
+    size_t exchange = pos;
+    if (q->elems[exchange].priority < q->elems[pos * 2].priority)
+      exchange = pos * 2;
 
-		if ((pos * 2 + 1) < len
-		    && q->elems[exchange].priority < q->elems[pos * 2 + 1].priority)
-			exchange = pos * 2 + 1;
+    if ((pos * 2 + 1) < len &&
+        q->elems[exchange].priority < q->elems[pos * 2 + 1].priority)
+      exchange = pos * 2 + 1;
 
-		if (exchange == pos)
-			break;
+    if (exchange == pos) break;
 
-		pqueue_el_t tmp    = q->elems[pos];
-		q->elems[pos]      = q->elems[exchange];
-		q->elems[exchange] = tmp;
+    pqueue_el_t tmp = q->elems[pos];
+    q->elems[pos] = q->elems[exchange];
+    q->elems[exchange] = tmp;
 
-		pos = exchange;
-	}
+    pos = exchange;
+  }
 }
 
 /**
  * Sifts up a newly inserted element at position @p pos.
  */
-static void pqueue_sift_up(pqueue_t *q, size_t pos)
-{
-	while (q->elems[pos].priority > q->elems[pos / 2].priority) {
-		pqueue_el_t tmp   = q->elems[pos];
-		q->elems[pos]     = q->elems[pos / 2];
-		q->elems[pos / 2] = tmp;
+static void pqueue_sift_up(pqueue_t *q, size_t pos) {
+  while (q->elems[pos].priority > q->elems[pos / 2].priority) {
+    pqueue_el_t tmp = q->elems[pos];
+    q->elems[pos] = q->elems[pos / 2];
+    q->elems[pos / 2] = tmp;
 
-		pos /= 2;
-	}
+    pos /= 2;
+  }
 }
 
-pqueue_t *new_pqueue(void)
-{
-	pqueue_t *res = XMALLOC(pqueue_t);
-	res->elems = NEW_ARR_F(pqueue_el_t, 0);
-	return res;
+pqueue_t *new_pqueue(void) {
+  pqueue_t *res = XMALLOC(pqueue_t);
+  res->elems = NEW_ARR_F(pqueue_el_t, 0);
+  return res;
 }
 
-void del_pqueue(pqueue_t *q)
-{
-	DEL_ARR_F(q->elems);
-	free(q);
+void del_pqueue(pqueue_t *q) {
+  DEL_ARR_F(q->elems);
+  free(q);
 }
 
-void pqueue_put(pqueue_t *q, void *data, int priority)
-{
-	pqueue_el_t el = {
-		.data = data,
-		.priority = priority
-	};
-	ARR_APP1(pqueue_el_t, q->elems, el);
+void pqueue_put(pqueue_t *q, void *data, int priority) {
+  pqueue_el_t el = {.data = data, .priority = priority};
+  ARR_APP1(pqueue_el_t, q->elems, el);
 
-	pqueue_sift_up(q, ARR_LEN(q->elems) - 1);
+  pqueue_sift_up(q, ARR_LEN(q->elems) - 1);
 }
 
-void *pqueue_pop_front(pqueue_t *q)
-{
-	switch (ARR_LEN(q->elems)) {
-	case 0:
-		panic("attempt to retrieve element from empty priority queue");
-	case 1:
-		ARR_SHRINKLEN(q->elems, 0);
-		return q->elems[0].data;
-	default: {
-		void   *data = q->elems[0].data;
-		size_t len   = ARR_LEN(q->elems) - 1;
+void *pqueue_pop_front(pqueue_t *q) {
+  switch (ARR_LEN(q->elems)) {
+    case 0:
+      panic("attempt to retrieve element from empty priority queue");
+    case 1:
+      ARR_SHRINKLEN(q->elems, 0);
+      return q->elems[0].data;
+    default: {
+      void *data = q->elems[0].data;
+      size_t len = ARR_LEN(q->elems) - 1;
 
-		q->elems[0] = q->elems[len];
-		ARR_SHRINKLEN(q->elems, len);
-		pqueue_heapify(q, 0);
-		return data;
-	}
-	}
+      q->elems[0] = q->elems[len];
+      ARR_SHRINKLEN(q->elems, len);
+      pqueue_heapify(q, 0);
+      return data;
+    }
+  }
 }
 
-size_t pqueue_length(pqueue_t const *q)
-{
-	return ARR_LEN(q->elems);
-}
+size_t pqueue_length(pqueue_t const *q) { return ARR_LEN(q->elems); }
 
-int pqueue_empty(pqueue_t const *q)
-{
-	return ARR_LEN(q->elems) == 0;
-}
+int pqueue_empty(pqueue_t const *q) { return ARR_LEN(q->elems) == 0; }

@@ -19,13 +19,13 @@
 #define IA32_REGISTER_SIZE 4
 
 typedef struct ia32_irg_data_t {
-	bool     do_x87_sim;     /**< Should simulate x87 register stack. */
-	bool     omit_fp;        /**< No frame pointer is used. */
-	ir_node *noreg_gp;       /**< unique NoReg_GP node */
-	ir_node *noreg_fp;       /**< unique NoReg_FP node */
-	ir_node *noreg_xmm;      /**< unique NoReg_XMM node */
-	ir_node *fpu_trunc_mode; /**< truncate fpu mode */
-	ir_node *get_eip;        /**< get eip node */
+  bool do_x87_sim;         /**< Should simulate x87 register stack. */
+  bool omit_fp;            /**< No frame pointer is used. */
+  ir_node *noreg_gp;       /**< unique NoReg_GP node */
+  ir_node *noreg_fp;       /**< unique NoReg_FP node */
+  ir_node *noreg_xmm;      /**< unique NoReg_XMM node */
+  ir_node *fpu_trunc_mode; /**< truncate fpu mode */
+  ir_node *get_eip;        /**< get eip node */
 } ia32_irg_data_t;
 
 extern pmap *ia32_tv_ent; /**< A map of entities that store const tarvals */
@@ -37,15 +37,13 @@ extern ir_mode *ia32_mode_float64;
 extern ir_mode *ia32_mode_float32;
 extern ir_mode *ia32_mode_flags;
 
-static inline ia32_irg_data_t *ia32_get_irg_data(const ir_graph *irg)
-{
-	return (ia32_irg_data_t*)be_birg_from_irg(irg)->isa_link;
+static inline ia32_irg_data_t *ia32_get_irg_data(const ir_graph *irg) {
+  return (ia32_irg_data_t *)be_birg_from_irg(irg)->isa_link;
 }
 
-static inline void ia32_request_x87_sim(ir_graph const *const irg)
-{
-	ia32_irg_data_t *const d = ia32_get_irg_data(irg);
-	d->do_x87_sim = true;
+static inline void ia32_request_x87_sim(ir_graph const *const irg) {
+  ia32_irg_data_t *const d = ia32_get_irg_data(irg);
+  d->do_x87_sim = true;
 }
 
 /**
@@ -86,9 +84,8 @@ void ia32_adjust_pic(ir_graph *irg);
 
 ir_node *ia32_get_pic_base(ir_graph *irg);
 
-static inline bool ia32_is_8bit_val(int32_t const v)
-{
-	return -128 <= v && v < 128;
+static inline bool ia32_is_8bit_val(int32_t const v) {
+  return -128 <= v && v < 128;
 }
 
 /**

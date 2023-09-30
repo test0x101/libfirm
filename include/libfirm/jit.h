@@ -40,8 +40,8 @@ typedef struct ir_jit_function_t ir_jit_function_t;
 FIRM_API ir_jit_segment_t *be_new_jit_segment(void);
 
 /**
- * Destroy jit segment \p segment. Invalidates references to functions created in
- * the segment.
+ * Destroy jit segment \p segment. Invalidates references to functions created
+ * in the segment.
  */
 FIRM_API void be_destroy_jit_segment(ir_jit_segment_t *segment);
 

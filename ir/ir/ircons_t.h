@@ -18,20 +18,17 @@
 #include "compiler.h"
 
 #define verify_new_node(node) verify_new_node_((node))
-#define get_cur_block()       _get_cur_block()
+#define get_cur_block() _get_cur_block()
 
-static inline ir_node *_get_cur_block(void)
-{
-	return current_ir_graph->current_block;
+static inline ir_node *_get_cur_block(void) {
+  return current_ir_graph->current_block;
 }
 
-static inline void verify_new_node_(ir_node *const node)
-{
+static inline void verify_new_node_(ir_node *const node) {
 #ifdef DEBUG_libfirm
-	if (UNLIKELY(!irn_verify(node)))
-		abort();
+  if (UNLIKELY(!irn_verify(node))) abort();
 #else
-	(void)node;
+  (void)node;
 #endif
 }
 
@@ -45,11 +42,12 @@ ir_node *new_r_Anchor(ir_graph *irg);
 ir_node *new_r_Block_noopt(ir_graph *irg, int arity, ir_node *in[]);
 
 /**
- * Allocate a frag array for a node if the current graph state is phase_building.
+ * Allocate a frag array for a node if the current graph state is
+ * phase_building.
  *
  * @param irn         the node for which the frag array should be allocated
- * @param op          the opcode of the (original) node, if does not match opcode of irn,
- *                    nothing is done
+ * @param op          the opcode of the (original) node, if does not match
+ * opcode of irn, nothing is done
  * @param frag_store  the address of the frag store in irn attributes, if this
  *                    address contains a value != NULL, does nothing
  */

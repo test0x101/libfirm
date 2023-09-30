@@ -12,6 +12,6 @@
 #define FIRM_ADT_FOURCC_H
 
 /** define a readable fourcc code */
-#define FOURCC(a,b,c,d)         ((a) | ((b) << 8) | ((c) << 16) | ((d) << 24))
+#define FOURCC(a, b, c, d) ((a) | ((b) << 8) | ((c) << 16) | ((d) << 24))
 
 #endif

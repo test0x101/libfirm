@@ -18,25 +18,25 @@
 
 /** indices for AM inputs */
 enum {
-	n_ia32_base         = 0,
-	n_ia32_index        = 1,
-	n_ia32_mem          = 2,
-	n_ia32_unary_op     = 3,
-	n_ia32_binary_left  = 3,
-	n_ia32_binary_right = 4,
+  n_ia32_base = 0,
+  n_ia32_index = 1,
+  n_ia32_mem = 2,
+  n_ia32_unary_op = 3,
+  n_ia32_binary_left = 3,
+  n_ia32_binary_right = 4,
 };
 
-/** proj numbers for "normal" one-result nodes (for the complicated cases where we not only
- * need the result) */
+/** proj numbers for "normal" one-result nodes (for the complicated cases where
+ * we not only need the result) */
 enum {
-	pn_ia32_res          = 0,
-	pn_ia32_flags        = 1,
-	pn_ia32_M            = 2,
-	pn_ia32_X_regular    = 3,
-	pn_ia32_X_except     = 4,
-	pn_ia32_st_M         = 0,
-	pn_ia32_st_X_regular = 1,
-	pn_ia32_st_X_except  = 2,
+  pn_ia32_res = 0,
+  pn_ia32_flags = 1,
+  pn_ia32_M = 2,
+  pn_ia32_X_regular = 3,
+  pn_ia32_X_except = 4,
+  pn_ia32_st_M = 0,
+  pn_ia32_st_X_regular = 1,
+  pn_ia32_st_X_except = 2,
 };
 
 extern struct obstack opcodes_obst;
@@ -113,27 +113,23 @@ void set_ia32_commutative(ir_node *node);
 int is_ia32_commutative(const ir_node *node);
 
 static inline void set_ia32_frame_use(ir_node *const node,
-                                      ia32_frame_use_t const val)
-{
-	ia32_attr_t *const attr = get_ia32_attr(node);
-	if (attr->frame_use == val)
-		return;
-	/* Only allow more specific, the same or reset. */
-	assert(attr->frame_use == IA32_FRAME_USE_NONE
-	    || attr->frame_use == IA32_FRAME_USE_AUTO
-	    || val == IA32_FRAME_USE_NONE);
-	attr->frame_use = val;
-	if (val != IA32_FRAME_USE_NONE) {
-		assert(attr->addr.immediate.kind == X86_IMM_VALUE ||
-		       attr->addr.immediate.kind == X86_IMM_FRAMEENT);
-		attr->addr.immediate.kind = X86_IMM_FRAMEENT;
-	}
+                                      ia32_frame_use_t const val) {
+  ia32_attr_t *const attr = get_ia32_attr(node);
+  if (attr->frame_use == val) return;
+  /* Only allow more specific, the same or reset. */
+  assert(attr->frame_use == IA32_FRAME_USE_NONE ||
+         attr->frame_use == IA32_FRAME_USE_AUTO || val == IA32_FRAME_USE_NONE);
+  attr->frame_use = val;
+  if (val != IA32_FRAME_USE_NONE) {
+    assert(attr->addr.immediate.kind == X86_IMM_VALUE ||
+           attr->addr.immediate.kind == X86_IMM_FRAMEENT);
+    attr->addr.immediate.kind = X86_IMM_FRAMEENT;
+  }
 }
 
-static inline ia32_frame_use_t get_ia32_frame_use(ir_node const *const node)
-{
-	ia32_attr_t const *const attr = get_ia32_attr_const(node);
-	return (ia32_frame_use_t)attr->frame_use;
+static inline ia32_frame_use_t get_ia32_frame_use(ir_node const *const node) {
+  ia32_attr_t const *const attr = get_ia32_attr_const(node);
+  return (ia32_frame_use_t)attr->frame_use;
 }
 
 void set_ia32_is_reload(ir_node *node);

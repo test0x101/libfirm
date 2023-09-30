@@ -41,7 +41,8 @@ arm_load_store_attr_t *get_arm_load_store_attr(ir_node *node);
 const arm_load_store_attr_t *get_arm_load_store_attr_const(const ir_node *node);
 
 arm_shifter_operand_t *get_arm_shifter_operand_attr(ir_node *node);
-const arm_shifter_operand_t *get_arm_shifter_operand_attr_const(const ir_node *node);
+const arm_shifter_operand_t *get_arm_shifter_operand_attr_const(
+    const ir_node *node);
 
 arm_cmp_attr_t *get_arm_cmp_attr(ir_node *node);
 const arm_cmp_attr_t *get_arm_cmp_attr_const(const ir_node *node);

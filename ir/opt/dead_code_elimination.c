@@ -31,19 +31,17 @@
  * Reroute the inputs of a node from nodes in the old graph to copied nodes in
  * the new graph
  */
-static void rewire_inputs(ir_node *node, void *env)
-{
-	(void)env;
-	irn_rewire_inputs(node);
+static void rewire_inputs(ir_node *node, void *env) {
+  (void)env;
+  irn_rewire_inputs(node);
 }
 
-static void copy_node_dce(ir_node *node, void *env)
-{
-	(void)env;
-	ir_node *new_node = exact_copy(node);
-	/* preserve the node numbers for easier debugging */
-	new_node->node_nr = node->node_nr;
-	set_irn_link(node, new_node);
+static void copy_node_dce(ir_node *node, void *env) {
+  (void)env;
+  ir_node *new_node = exact_copy(node);
+  /* preserve the node numbers for easier debugging */
+  new_node->node_nr = node->node_nr;
+  set_irn_link(node, new_node);
 }
 
 /**
@@ -52,16 +50,15 @@ static void copy_node_dce(ir_node *node, void *env)
  *
  * @param copy_node_nr  If non-zero, the node number will be copied
  */
-static void copy_graph_env(ir_graph *irg)
-{
-	/* copy nodes */
-	ir_node *anchor = irg->anchor;
-	irg_walk_in_or_dep(anchor, copy_node_dce, rewire_inputs, NULL);
+static void copy_graph_env(ir_graph *irg) {
+  /* copy nodes */
+  ir_node *anchor = irg->anchor;
+  irg_walk_in_or_dep(anchor, copy_node_dce, rewire_inputs, NULL);
 
-	/* fix the anchor */
-	ir_node *new_anchor = (ir_node*)get_irn_link(anchor);
-	assert(new_anchor != NULL);
-	irg->anchor = new_anchor;
+  /* fix the anchor */
+  ir_node *new_anchor = (ir_node *)get_irn_link(anchor);
+  assert(new_anchor != NULL);
+  irg->anchor = new_anchor;
 }
 
 /**
@@ -72,33 +69,32 @@ static void copy_graph_env(ir_graph *irg)
  * Adds all new nodes to a new hash table for CSE.  Does not
  * perform CSE, so the hash table might contain common subexpressions.
  */
-void dead_node_elimination(ir_graph *irg)
-{
-	edges_deactivate(irg);
+void dead_node_elimination(ir_graph *irg) {
+  edges_deactivate(irg);
 
-	/* Handle graph state */
-	free_callee_info(irg);
-	free_irg_outs(irg);
-	free_loop_information(irg);
-	free_vrp_data(irg);
-	clear_irg_properties(irg, IR_GRAPH_PROPERTY_CONSISTENT_DOMINANCE);
+  /* Handle graph state */
+  free_callee_info(irg);
+  free_irg_outs(irg);
+  free_loop_information(irg);
+  free_vrp_data(irg);
+  clear_irg_properties(irg, IR_GRAPH_PROPERTY_CONSISTENT_DOMINANCE);
 
-	/* A quiet place, where the old obstack can rest in peace,
-	   until it will be cremated. */
-	struct obstack graveyard_obst = irg->obst;
+  /* A quiet place, where the old obstack can rest in peace,
+     until it will be cremated. */
+  struct obstack graveyard_obst = irg->obst;
 
-	/* A new obstack, where the reachable nodes will be copied to. */
-	obstack_init(&irg->obst);
-	irg->last_node_idx = 0;
+  /* A new obstack, where the reachable nodes will be copied to. */
+  obstack_init(&irg->obst);
+  irg->last_node_idx = 0;
 
-	/* We also need a new value table for CSE */
-	new_identities(irg);
+  /* We also need a new value table for CSE */
+  new_identities(irg);
 
-	/* Copy the graph from the old to the new obstack */
-	ir_reserve_resources(irg, IR_RESOURCE_IRN_LINK);
-	copy_graph_env(irg);
-	ir_free_resources(irg, IR_RESOURCE_IRN_LINK);
+  /* Copy the graph from the old to the new obstack */
+  ir_reserve_resources(irg, IR_RESOURCE_IRN_LINK);
+  copy_graph_env(irg);
+  ir_free_resources(irg, IR_RESOURCE_IRN_LINK);
 
-	/* Free memory from old unoptimized obstack */
-	obstack_free(&graveyard_obst, 0);  /* First empty the obstack ... */
+  /* Free memory from old unoptimized obstack */
+  obstack_free(&graveyard_obst, 0); /* First empty the obstack ... */
 }

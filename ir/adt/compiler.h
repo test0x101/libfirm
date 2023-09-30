@@ -18,7 +18,7 @@
  * Indicates to the compiler that the value of x is very likely 1
  * @note Only use this in speed critical code and when you are sure x is often 1
  */
-#define LIKELY(x)   __builtin_expect((x), 1)
+#define LIKELY(x) __builtin_expect((x), 1)
 
 /**
  * Indicates to the compiler that it's very likely that x is 0
@@ -31,26 +31,26 @@
  * uses its parameters and never modifies the "state".
  * Add this macro after the return type.
  */
-#define PURE        __attribute__((const))
+#define PURE __attribute__((const))
 
 /**
  * Tell the compiler, that a function is unused, no warning needed.
  */
-#define UNUSED      __attribute__((unused))
+#define UNUSED __attribute__((unused))
 
 /**
  * Use an enum type as the base type for a bitfield. This is more useful
  * than using the generic "unsigned" because the compiler can warn if the
  * range of enum elements exceeds the bitfield size now.
  */
-#define ENUMBF(type)  __extension__ type
+#define ENUMBF(type) __extension__ type
 
 #else
-#define LIKELY(x)   x
+#define LIKELY(x) x
 #define UNLIKELY(x) x
 #define PURE
 #define UNUSED
-#define ENUMBF(type)  unsigned
+#define ENUMBF(type) unsigned
 #endif
 
 /**
@@ -59,9 +59,13 @@
  *
  * @note This uses the fact, that double case labels are not allowed.
  */
-#define COMPILETIME_ASSERT(x, name) \
-    static UNUSED void compiletime_assert_##name (int h) { \
-        switch (h) { case 0: case (x): {} } \
-    }
+#define COMPILETIME_ASSERT(x, name)                     \
+  static UNUSED void compiletime_assert_##name(int h) { \
+    switch (h) {                                        \
+      case 0:                                           \
+      case (x): {                                       \
+      }                                                 \
+    }                                                   \
+  }
 
 #endif

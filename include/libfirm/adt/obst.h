@@ -16,7 +16,7 @@
 
 /** @cond PRIVATE */
 #define obstack_chunk_alloc xmalloc
-#define obstack_chunk_free  free
+#define obstack_chunk_free free
 /** @endcond */
 
 #endif

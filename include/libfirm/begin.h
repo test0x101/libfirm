@@ -17,21 +17,21 @@
  * visible outside the firm library/dll
  */
 #ifdef FIRM_DLL
-	#ifdef FIRM_BUILD
-		#ifdef _WIN32
-			#define FIRM_API extern __declspec(dllexport)
-		#else
-			#define FIRM_API extern __attribute__((visibility("default")))
-		#endif
-	#else
-		#ifdef _WIN32
-			#define FIRM_API extern __declspec(dllimport)
-		#else
-			#define FIRM_API extern
-		#endif
-	#endif
+#ifdef FIRM_BUILD
+#ifdef _WIN32
+#define FIRM_API extern __declspec(dllexport)
 #else
-	#define  FIRM_API extern
+#define FIRM_API extern __attribute__((visibility("default")))
+#endif
+#else
+#ifdef _WIN32
+#define FIRM_API extern __declspec(dllimport)
+#else
+#define FIRM_API extern
+#endif
+#endif
+#else
+#define FIRM_API extern
 #endif
 
 #endif

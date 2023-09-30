@@ -66,15 +66,15 @@ FIRM_API const char *ir_get_version_build(void);
  * This is used in debug helper functions and printers.
  */
 typedef enum firm_kind {
-	k_BAD = 0,                /**< An invalid firm node. */
-	k_entity,                 /**< An entity. */
-	k_type,                   /**< A type. */
-	k_ir_graph,               /**< An IR graph. */
-	k_ir_node,                /**< An IR node. */
-	k_ir_mode,                /**< An IR mode. */
-	k_tarval,                 /**< A tarval. */
-	k_ir_loop,                /**< A loop. */
-	k_ir_max                  /**< maximum value -- illegal for firm nodes. */
+  k_BAD = 0,  /**< An invalid firm node. */
+  k_entity,   /**< An entity. */
+  k_type,     /**< A type. */
+  k_ir_graph, /**< An IR graph. */
+  k_ir_node,  /**< An IR node. */
+  k_ir_mode,  /**< An IR mode. */
+  k_tarval,   /**< A tarval. */
+  k_ir_loop,  /**< A loop. */
+  k_ir_max    /**< maximum value -- illegal for firm nodes. */
 } firm_kind;
 
 /**

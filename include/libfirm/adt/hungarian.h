@@ -43,15 +43,15 @@
 
 /** type of matching */
 typedef enum match_type_t {
-	HUNGARIAN_MATCH_NORMAL,   /**< ever nodes matches another node */
-	HUNGARIAN_MATCH_PERFECT   /**< matchings of nodes having no edge getting
-	                               removed */
+  HUNGARIAN_MATCH_NORMAL, /**< ever nodes matches another node */
+  HUNGARIAN_MATCH_PERFECT /**< matchings of nodes having no edge getting
+                               removed */
 } match_type_t;
 
 /** mode of matching (the optimization goal) */
 typedef enum hungarian_mode_t {
-	HUNGARIAN_MODE_MINIMIZE_COST, /**< minimize cost */
-	HUNGARIAN_MODE_MAXIMIZE_UTIL  /**< maximize cost */
+  HUNGARIAN_MODE_MINIMIZE_COST, /**< minimize cost */
+  HUNGARIAN_MODE_MAXIMIZE_UTIL  /**< maximize cost */
 } hungarian_mode_t;
 
 /**
@@ -103,7 +103,8 @@ FIRM_API void hungarian_free(hungarian_problem_t *p);
  * @param p              The hungarian object
  * @param assignment     The final assignment
  * @param final_cost     The final costs
- * @param cost_threshold Matchings with costs >= this limit will be removed (if limit > 0)
+ * @param cost_threshold Matchings with costs >= this limit will be removed (if
+ * limit > 0)
  * @return 0 on success, negative number otherwise
  */
 FIRM_API int hungarian_solve(hungarian_problem_t *p, unsigned *assignment,

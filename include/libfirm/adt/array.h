@@ -29,18 +29,18 @@
 /** A type that has most constrained alignment.  */
 typedef union {
   long double d;
-  void       *p;
-  long        l;
+  void *p;
+  long l;
 } aligned_type;
 
 /**
  * The array descriptor header type.
  */
 typedef struct {
-	int magic;              /**< array magic. */
-	size_t allocated;       /**< number of allocated elements. */
-	size_t nelts;           /**< current length of the array. */
-	aligned_type elts[];    /**< start of the array data. */
+  int magic;           /**< array magic. */
+  size_t allocated;    /**< number of allocated elements. */
+  size_t nelts;        /**< current length of the array. */
+  aligned_type elts[]; /**< start of the array data. */
 } ir_arr_descr;
 
 extern ir_arr_descr arr_mt_descr;
@@ -70,7 +70,8 @@ FIRM_API void *ir_new_arr_f(size_t nelts, size_t elts_size);
  *
  * @remark Helper function, use NEW_ARR_D() instead.
  */
-FIRM_API void *ir_new_arr_d(struct obstack *obstack, size_t nelts, size_t elts_size);
+FIRM_API void *ir_new_arr_d(struct obstack *obstack, size_t nelts,
+                            size_t elts_size);
 
 /**
  * Resize a flexible array, allocate more data if needed but do NOT
@@ -104,17 +105,16 @@ FIRM_API void *ir_arr_setlen(void *elts, size_t nelts, size_t elts_size);
 FIRM_API void ir_verify_arr(const void *elts);
 
 #define ARR_ELTS_OFFS offsetof(ir_arr_descr, elts)
-#define ARR_DESCR(elts) ((ir_arr_descr *)(void *)((char *)(elts) - ARR_ELTS_OFFS))
+#define ARR_DESCR(elts) ((ir_arr_descr *)(void *)((char *)(elts)-ARR_ELTS_OFFS))
 
 /** Set a length smaller than the current length of the array.  Do not
  *  resize. len must be <= ARR_LEN(arr). */
-static inline void ARR_SHRINKLEN(void *arr, size_t new_len)
-{
+static inline void ARR_SHRINKLEN(void *arr, size_t new_len) {
 #ifndef NDEBUG
-	ir_verify_arr(arr);
+  ir_verify_arr(arr);
 #endif
-	assert(ARR_DESCR(arr)->nelts >= new_len);
-	ARR_DESCR(arr)->nelts = new_len;
+  assert(ARR_DESCR(arr)->nelts >= new_len);
+  ARR_DESCR(arr)->nelts = new_len;
 }
 
 /** @endcond */
@@ -138,7 +138,7 @@ static inline void ARR_SHRINKLEN(void *arr, size_t new_len)
  * Create a flexible array and null its contents.
  */
 #define NEW_ARR_FZ(type, nelts) \
-	((type*)memset(NEW_ARR_F(type, (nelts)), 0, sizeof(type) * (nelts)))
+  ((type *)memset(NEW_ARR_F(type, (nelts)), 0, sizeof(type) * (nelts)))
 
 /**
  * Duplicates an array and returns the new flexible one.
@@ -152,8 +152,9 @@ static inline void ARR_SHRINKLEN(void *arr, size_t new_len)
  * @return A pointer to the flexible array (can be used as a pointer to the
  *         first element of this array).
  */
-#define DUP_ARR_F(type, arr) \
-  ((type*)memcpy(NEW_ARR_F(type, ARR_LEN((arr))), (arr), sizeof(type) * ARR_LEN((arr))))
+#define DUP_ARR_F(type, arr)                              \
+  ((type *)memcpy(NEW_ARR_F(type, ARR_LEN((arr))), (arr), \
+                  sizeof(type) * ARR_LEN((arr))))
 
 /**
  * Delete a flexible array.
@@ -174,16 +175,16 @@ FIRM_API void DEL_ARR_F(void *arr);
  * @return A pointer to the dynamic array (can be used as a pointer to the
  *         first element of this array).
  */
-#define NEW_ARR_D(type, obstack, nelts)                                 \
-  (  nelts                                                              \
-   ? (type *)ir_new_arr_d((obstack), (nelts), sizeof(type) * (nelts))   \
-   : (type *)arr_mt_descr.elts)
+#define NEW_ARR_D(type, obstack, nelts)                                     \
+  (nelts ? (type *)ir_new_arr_d((obstack), (nelts), sizeof(type) * (nelts)) \
+         : (type *)arr_mt_descr.elts)
 
 /**
  * Create a dynamic array on an obstack and null its contents.
  */
-#define NEW_ARR_DZ(type, obstack, nelts) \
-	((type*)memset(NEW_ARR_D(type, (obstack), (nelts)), 0, sizeof(type) * (nelts)))
+#define NEW_ARR_DZ(type, obstack, nelts)                  \
+  ((type *)memset(NEW_ARR_D(type, (obstack), (nelts)), 0, \
+                  sizeof(type) * (nelts)))
 
 /**
  * Duplicates an array and returns the new dynamic one.
@@ -198,20 +199,20 @@ FIRM_API void DEL_ARR_F(void *arr);
  * @return A pointer to the dynamic array (can be used as a pointer to the
  *         first element of this array).
  */
-#define DUP_ARR_D(type, obstack, arr) \
-  ((type*)memcpy(NEW_ARR_D(type, (obstack), ARR_LEN((arr))), (arr), sizeof(type) * ARR_LEN ((arr))))
+#define DUP_ARR_D(type, obstack, arr)                                \
+  ((type *)memcpy(NEW_ARR_D(type, (obstack), ARR_LEN((arr))), (arr), \
+                  sizeof(type) * ARR_LEN((arr))))
 
 /**
  * Returns the length of an array
  *
  * @param arr  a flexible, dynamic, automatic or static array.
  */
-static inline size_t ARR_LEN(void const *const arr)
-{
+static inline size_t ARR_LEN(void const *const arr) {
 #ifndef NDEBUG
-	ir_verify_arr(arr);
+  ir_verify_arr(arr);
 #endif
-	return ARR_DESCR(arr)->nelts;
+  return ARR_DESCR(arr)->nelts;
 }
 
 /**
@@ -225,7 +226,7 @@ static inline size_t ARR_LEN(void const *const arr)
  * @remark  This macro may change arr, so update all references!
  */
 #define ARR_RESIZE(type, arr, n) \
-  ((arr) = (type*) ir_arr_resize((void *)(arr), (n), sizeof(type)))
+  ((arr) = (type *)ir_arr_resize((void *)(arr), (n), sizeof(type)))
 
 /**
  * Resize a flexible array, always reallocate data.
@@ -237,7 +238,7 @@ static inline size_t ARR_LEN(void const *const arr)
  * @remark  This macro may change arr, so update all references!
  */
 #define ARR_SETLEN(type, arr, n) \
-  ((arr) = (type*) ir_arr_setlen((void *)(arr), (n), sizeof(type) * (n)))
+  ((arr) = (type *)ir_arr_setlen((void *)(arr), (n), sizeof(type) * (n)))
 
 /**
  * Resize a flexible array by growing it by delta elements.
@@ -261,10 +262,12 @@ static inline size_t ARR_LEN(void const *const arr)
  *
  * @remark  This macro may change arr, so update all references!
  */
-#define ARR_EXTO(type, arr, n) \
-	do { \
-		if ((n) >= ARR_LEN(arr)) { ARR_RESIZE(type, arr, (n)+1); } \
-	} while(0)
+#define ARR_EXTO(type, arr, n)        \
+  do {                                \
+    if ((n) >= ARR_LEN(arr)) {        \
+      ARR_RESIZE(type, arr, (n) + 1); \
+    }                                 \
+  } while (0)
 
 /**
  * Append one element to a flexible array.
@@ -274,7 +277,7 @@ static inline size_t ARR_LEN(void const *const arr)
  * @param elt      The new element, must be of type (type).
  */
 #define ARR_APP1(type, arr, elt) \
-  (ARR_EXTEND(type, (arr), 1), (arr)[ARR_LEN((arr))-1] = (elt))
+  (ARR_EXTEND(type, (arr), 1), (arr)[ARR_LEN((arr)) - 1] = (elt))
 
 /** @} */
 

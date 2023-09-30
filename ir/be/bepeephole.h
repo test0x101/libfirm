@@ -15,21 +15,19 @@
 
 extern ir_node **register_values;
 
-static inline ir_node *be_peephole_get_value(unsigned register_idx)
-{
-	return register_values[register_idx];
+static inline ir_node *be_peephole_get_value(unsigned register_idx) {
+  return register_values[register_idx];
 }
 
-static inline ir_node *be_peephole_get_reg_value(const arch_register_t *reg)
-{
-	unsigned register_idx = reg->global_index;
-	return be_peephole_get_value(register_idx);
+static inline ir_node *be_peephole_get_reg_value(const arch_register_t *reg) {
+  unsigned register_idx = reg->global_index;
+  return be_peephole_get_value(register_idx);
 }
 
 /**
  * Datatype of the generic op handler for optimization.
  */
-typedef void (*peephole_opt_func) (ir_node *node);
+typedef void (*peephole_opt_func)(ir_node *node);
 
 /**
  * When doing peephole optimization use this function instead of plain
@@ -39,9 +37,10 @@ typedef void (*peephole_opt_func) (ir_node *node);
 void be_peephole_exchange(ir_node *old, ir_node *nw);
 
 /**
- * Same as be_peephole_exchange(), but this function should be used for exchanging a Proj node with a new node, as it
- * updates the internal state correctly for this case.
- * This function removes the proj operand of old_proj from the schedule.
+ * Same as be_peephole_exchange(), but this function should be used for
+ * exchanging a Proj node with a new node, as it updates the internal state
+ * correctly for this case. This function removes the proj operand of old_proj
+ * from the schedule.
  */
 void be_peephole_exchange_using_proj(ir_node *old_proj, ir_node *nw);
 
@@ -85,10 +84,10 @@ bool be_can_move_up(ir_heights_t *heights, const ir_node *node,
 /**
  * Register a peephole optimization function.
  */
-static inline void register_peephole_optimization(ir_op *const op, peephole_opt_func const func)
-{
-	assert(!op->ops.generic);
-	op->ops.generic = (op_func)func;
+static inline void register_peephole_optimization(
+    ir_op *const op, peephole_opt_func const func) {
+  assert(!op->ops.generic);
+  op->ops.generic = (op_func)func;
 }
 
 /**

@@ -28,39 +28,44 @@
 
 /** The allowed arities. */
 typedef enum {
-	oparity_invalid = 0,
-	oparity_binary,             /**< A binary operator  -- considering 'numeric' arguments.*/
-	oparity_dynamic,            /**< The arity depends on state of Firm representation.
-	                                 Can be changed by optimizations...
-	                                 We must allocate a dynamic in array for the node! */
-	/** Any other arity, either fixed for the opcode or known when creating the node. */
-	oparity_any
+  oparity_invalid = 0,
+  oparity_binary,  /**< A binary operator  -- considering 'numeric' arguments.*/
+  oparity_dynamic, /**< The arity depends on state of Firm representation.
+                        Can be changed by optimizations...
+                        We must allocate a dynamic in array for the node! */
+  /** Any other arity, either fixed for the opcode or known when creating the
+     node. */
+  oparity_any
 } op_arity;
-
 
 /** The irop flags */
 typedef enum {
-	irop_flag_none         = 0, /**< Nothing. */
-	irop_flag_commutative  = 1U <<  0, /**< This operation is commutative. */
-	irop_flag_cfopcode     = 1U <<  1, /**< This operation is a control flow operation. */
-	irop_flag_fragile      = 1U <<  2, /**< Set if the operation can change the
-	                                       control flow because of an exception.
-	                                   */
-	irop_flag_forking      = 1U <<  3, /**< Forking control flow at this operation. */
-	irop_flag_constlike    = 1U <<  5, /**< This operation has no arguments and is some
-	                                       kind of a constant. */
-	irop_flag_keep         = 1U <<  6, /**< This operation can be kept in End's keep-alive list. */
-	irop_flag_start_block  = 1U <<  7, /**< This operation is always placed in the Start block. */
-	irop_flag_uses_memory  = 1U <<  8, /**< This operation has a memory input and may change the memory state. */
-	irop_flag_dump_noblock = 1U <<  9, /**< node should be dumped outside any blocks */
-	/** This operation jumps to an unknown destination. The CFG is a
-	 * conservative approximation in this case. You cannot change the destination
-	 * of an unknown_jump */
-	irop_flag_unknown_jump = 1U << 11,
-	/** The opcode has a memory input/output but does not actually change the
-	 * contents of any memory block known to the program. The input/output is
-	 * just necessary for scheduling reasons. Implies irop_flag_uses_memory. */
-	irop_flag_const_memory = 1U << 12,
+  irop_flag_none = 0,              /**< Nothing. */
+  irop_flag_commutative = 1U << 0, /**< This operation is commutative. */
+  irop_flag_cfopcode =
+      1U << 1, /**< This operation is a control flow operation. */
+  irop_flag_fragile = 1U << 2,   /**< Set if the operation can change the
+                                     control flow because of an exception.
+                                 */
+  irop_flag_forking = 1U << 3,   /**< Forking control flow at this operation. */
+  irop_flag_constlike = 1U << 5, /**< This operation has no arguments and is
+                                    some kind of a constant. */
+  irop_flag_keep =
+      1U << 6, /**< This operation can be kept in End's keep-alive list. */
+  irop_flag_start_block =
+      1U << 7, /**< This operation is always placed in the Start block. */
+  irop_flag_uses_memory = 1U << 8, /**< This operation has a memory input and
+                                      may change the memory state. */
+  irop_flag_dump_noblock =
+      1U << 9, /**< node should be dumped outside any blocks */
+  /** This operation jumps to an unknown destination. The CFG is a
+   * conservative approximation in this case. You cannot change the destination
+   * of an unknown_jump */
+  irop_flag_unknown_jump = 1U << 11,
+  /** The opcode has a memory input/output but does not actually change the
+   * contents of any memory block known to the program. The input/output is
+   * just necessary for scheduling reasons. Implies irop_flag_uses_memory. */
+  irop_flag_const_memory = 1U << 12,
 } irop_flags;
 ENUM_BITSET(irop_flags)
 
@@ -79,7 +84,8 @@ FIRM_API op_pin_state get_op_pinned(const ir_op *op);
 /** Returns the next free IR opcode number, allows to register user ops. */
 FIRM_API unsigned get_next_ir_opcode(void);
 
-/** Returns the next free n IR opcode number, allows to register a bunch of user ops. */
+/** Returns the next free n IR opcode number, allows to register a bunch of user
+ * ops. */
 FIRM_API unsigned get_next_ir_opcodes(unsigned num);
 
 /**
@@ -157,7 +163,8 @@ typedef int (*reassociate_func)(ir_node **n);
  * The copy attribute operation.
  * Copy the node attributes from an 'old' node to a 'new' one.
  */
-typedef void (*copy_attr_func)(ir_graph *irg, const ir_node *old_node, ir_node *new_node);
+typedef void (*copy_attr_func)(ir_graph *irg, const ir_node *old_node,
+                               ir_node *new_node);
 
 /**
  * The get_type_attr operation. Used to traverse all types that can be
@@ -195,10 +202,10 @@ typedef int (*verify_proj_node_func)(const ir_node *proj);
  * Reasons to call the dump_node operation:
  */
 typedef enum {
-	dump_node_opcode_txt,   /**< Dump the opcode. */
-	dump_node_mode_txt,     /**< Dump the mode. */
-	dump_node_nodeattr_txt, /**< Dump node attributes to be shown in the label. */
-	dump_node_info_txt      /**< Dump node attributes into info1. */
+  dump_node_opcode_txt,   /**< Dump the opcode. */
+  dump_node_mode_txt,     /**< Dump the mode. */
+  dump_node_nodeattr_txt, /**< Dump node attributes to be shown in the label. */
+  dump_node_info_txt      /**< Dump node attributes into info1. */
 } dump_reason_t;
 
 /**
@@ -206,7 +213,8 @@ typedef enum {
  * Writes several informations requested by reason to
  * an output file
  */
-typedef void (*dump_node_func)(FILE *out, const ir_node *self, dump_reason_t reason);
+typedef void (*dump_node_func)(FILE *out, const ir_node *self,
+                               dump_reason_t reason);
 
 /** Sets hash callback @p func for operation @p op */
 FIRM_API void set_op_hash(ir_op *op, hash_func func);
@@ -244,11 +252,13 @@ FIRM_API void set_op_dump(ir_op *op, dump_node_func func);
  *
  * @param code      the opcode, one of type \c opcode
  * @param name      the printable name of this opcode
- * @param p         whether operations of this opcode are op_pin_state_pinned or floating
- * @param flags     a bitmask of irop_flags describing the behavior of the IR operation
+ * @param p         whether operations of this opcode are op_pin_state_pinned or
+ * floating
+ * @param flags     a bitmask of irop_flags describing the behavior of the IR
+ * operation
  * @param opar      the parity of this IR operation
- * @param op_index  if the parity is oparity_unary, oparity_binary or oparity_trinary the index
- *                  of the left operand
+ * @param op_index  if the parity is oparity_unary, oparity_binary or
+ * oparity_trinary the index of the left operand
  * @param attr_size attribute size for this IR operation
  *
  * @return The generated IR operation.

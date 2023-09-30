@@ -20,25 +20,25 @@
 
 /** Attributes for x87 nodes. */
 typedef struct x87_attr_t {
-	arch_register_t const *reg;        /**< The explicit register operand. */
-	/** True if result is in the explicit register operand, %st0 otherwise. */
-	bool                   res_in_reg;
-	bool                   pop;        /**< Emit a pop suffix. */
-	/** Use reverse variant of binop (e.g. fsubr instead of fsub) */
-	bool                   reverse;
+  arch_register_t const *reg; /**< The explicit register operand. */
+  /** True if result is in the explicit register operand, %st0 otherwise. */
+  bool res_in_reg;
+  bool pop; /**< Emit a pop suffix. */
+  /** Use reverse variant of binop (e.g. fsubr instead of fsub) */
+  bool reverse;
 } x87_attr_t;
 
 typedef struct x87_simulator_config_t {
-	const arch_register_class_t *regclass;
-	ir_node *(*new_bd_fdup)(dbg_info *dbgi, ir_node *block, ir_node *value,
-	                        const arch_register_t *reg);
-	ir_node *(*new_bd_fxch)(dbg_info *dbgi, ir_node *block,
-	                        const arch_register_t *reg);
-	ir_node *(*new_bd_fpop)(dbg_info *dbgi, ir_node *block,
-	                        const arch_register_t *reg);
-	ir_node *(*new_bd_ffreep)(dbg_info *dbgi, ir_node *block,
-	                          const arch_register_t *reg);
-	x87_attr_t *(*get_x87_attr)(ir_node *node);
+  const arch_register_class_t *regclass;
+  ir_node *(*new_bd_fdup)(dbg_info *dbgi, ir_node *block, ir_node *value,
+                          const arch_register_t *reg);
+  ir_node *(*new_bd_fxch)(dbg_info *dbgi, ir_node *block,
+                          const arch_register_t *reg);
+  ir_node *(*new_bd_fpop)(dbg_info *dbgi, ir_node *block,
+                          const arch_register_t *reg);
+  ir_node *(*new_bd_ffreep)(dbg_info *dbgi, ir_node *block,
+                            const arch_register_t *reg);
+  x87_attr_t *(*get_x87_attr)(ir_node *node);
 } x87_simulator_config_t;
 
 typedef struct x87_state x87_state;
@@ -69,8 +69,8 @@ void x86_sim_x87_unop(x87_state *state, ir_node *node);
 void x86_sim_x87_binop(x87_state *state, ir_node *node, int n_op0, int n_op1,
                        arch_register_t const *out);
 
-unsigned x86_sim_x87_fucom(x87_state *state, ir_node *node,
-                           ir_node *op0, ir_node *op1);
+unsigned x86_sim_x87_fucom(x87_state *state, ir_node *node, ir_node *op0,
+                           ir_node *op1);
 
 /** Push a value on the x87 stack. Intended to be used in sim functions. */
 void x86_x87_push(x87_state *state, ir_node *value);

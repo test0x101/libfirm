@@ -20,14 +20,14 @@
  *
  * Add this before your constructor as it will declare the function
  */
-#define BE_REGISTER_MODULE_CONSTRUCTOR(func)         void func(void);
+#define BE_REGISTER_MODULE_CONSTRUCTOR(func) void func(void);
 
 /**
  * Mark a function as module destructor.
  *
  * Add this before your constructor as it will declare the function
  */
-#define BE_REGISTER_MODULE_DESTRUCTOR(func)          void func(void);
+#define BE_REGISTER_MODULE_DESTRUCTOR(func) void func(void);
 
 /**
  * Call all module constructors
@@ -50,7 +50,6 @@ void be_add_module_to_list(be_module_list_entry_t **list_head, const char *name,
 
 void be_add_module_list_opt(lc_opt_entry_t *grp, const char *name,
                             const char *description,
-                            be_module_list_entry_t * const * first,
-                            void **var);
+                            be_module_list_entry_t *const *first, void **var);
 
 #endif

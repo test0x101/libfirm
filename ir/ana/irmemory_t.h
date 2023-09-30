@@ -29,23 +29,23 @@ bool is_partly_volatile(ir_node *ptr);
  * NOTTAKEN modifier.
  */
 typedef enum ir_storage_class_class_t {
-	ir_sc_pointer           = 0x00, /**< generic pointer, may be anything */
-	ir_sc_globalvar         = 0x01, /**< an address of a global variable */
-	ir_sc_localvar          = 0x02, /**< an address of a local variable */
-	ir_sc_argument          = 0x03, /**< an address of a function argument */
-	ir_sc_tls               = 0x04, /**< an address of a thread local storage
-	                                     variable */
-	ir_sc_malloced          = 0x05, /**< an allocated heap address */
-	ir_sc_globaladdr        = 0x06, /**< a constant address of something */
-	ir_sc_null              = 0x07, /**< null pointer */
+  ir_sc_pointer = 0x00,    /**< generic pointer, may be anything */
+  ir_sc_globalvar = 0x01,  /**< an address of a global variable */
+  ir_sc_localvar = 0x02,   /**< an address of a local variable */
+  ir_sc_argument = 0x03,   /**< an address of a function argument */
+  ir_sc_tls = 0x04,        /**< an address of a thread local storage
+                                variable */
+  ir_sc_malloced = 0x05,   /**< an allocated heap address */
+  ir_sc_globaladdr = 0x06, /**< a constant address of something */
+  ir_sc_null = 0x07,       /**< null pointer */
 
-	ir_sc_modifier_nottaken = 0x10 << 0, /**< if set, the address of the
-	                                          variable was not taken */
-	ir_sc_modifier_obj_prim = 0x10 << 1, /**< if set the address is for an
-	                                          object with primitive type */
-	ir_sc_modifier_obj_comp = 0x10 << 2, /**< if set the address is for an
-	                                          object with compound type */
-	ir_sc_modifiers         = 0xf0,
+  ir_sc_modifier_nottaken = 0x10 << 0, /**< if set, the address of the
+                                            variable was not taken */
+  ir_sc_modifier_obj_prim = 0x10 << 1, /**< if set the address is for an
+                                            object with primitive type */
+  ir_sc_modifier_obj_comp = 0x10 << 2, /**< if set the address is for an
+                                            object with compound type */
+  ir_sc_modifiers = 0xf0,
 } ir_storage_class_class_t;
 ENUM_BITSET(ir_storage_class_class_t)
 

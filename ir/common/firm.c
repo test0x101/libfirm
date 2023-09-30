@@ -42,89 +42,71 @@
 static bool initialized;
 
 /* returns the firm root */
-lc_opt_entry_t *firm_opt_get_root(void)
-{
-	static lc_opt_entry_t *grp = NULL;
-	if (!grp)
-		grp = lc_opt_get_grp(lc_opt_root_grp(), "firm");
-	return grp;
+lc_opt_entry_t *firm_opt_get_root(void) {
+  static lc_opt_entry_t *grp = NULL;
+  if (!grp) grp = lc_opt_get_grp(lc_opt_root_grp(), "firm");
+  return grp;
 }
 
-void ir_init_library(void)
-{
-	if (initialized)
-		panic("Double initialization");
-	initialized = true;
+void ir_init_library(void) {
+  if (initialized) panic("Double initialization");
+  initialized = true;
 
-	firm_init_flags();
-	init_ident();
-	init_edges();
-	init_tarval_1();
-	/* Builds a basic program representation, so modes can be added. */
-	init_irprog_1();
-	init_mode();
-	init_tarval_2();
-	firm_init_op();
-	firm_init_reassociation();
-	firm_init_funccalls();
-	firm_init_inline();
-	firm_init_scalar_replace();
-	/* Builds a construct allowing to access all information to be constructed
-	   later. */
-	init_irprog_2();
-	firm_init_memory_disambiguator();
-	firm_init_loop_opt();
+  firm_init_flags();
+  init_ident();
+  init_edges();
+  init_tarval_1();
+  /* Builds a basic program representation, so modes can be added. */
+  init_irprog_1();
+  init_mode();
+  init_tarval_2();
+  firm_init_op();
+  firm_init_reassociation();
+  firm_init_funccalls();
+  firm_init_inline();
+  firm_init_scalar_replace();
+  /* Builds a construct allowing to access all information to be constructed
+     later. */
+  init_irprog_2();
+  firm_init_memory_disambiguator();
+  firm_init_loop_opt();
 
-	init_execfreq();
-	firm_be_init();
+  init_execfreq();
+  firm_be_init();
 
 #ifdef DEBUG_libfirm
-	firm_init_debugger();
+  firm_init_debugger();
 #endif
 }
 
-void ir_finish(void)
-{
+void ir_finish(void) {
 #ifdef DEBUG_libfirm
-	firm_finish_debugger();
+  firm_finish_debugger();
 #endif
-	exit_execfreq();
-	firm_be_finish();
+  exit_execfreq();
+  firm_be_finish();
 
-	free_ir_prog();
-	firm_finish_op();
-	finish_tarval();
-	finish_mode();
-	finish_ident();
-	finish_target();
-	initialized = false;
+  free_ir_prog();
+  firm_finish_op();
+  finish_tarval();
+  finish_mode();
+  finish_ident();
+  finish_target();
+  initialized = false;
 }
 
-unsigned ir_get_version_major(void)
-{
-	return libfirm_VERSION_MAJOR;
-}
+unsigned ir_get_version_major(void) { return libfirm_VERSION_MAJOR; }
 
-unsigned ir_get_version_minor(void)
-{
-	return libfirm_VERSION_MINOR;
-}
+unsigned ir_get_version_minor(void) { return libfirm_VERSION_MINOR; }
 
-unsigned ir_get_version_micro(void)
-{
-	return libfirm_VERSION_MICRO;
-}
+unsigned ir_get_version_micro(void) { return libfirm_VERSION_MICRO; }
 
-const char *ir_get_version_revision(void)
-{
+const char *ir_get_version_revision(void) {
 #ifdef libfirm_VERSION_REVISION
-	return libfirm_VERSION_REVISION;
+  return libfirm_VERSION_REVISION;
 #else
-	return "";
+  return "";
 #endif
 }
 
-const char *ir_get_version_build(void)
-{
-	return "";
-}
+const char *ir_get_version_build(void) { return ""; }

@@ -21,13 +21,13 @@
 typedef struct calling_convention_t calling_convention_t;
 
 typedef struct sparc_irg_data_t {
-	bool omit_fp;
+  bool omit_fp;
 } sparc_irg_data_t;
 
 typedef struct sparc_codegen_config_t {
-	bool     use_fpu;
-	bool     use_cas;
-	unsigned cas_asi : 8;
+  bool use_fpu;
+  bool use_cas;
+  unsigned cas_asi : 8;
 } sparc_codegen_config_t;
 extern sparc_codegen_config_t sparc_cg_config;
 
@@ -48,25 +48,23 @@ extern ir_mode *sparc_mode_Q;
  *            param 0-5 in this spaces and then handle va_next by simply
  *            incrementing the stack pointer
  */
-#define SPARC_IMMEDIATE_MIN           -4096
-#define SPARC_IMMEDIATE_MAX            4095
-#define SPARC_MIN_STACKSIZE              92
-#define SPARC_AGGREGATE_RETURN_OFFSET    64
-#define SPARC_PARAMS_SPILL_OFFSET        68
-#define SPARC_SAVE_AREA_SIZE             64
-#define SPARC_N_PARAM_REGS                6
-#define SPARC_PO2_STACK_ALIGNMENT         3
-#define SPARC_STACK_ALIGNMENT             (1<<SPARC_PO2_STACK_ALIGNMENT)
-#define SPARC_REGISTER_SIZE               4
+#define SPARC_IMMEDIATE_MIN -4096
+#define SPARC_IMMEDIATE_MAX 4095
+#define SPARC_MIN_STACKSIZE 92
+#define SPARC_AGGREGATE_RETURN_OFFSET 64
+#define SPARC_PARAMS_SPILL_OFFSET 68
+#define SPARC_SAVE_AREA_SIZE 64
+#define SPARC_N_PARAM_REGS 6
+#define SPARC_PO2_STACK_ALIGNMENT 3
+#define SPARC_STACK_ALIGNMENT (1 << SPARC_PO2_STACK_ALIGNMENT)
+#define SPARC_REGISTER_SIZE 4
 
-static inline bool sparc_is_value_imm_encodeable(int32_t value)
-{
-	return SPARC_IMMEDIATE_MIN <= value && value <= SPARC_IMMEDIATE_MAX;
+static inline bool sparc_is_value_imm_encodeable(int32_t value) {
+  return SPARC_IMMEDIATE_MIN <= value && value <= SPARC_IMMEDIATE_MAX;
 }
 
-static inline sparc_irg_data_t *sparc_get_irg_data(ir_graph const *const irg)
-{
-	return (sparc_irg_data_t*)be_birg_from_irg(irg)->isa_link;
+static inline sparc_irg_data_t *sparc_get_irg_data(ir_graph const *const irg) {
+  return (sparc_irg_data_t *)be_birg_from_irg(irg)->isa_link;
 }
 
 void sparc_finish_graph(ir_graph *irg);

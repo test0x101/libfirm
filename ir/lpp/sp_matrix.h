@@ -17,9 +17,9 @@
  * A matrix element.
  */
 typedef struct matrix_elem_t {
-	int   row;  /* row index */
-	int   col;  /* column index */
-	float val;  /* the actual value of the entry */
+  int row;   /* row index */
+  int col;   /* column index */
+  float val; /* the actual value of the entry */
 } matrix_elem_t;
 
 typedef struct sp_matrix_t sp_matrix_t;
@@ -47,7 +47,8 @@ void matrix_set(sp_matrix_t *m, int row, int col, double val);
  * - the current row inserted is the last inserted row so far
  * - cols[] is sorted ascending by col number
  */
-void matrix_set_row_bulk(sp_matrix_t *m, int row, int *cols, int num_cols, double val);
+void matrix_set_row_bulk(sp_matrix_t *m, int row, int *cols, int num_cols,
+                         double val);
 
 /**
  * Returns the value stored in m[row, col].
@@ -102,8 +103,8 @@ unsigned matrix_get_elem_size(void);
  * curr The variable to assign all elements to during iteration
  * Save against removal of curr
  */
-#define matrix_foreach(m,curr) \
-		for (matrix_elem_t const *curr = matrix_first(m); curr; curr = matrix_next(m))
+#define matrix_foreach(m, curr) \
+  for (matrix_elem_t const *curr = matrix_first(m); curr; curr = matrix_next(m))
 
 /**
  * m    The matrix
@@ -111,8 +112,9 @@ unsigned matrix_get_elem_size(void);
  * curr The variable to assign all elements to during iteration
  * Save against removal of curr
  */
-#define matrix_foreach_in_row(m,r,curr) \
-		for (matrix_elem_t const *curr = matrix_row_first(m, r); curr; curr = matrix_next(m))
+#define matrix_foreach_in_row(m, r, curr)                        \
+  for (matrix_elem_t const *curr = matrix_row_first(m, r); curr; \
+       curr = matrix_next(m))
 
 /**
  * m    The matrix
@@ -120,8 +122,9 @@ unsigned matrix_get_elem_size(void);
  * curr The variable to assign all elements to during iteration
  * Save against removal of curr
  */
-#define matrix_foreach_in_col(m,c,curr) \
-		for (matrix_elem_t const *curr = matrix_col_first(m, c); curr; curr = matrix_next(m))
+#define matrix_foreach_in_col(m, c, curr)                        \
+  for (matrix_elem_t const *curr = matrix_col_first(m, c); curr; \
+       curr = matrix_next(m))
 
 /**
  * Changes the matrix into an equivalent one with maximal number zero-rows.

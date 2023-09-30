@@ -14,9 +14,9 @@
 
 #include "firm_types.h"
 
-#define HashSet          ir_edgeset_t
-#define HashSetIterator  ir_edgeset_iterator_t
-#define ValueType        ir_edge_t*
+#define HashSet ir_edgeset_t
+#define HashSetIterator ir_edgeset_iterator_t
+#define ValueType ir_edge_t *
 #define DO_REHASH
 
 #include "hashset.h"
@@ -26,7 +26,7 @@
 #undef HashSetIterator
 #undef HashSet
 
-typedef struct ir_edgeset_t          ir_edgeset_t;
+typedef struct ir_edgeset_t ir_edgeset_t;
 typedef struct ir_edgeset_iterator_t ir_edgeset_iterator_t;
 
 /**
@@ -37,8 +37,8 @@ typedef struct ir_edgeset_iterator_t ir_edgeset_iterator_t;
 void ir_edgeset_init(ir_edgeset_t *edgeset);
 
 /**
- * Destroys a edgeset and frees the memory allocated for hashtable. The memory of
- * the edgeset itself is not freed.
+ * Destroys a edgeset and frees the memory allocated for hashtable. The memory
+ * of the edgeset itself is not freed.
  *
  * @param edgeset   Pointer to the edgeset
  */
@@ -51,7 +51,6 @@ void ir_edgeset_destroy(ir_edgeset_t *edgeset);
  * @param edge      edge to insert into the edgeset
  */
 ir_edge_t *ir_edgeset_insert(ir_edgeset_t *edgeset, ir_edge_t *edge);
-
 
 /**
  * Removes a edge from a edgeset. Does nothing if the edgeset doesn't contain
@@ -92,7 +91,8 @@ ir_edge_t *ir_edgeset_iterator_next(ir_edgeset_iterator_t *iterator);
 void ir_edgeset_remove_iterator(ir_edgeset_t *edgeset,
                                 const ir_edgeset_iterator_t *iterator);
 
-#define foreach_ir_edgeset(edgeset, edge, iter) \
-	for (ir_edgeset_iterator_init(&iter, edgeset); (edge = ir_edgeset_iterator_next(&iter)) != NULL;)
+#define foreach_ir_edgeset(edgeset, edge, iter)  \
+  for (ir_edgeset_iterator_init(&iter, edgeset); \
+       (edge = ir_edgeset_iterator_next(&iter)) != NULL;)
 
 #endif

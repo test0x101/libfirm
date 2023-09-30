@@ -18,21 +18,20 @@
  * An entry in the control dependence list.
  */
 struct ir_cdep {
-	ir_node *node;  /**< A node on which the current block is control dependent on. */
-	ir_cdep *next;  /**< Link to the next one if any. */
+  ir_node
+      *node; /**< A node on which the current block is control dependent on. */
+  ir_cdep *next; /**< Link to the next one if any. */
 };
 
-static inline ir_node *_get_cdep_node(const ir_cdep *cdep)
-{
-	return skip_Id(cdep->node);
+static inline ir_node *_get_cdep_node(const ir_cdep *cdep) {
+  return skip_Id(cdep->node);
 }
 
-static inline ir_cdep *_get_cdep_next(const ir_cdep *cdep)
-{
-	return cdep->next;
+static inline ir_cdep *_get_cdep_next(const ir_cdep *cdep) {
+  return cdep->next;
 }
 
-#define get_cdep_node(cdep)     _get_cdep_node(cdep)
-#define get_cdep_next(cdep)     _get_cdep_next(cdep)
+#define get_cdep_node(cdep) _get_cdep_node(cdep)
+#define get_cdep_next(cdep) _get_cdep_next(cdep)
 
 #endif

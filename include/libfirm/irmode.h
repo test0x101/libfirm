@@ -34,16 +34,16 @@
  * mode.
  */
 typedef enum ir_mode_arithmetic {
-	irma_none = 1,            /**< For modes for which no representation is
-	                               specified. */
-	irma_twos_complement = 2, /**< Values of the mode are represented as two's
-	                               complement. Only legal for modes of sort
-	                               int_number and reference. */
-	irma_ieee754 = 256,       /**< Values of the mode are represented according
-	                               to ieee754 floating point standard.  Only
-	                               legal for modes of sort float_number. */
-	irma_x86_extended_float,  /**< x86 extended floating point values */
-	irma_last = irma_x86_extended_float,
+  irma_none = 1,            /**< For modes for which no representation is
+                                 specified. */
+  irma_twos_complement = 2, /**< Values of the mode are represented as two's
+                                 complement. Only legal for modes of sort
+                                 int_number and reference. */
+  irma_ieee754 = 256,       /**< Values of the mode are represented according
+                                 to ieee754 floating point standard.  Only
+                                 legal for modes of sort float_number. */
+  irma_x86_extended_float,  /**< x86 extended floating point values */
+  irma_last = irma_x86_extended_float,
 } ir_mode_arithmetic;
 
 /**
@@ -62,8 +62,7 @@ typedef enum ir_mode_arithmetic {
  * @return
  *   The new mode or NULL on error.
  */
-FIRM_API ir_mode *new_int_mode(const char *name,
-                               unsigned bit_size, int sign,
+FIRM_API ir_mode *new_int_mode(const char *name, unsigned bit_size, int sign,
                                unsigned modulo_shift);
 
 /**
@@ -71,8 +70,7 @@ FIRM_API ir_mode *new_int_mode(const char *name,
  * Reference modes are always unsigned.
  * Arithmetic of reference modes is irma_twos_complement.
  */
-FIRM_API ir_mode *new_reference_mode(const char *name,
-                                     unsigned bit_size,
+FIRM_API ir_mode *new_reference_mode(const char *name, unsigned bit_size,
                                      unsigned modulo_shift);
 
 /**
@@ -86,12 +84,10 @@ FIRM_API ir_mode *new_reference_mode(const char *name,
  *                      irma_x86_extended_float)
  * @param int_conv_overflow Semantic on float to integer conversion overflow.
  */
-FIRM_API ir_mode *new_float_mode(const char *name,
-                                 ir_mode_arithmetic arithmetic,
-                                 unsigned exponent_size,
-                                 unsigned mantissa_size,
-                                 float_int_conversion_overflow_style_t
-                                     int_conv_overflow);
+FIRM_API ir_mode *new_float_mode(
+    const char *name, ir_mode_arithmetic arithmetic, unsigned exponent_size,
+    unsigned mantissa_size,
+    float_int_conversion_overflow_style_t int_conv_overflow);
 
 /**
  * Creates a new mode for data values which are not used to perform arithmetic.
@@ -177,17 +173,17 @@ FIRM_API ir_tarval *get_mode_infinite(const ir_mode *mode);
 
 FIRM_API ir_mode *mode_M; /**< memory */
 
-FIRM_API ir_mode *mode_F;   /**< ieee754 binary32 float (single precision) */
-FIRM_API ir_mode *mode_D;   /**< ieee754 binary64 float (double precision) */
-FIRM_API ir_mode *mode_Bs;  /**< int8 */
-FIRM_API ir_mode *mode_Bu;  /**< uint8 */
-FIRM_API ir_mode *mode_Hs;  /**< int16 */
-FIRM_API ir_mode *mode_Hu;  /**< uint16 */
-FIRM_API ir_mode *mode_Is;  /**< int32 */
-FIRM_API ir_mode *mode_Iu;  /**< uint32 */
-FIRM_API ir_mode *mode_Ls;  /**< int64 */
-FIRM_API ir_mode *mode_Lu;  /**< uint64 */
-FIRM_API ir_mode *mode_P;   /**< pointer */
+FIRM_API ir_mode *mode_F;  /**< ieee754 binary32 float (single precision) */
+FIRM_API ir_mode *mode_D;  /**< ieee754 binary64 float (double precision) */
+FIRM_API ir_mode *mode_Bs; /**< int8 */
+FIRM_API ir_mode *mode_Bu; /**< uint8 */
+FIRM_API ir_mode *mode_Hs; /**< int16 */
+FIRM_API ir_mode *mode_Hu; /**< uint16 */
+FIRM_API ir_mode *mode_Is; /**< int32 */
+FIRM_API ir_mode *mode_Iu; /**< uint32 */
+FIRM_API ir_mode *mode_Ls; /**< int64 */
+FIRM_API ir_mode *mode_Lu; /**< uint64 */
+FIRM_API ir_mode *mode_P;  /**< pointer */
 
 /**
  * This mode represents (parts of) the processor status flag queried in
@@ -205,9 +201,9 @@ FIRM_API ir_mode *mode_b;
 FIRM_API ir_mode *mode_X;  /**< execution */
 FIRM_API ir_mode *mode_BB; /**< block */
 
-FIRM_API ir_mode *mode_T;  /**< tuple (none) */
-FIRM_API ir_mode *mode_ANY;/**< undefined mode */
-FIRM_API ir_mode *mode_BAD;/**< bad mode */
+FIRM_API ir_mode *mode_T;   /**< tuple (none) */
+FIRM_API ir_mode *mode_ANY; /**< undefined mode */
+FIRM_API ir_mode *mode_BAD; /**< bad mode */
 
 /** Returns float mode. @copydoc mode_F */
 FIRM_API ir_mode *get_modeF(void);
@@ -364,8 +360,8 @@ FIRM_API unsigned get_mode_exponent_size(const ir_mode *mode);
 /**
  * Returns semantic on float to integer conversion overflow.
  */
-FIRM_API float_int_conversion_overflow_style_t get_mode_float_int_overflow(
-		const ir_mode *mode);
+FIRM_API float_int_conversion_overflow_style_t
+get_mode_float_int_overflow(const ir_mode *mode);
 
 /**
  * Returns non-zero if the cast from mode src to mode dst is a

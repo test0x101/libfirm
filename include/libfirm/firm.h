@@ -25,19 +25,19 @@
  *       FIRM graphs for procedures and other global things.
  *     irgraph: represents a procedure.  Allows access to the code of the
  *       procedure, the actual FIRM graph.
- *     irnode: A node of a FIRM graph.  Nodes are typed with an opcode and a mode
- *   and represent instructions in a program.
- *     irop: The opcode of FIRM nodes.
+ *     irnode: A node of a FIRM graph.  Nodes are typed with an opcode and a
+ * mode and represent instructions in a program. irop: The opcode of FIRM nodes.
  *     irmode: The mode of FIRM nodes.  Most modes correspond to machine known
  *       data types (int, float, pointer).
  *   - Entities representing program known objects. (Subdirectory tr.)
  *     All variables and procedures are entities.
  *   - Types describing the type system for the program. (Subdirectory tr.)
  *   - Target Values representing program known constants. (Subdirectory tv.)
- *   - Identifiers representing any Strings used in the program. (Subdirectory ident.)
+ *   - Identifiers representing any Strings used in the program. (Subdirectory
+ * ident.)
  *
- *   Further this library supplies functionality to build and optimize FIRM graphs
- *   and further functionality needed in a compiler.  Finally there is more
+ *   Further this library supplies functionality to build and optimize FIRM
+ * graphs and further functionality needed in a compiler.  Finally there is more
  *   generic functionality to support implementations using firm.
  *   (Code generation, further optimizations).
  */

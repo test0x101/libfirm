@@ -5,7 +5,8 @@
 
 /**
  * @file
- * @brief       hashset: data structure containing objects accessible by their key
+ * @brief       hashset: data structure containing objects accessible by their
+ * key
  * @author      Markus Armbruster
  */
 #ifndef FIRM_ADT_SET_H
@@ -33,12 +34,13 @@
  */
 typedef struct set set;
 
-/** The entry of a set, representing an element in the set and its meta-information */
+/** The entry of a set, representing an element in the set and its
+ * meta-information */
 typedef struct set_entry {
-	unsigned hash;  /**< the hash value of the element */
-	size_t size;    /**< the size of the element */
-	int dptr[1];    /**< the element itself, data copied in must not need more
-	                     alignment than this */
+  unsigned hash; /**< the hash value of the element */
+  size_t size;   /**< the size of the element */
+  int dptr[1];   /**< the element itself, data copied in must not need more
+                      alignment than this */
 } set_entry;
 
 /**
@@ -56,7 +58,7 @@ typedef struct set_entry {
  *    of two elements of a set, they can be only equal if their sizes are
  *    are equal. This is checked before the compare function is called.
  */
-typedef int (*set_cmp_fun) (void const *elt, void const *key, size_t size);
+typedef int (*set_cmp_fun)(void const *elt, void const *key, size_t size);
 
 /**
  * Creates a new set.
@@ -111,7 +113,8 @@ FIRM_API void *set_find(set *set, void const *key, size_t size, unsigned hash);
  *    that should be inserted is already in the set, this functions does
  *    nothing but returning its pointer.
  */
-FIRM_API void *set_insert(set *set, void const *key, size_t size, unsigned hash);
+FIRM_API void *set_insert(set *set, void const *key, size_t size,
+                          unsigned hash);
 
 /**
  * Inserts an element into a set and returns its set_entry.
@@ -168,7 +171,7 @@ FIRM_API void *set_first(set *set);
  *
  * @return a pointer to the element or NULL if the set is empty
  */
-#define set_first(type, set) ((type*)set_first((set)))
+#define set_first(type, set) ((type *)set_first((set)))
 
 /**
  * Returns the next element of a set.
@@ -191,7 +194,7 @@ FIRM_API void *set_next(set *set);
  * @return a pointer to the next element or NULL if the
  *         iteration is finished
  */
-#define set_next(type, set) ((type*)set_next((set)))
+#define set_next(type, set) ((type *)set_next((set)))
 
 /**
  * Breaks the iteration of a set. Must be called before
@@ -209,22 +212,30 @@ FIRM_API void set_break(set *set);
  * @param type   type of iterator variable
  * @param entry  the iterator
  */
-#define foreach_set(set, type, entry) for (type *entry = set_first(type, set); entry; entry = set_next(type, set))
+#define foreach_set(set, type, entry) \
+  for (type *entry = set_first(type, set); entry; entry = set_next(type, set))
 
 /** @cond PRIVATE */
 
 /* implementation specific */
-#define new_set(cmp, slots) ((new_set) ((cmp), (slots)))
-#define set_find(type, set, key, size, hash) \
-  ((type*)_set_search((set), 1 ? (key) : (type*)0 /* type check */, (size), (hash), _set_find))
-#define set_insert(type, set, key, size, hash) \
-  ((type*)_set_search((set), 1 ? (key) : (type*)0 /* type check */, (size), (hash), _set_insert))
+#define new_set(cmp, slots) ((new_set)((cmp), (slots)))
+#define set_find(type, set, key, size, hash)                                  \
+  ((type *)_set_search((set), 1 ? (key) : (type *)0 /* type check */, (size), \
+                       (hash), _set_find))
+#define set_insert(type, set, key, size, hash)                                \
+  ((type *)_set_search((set), 1 ? (key) : (type *)0 /* type check */, (size), \
+                       (hash), _set_insert))
 #define set_hinsert(set, key, size, hash) \
-  ((set_entry *)_set_search ((set), (key), (size), (hash), _set_hinsert))
+  ((set_entry *)_set_search((set), (key), (size), (hash), _set_hinsert))
 #define set_hinsert0(set, key, size, hash) \
-  ((set_entry *)_set_search ((set), (key), (size), (hash), _set_hinsert0))
+  ((set_entry *)_set_search((set), (key), (size), (hash), _set_hinsert0))
 
-typedef enum { _set_find, _set_insert, _set_hinsert, _set_hinsert0 } _set_action;
+typedef enum {
+  _set_find,
+  _set_insert,
+  _set_hinsert,
+  _set_hinsert0
+} _set_action;
 
 FIRM_API void *_set_search(set *set, void const *key, size_t size,
                            unsigned hash, _set_action action);

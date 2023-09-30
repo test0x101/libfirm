@@ -16,23 +16,23 @@
 #include "gen_arm_regalloc_if.h"
 
 /** information about a single parameter or result */
-typedef struct reg_or_stackslot_t
-{
-	const arch_register_t *reg0;   /**< if != NULL, the first register used for this parameter. */
-	const arch_register_t *reg1;   /**< if != NULL, the second register used. */
-	ir_type               *type;   /**< indicates that an entity of the specific type is needed */
-	unsigned               offset; /**< if transmitted via stack, the offset for this parameter. */
-	ir_entity             *entity; /**< entity in frame type */
+typedef struct reg_or_stackslot_t {
+  const arch_register_t
+      *reg0; /**< if != NULL, the first register used for this parameter. */
+  const arch_register_t *reg1; /**< if != NULL, the second register used. */
+  ir_type *type; /**< indicates that an entity of the specific type is needed */
+  unsigned
+      offset; /**< if transmitted via stack, the offset for this parameter. */
+  ir_entity *entity; /**< entity in frame type */
 } reg_or_stackslot_t;
 
 /** The calling convention info for one call site. */
-typedef struct calling_convention_t
-{
-	reg_or_stackslot_t *parameters;        /**< parameter info. */
-	unsigned            n_parameters;      /**< number of parameters */
-	unsigned            param_stack_size;  /**< needed stack size for parameters */
-	unsigned            n_param_regs;
-	reg_or_stackslot_t *results;           /**< result info. */
+typedef struct calling_convention_t {
+  reg_or_stackslot_t *parameters; /**< parameter info. */
+  unsigned n_parameters;          /**< number of parameters */
+  unsigned param_stack_size;      /**< needed stack size for parameters */
+  unsigned n_param_regs;
+  reg_or_stackslot_t *results; /**< result info. */
 } calling_convention_t;
 
 /**

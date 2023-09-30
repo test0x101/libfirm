@@ -19,7 +19,7 @@ extern bool be_coalesce_spill_slots;
 extern bool be_do_remats;
 
 typedef void (*be_spill_func)(ir_graph *irg, const arch_register_class_t *cls,
-							  const regalloc_if_t *regif);
+                              const regalloc_if_t *regif);
 
 /**
  * Register a new spill algorithm.
@@ -37,6 +37,6 @@ void be_register_spiller(const char *name, be_spill_func spiller);
  * @param cls   the register class to spill
  */
 void be_do_spill(ir_graph *irg, const arch_register_class_t *cls,
-				 const regalloc_if_t *regif);
+                 const regalloc_if_t *regif);
 
 #endif

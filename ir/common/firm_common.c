@@ -11,7 +11,4 @@
 #include "tv.h"
 
 /* returns the kind of the thing */
-firm_kind get_kind(const void *firm_thing)
-{
-	return *(firm_kind*)firm_thing;
-}
+firm_kind get_kind(const void *firm_thing) { return *(firm_kind *)firm_thing; }

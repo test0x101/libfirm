@@ -12,7 +12,7 @@
 #define FIRM_IRNODEMAP_T_H
 
 typedef struct ir_nodemap {
-	void **data;
+  void **data;
 } ir_nodemap;
 
 #endif

@@ -21,12 +21,12 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define get_tarval_mode(tv)      get_tarval_mode_(tv)
-#define get_tarval_bad()         get_tarval_bad_()
-#define get_tarval_unknown()     get_tarval_unknown_()
-#define get_tarval_b_false()     get_tarval_b_false_()
-#define get_tarval_b_true()      get_tarval_b_true_()
-#define tarval_is_constant(tv)   tarval_is_constant_(tv)
+#define get_tarval_mode(tv) get_tarval_mode_(tv)
+#define get_tarval_bad() get_tarval_bad_()
+#define get_tarval_unknown() get_tarval_unknown_()
+#define get_tarval_b_false() get_tarval_b_false_()
+#define get_tarval_b_true() get_tarval_b_true_()
+#define tarval_is_constant(tv) tarval_is_constant_(tv)
 
 /**
  * Initialization of the tarval module.
@@ -57,46 +57,31 @@ void finish_tarval(void);
  *   irmode.h for predefined modes
  */
 struct ir_tarval {
-	firm_kind     kind;    /**< must be k_tarval */
-	uint16_t      length;  /**< the length of the stored value */
-	ir_mode      *mode;    /**< the mode of the stored value */
-	unsigned char value[]; /**< the value stored in an internal way */
+  firm_kind kind;        /**< must be k_tarval */
+  uint16_t length;       /**< the length of the stored value */
+  ir_mode *mode;         /**< the mode of the stored value */
+  unsigned char value[]; /**< the value stored in an internal way */
 };
 
 /* inline functions */
 /*
  * Access routines for tarval fields ========================================
  */
-static inline ir_mode *get_tarval_mode_(ir_tarval const *tv)
-{
-	return tv->mode;
+static inline ir_mode *get_tarval_mode_(ir_tarval const *tv) {
+  return tv->mode;
 }
 
-static inline ir_tarval *get_tarval_bad_(void)
-{
-	return tarval_bad;
-}
+static inline ir_tarval *get_tarval_bad_(void) { return tarval_bad; }
 
-static inline ir_tarval *get_tarval_unknown_(void)
-{
-	return tarval_unknown;
-}
+static inline ir_tarval *get_tarval_unknown_(void) { return tarval_unknown; }
 
-static inline ir_tarval *get_tarval_b_false_(void)
-{
-	return tarval_b_false;
-}
+static inline ir_tarval *get_tarval_b_false_(void) { return tarval_b_false; }
 
-static inline ir_tarval *get_tarval_b_true_(void)
-{
-	return tarval_b_true;
-}
+static inline ir_tarval *get_tarval_b_true_(void) { return tarval_b_true; }
 
-static inline int tarval_is_constant_(ir_tarval const *tv)
-{
-	return tv != tarval_bad && tv != tarval_unknown;
+static inline int tarval_is_constant_(ir_tarval const *tv) {
+  return tv != tarval_bad && tv != tarval_unknown;
 }
-
 
 /**
  *   Checks whether a pointer points to a tarval.
@@ -106,9 +91,8 @@ static inline int tarval_is_constant_(ir_tarval const *tv)
  *   @return
  *       true if the thing is a tarval, else false
  */
-static inline bool is_tarval(const void *thing)
-{
-	return get_kind(thing) == k_tarval;
+static inline bool is_tarval(const void *thing) {
+  return get_kind(thing) == k_tarval;
 }
 
 /**
@@ -147,17 +131,17 @@ unsigned get_tarval_magnitude(ir_tarval const *tv);
  * @p tv.
  */
 static inline unsigned tarval_get_bit(ir_tarval const *const tv,
-                                      unsigned const idx)
-{
+                                      unsigned const idx) {
 #ifndef NDEBUG
-	ir_mode *mode = get_tarval_mode(tv);
-	assert(mode_is_data(mode));
-	assert(idx < get_mode_size_bits(mode));
+  ir_mode *mode = get_tarval_mode(tv);
+  assert(mode_is_data(mode));
+  assert(idx < get_mode_size_bits(mode));
 #endif
-	return sc_get_bit_at(tv->value, idx);
+  return sc_get_bit_at(tv->value, idx);
 }
 
-bool tarval_in_range(ir_tarval const *min, ir_tarval const *val, ir_tarval const *max);
+bool tarval_in_range(ir_tarval const *min, ir_tarval const *val,
+                     ir_tarval const *max);
 
 void init_mode_values(ir_mode *mode);
 

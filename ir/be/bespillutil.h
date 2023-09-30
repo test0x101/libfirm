@@ -92,9 +92,9 @@ double be_get_spill_costs(spill_env_t *env, ir_node *to_spill, ir_node *before);
 double be_get_reload_costs(spill_env_t *env, ir_node *to_spill,
                            ir_node *before);
 
-unsigned be_get_reload_costs_no_weight(spill_env_t *env, const ir_node *to_spill,
+unsigned be_get_reload_costs_no_weight(spill_env_t *env,
+                                       const ir_node *to_spill,
                                        const ir_node *before);
-
 
 /**
  * Analog to be_get_reload_costs but returns the cost if the reload would be
@@ -104,10 +104,10 @@ double be_get_reload_costs_on_edge(spill_env_t *env, ir_node *to_spill,
                                    ir_node *block, int pos);
 
 typedef struct {
-	unsigned n_spills;
-	unsigned n_reloads;
-	double   spill_costs;
-	double   reload_costs;
+  unsigned n_spills;
+  unsigned n_reloads;
+  double spill_costs;
+  double reload_costs;
 } be_total_spill_costs_t;
 
 /**

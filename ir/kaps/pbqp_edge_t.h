@@ -15,10 +15,10 @@
 #include "pbqp_t.h"
 
 struct pbqp_edge_t {
-	pbqp_node_t   *src;                  /* Source index. */
-	pbqp_node_t   *tgt;                  /* Target index. */
-	pbqp_matrix_t *costs;                /* Cost matrix. */
-	unsigned       bucket_index;         /* Index of edge bucket. */
+  pbqp_node_t *src;      /* Source index. */
+  pbqp_node_t *tgt;      /* Target index. */
+  pbqp_matrix_t *costs;  /* Cost matrix. */
+  unsigned bucket_index; /* Index of edge bucket. */
 };
 
 #endif

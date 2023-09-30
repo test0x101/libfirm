@@ -13,4 +13,4 @@ aggregate_spec_t riscv_lower_parameter(void *env, ir_type const *type);
 
 aggregate_spec_t riscv_lower_result(void *env, ir_type const *type);
 
-#endif //LIBFIRM_RISCV_ABI_H
+#endif  // LIBFIRM_RISCV_ABI_H

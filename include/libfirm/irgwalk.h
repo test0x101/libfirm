@@ -37,8 +37,10 @@
  * pre and post functions.  Does not use the link fields.
  *
  * @param node  the start node
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  *
  */
@@ -55,8 +57,10 @@ FIRM_API void irg_walk_core(ir_node *node, irg_walk_func *pre,
  * Walks over all reachable nodes in the ir graph.
  *
  * @param irg   the irg graph
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  *
  * Like irg_walk(), but walks over all reachable nodes in the ir
@@ -78,8 +82,10 @@ FIRM_API void irg_walk_graph(ir_graph *irg, irg_walk_func *pre,
  * This walker also follows additional dependency egdes.
  *
  * @param node  the start node
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  *
  */
@@ -90,8 +96,10 @@ FIRM_API void irg_walk_in_or_dep(ir_node *node, irg_walk_func *pre,
  * Walks over all reachable nodes in the ir graph.
  *
  * @param irg   the irg graph
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  *
  * Like irg_walk(), but walks over all reachable nodes in the ir
@@ -118,20 +126,24 @@ FIRM_API void irg_walk_topological(ir_graph *irg, irg_walk_func *walker,
 /**
  * Executes irg_walk(end, pre, post, env) for all irgraphs in irprog.
  *
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  *
- * This function executes irg_walk(end, pre, post, env) for all irgraphs in irprog.
- * Does not use the link field.
+ * This function executes irg_walk(end, pre, post, env) for all irgraphs in
+ * irprog. Does not use the link field.
  */
 FIRM_API void all_irg_walk(irg_walk_func *pre, irg_walk_func *post, void *env);
 
 /** Walks only over Block nodes in the graph.
  *
  * @param node  the start node
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  *
  * This function Walks only over Block nodes in the graph. Has its own visited
@@ -146,8 +158,10 @@ FIRM_API void irg_block_walk(ir_node *node, irg_walk_func *pre,
  * Walks only over reachable Block nodes in the graph.
  *
  * @param irg   the irg graph
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  *
  * Like irg_block_walk(), but walks over all reachable blocks in the
@@ -159,8 +173,10 @@ FIRM_API void irg_block_walk_graph(ir_graph *irg, irg_walk_func *pre,
 /**
  * Walks over all code in const_code_irg.
  *
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  *
  * This function walks over all code in const_code_irg.
@@ -171,9 +187,9 @@ FIRM_API void walk_const_code(irg_walk_func *pre, irg_walk_func *post,
 
 /**
  * Walks over reachable nodes in block-wise topological order, i.e. visit
- * all nodes in a block before going to another block, starting at the end operation.
- * Executes pre before visiting the predecessor of a node, post after.
- * irg_walk_blkwise_graph() uses the visited flag in irg and the nodes to
+ * all nodes in a block before going to another block, starting at the end
+ * operation. Executes pre before visiting the predecessor of a node, post
+ * after. irg_walk_blkwise_graph() uses the visited flag in irg and the nodes to
  * determine visited nodes.
  * It executes inc_irg_visited() to generate a new flag. It marks the node as
  * visited before executing pre.
@@ -181,8 +197,10 @@ FIRM_API void walk_const_code(irg_walk_func *pre, irg_walk_func *post,
  * pre and post functions.  Does not use the link fields.
  *
  * @param irg   the irg graph
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  */
 FIRM_API void irg_walk_blkwise_graph(ir_graph *irg, irg_walk_func *pre,
@@ -190,9 +208,9 @@ FIRM_API void irg_walk_blkwise_graph(ir_graph *irg, irg_walk_func *pre,
 
 /**
  * Walks over reachable nodes in block-wise topological order, i.e. visit
- * all nodes in a block before going to another block, starting at the end operation.
- * Visit the blocks in dominator tree top-down order.
- * Executes pre before visiting the predecessor of a node, post after.
+ * all nodes in a block before going to another block, starting at the end
+ * operation. Visit the blocks in dominator tree top-down order. Executes pre
+ * before visiting the predecessor of a node, post after.
  * irg_walk_blkwise_graph() uses the visited flag in irg and the nodes to
  * determine visited nodes.
  * It executes inc_irg_visited() to generate a new flag. It marks the node as
@@ -201,8 +219,10 @@ FIRM_API void irg_walk_blkwise_graph(ir_graph *irg, irg_walk_func *pre,
  * pre and post functions.  Does not use the link fields.
  *
  * @param irg   the irg graph
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  */
 FIRM_API void irg_walk_blkwise_dom_top_down(ir_graph *irg, irg_walk_func *pre,
@@ -210,12 +230,14 @@ FIRM_API void irg_walk_blkwise_dom_top_down(ir_graph *irg, irg_walk_func *pre,
 
 /**
  * Additionally walk over all anchors.
- * This function visits all anchor nodes that otherwise might not been visited in a
- * walk, for instance the Bad() node.
+ * This function visits all anchor nodes that otherwise might not been visited
+ * in a walk, for instance the Bad() node.
  *
  * @param irg   the irg graph
- * @param pre   walker function, executed before the predecessor of a node are visited
- * @param post  walker function, executed after the predecessor of a node are visited
+ * @param pre   walker function, executed before the predecessor of a node are
+ * visited
+ * @param post  walker function, executed after the predecessor of a node are
+ * visited
  * @param env   environment, passed to pre and post
  */
 FIRM_API void irg_walk_anchors(ir_graph *irg, irg_walk_func *pre,

@@ -20,34 +20,34 @@
 #define HashSetEntry ValueType
 #else
 typedef struct HashSetEntry {
-	ValueType data;
-	unsigned hash;
+  ValueType data;
+  unsigned hash;
 } HashSetEntry;
 #endif
 
 struct HashSet {
-	HashSetEntry *entries;
-	size_t num_buckets;
-	size_t enlarge_threshold;
-	size_t shrink_threshold;
-	size_t num_elements;
-	size_t num_deleted;
-	int consider_shrink;
+  HashSetEntry *entries;
+  size_t num_buckets;
+  size_t enlarge_threshold;
+  size_t shrink_threshold;
+  size_t num_elements;
+  size_t num_deleted;
+  int consider_shrink;
 #ifndef NDEBUG
-	unsigned entries_version;
+  unsigned entries_version;
 #endif
 #ifdef ADDITIONAL_DATA
-	ADDITIONAL_DATA
+  ADDITIONAL_DATA
 #endif
 };
 
 #ifdef HashSetIterator
 struct HashSetIterator {
-	HashSetEntry *current_bucket;
-	HashSetEntry *end;
+  HashSetEntry *current_bucket;
+  HashSetEntry *end;
 #ifndef NDEBUG
-	const struct HashSet *set;
-	unsigned entries_version;
+  const struct HashSet *set;
+  unsigned entries_version;
 #endif
 };
 #endif

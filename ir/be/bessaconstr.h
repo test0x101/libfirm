@@ -42,13 +42,13 @@
 #include "obst.h"
 
 typedef struct be_ssa_construction_env_t {
-	ir_graph                    *irg;
-	const arch_register_req_t   *phi_req;
-	deq_t                        worklist;
-	ir_node                    **new_phis;
-	bool                         iterated_domfront_calculated;
-	ir_nodemap                   infos;
-	struct obstack               obst;
+  ir_graph *irg;
+  const arch_register_req_t *phi_req;
+  deq_t worklist;
+  ir_node **new_phis;
+  bool iterated_domfront_calculated;
+  ir_nodemap infos;
+  struct obstack obst;
 } be_ssa_construction_env_t;
 
 /**
@@ -79,7 +79,7 @@ void be_ssa_construction_fix_users_array(be_ssa_construction_env_t *env,
  * @note Remember that you have to call update_liveness on the copies yourself
  */
 void be_ssa_construction_update_liveness_phis(be_ssa_construction_env_t *env,
-                                             be_lv_t *lv);
+                                              be_lv_t *lv);
 
 ir_node **be_ssa_construction_get_new_phis(be_ssa_construction_env_t *env);
 

@@ -16,15 +16,14 @@
 
 extern const x86_asm_constraint_list_t amd64_asm_constraints;
 
-extern arch_register_req_t const         amd64_requirement_gp_same_0;
-extern arch_register_req_t const        *amd64_xmm_reqs[];
+extern arch_register_req_t const amd64_requirement_gp_same_0;
+extern arch_register_req_t const *amd64_xmm_reqs[];
 extern arch_register_req_t const **const gp_am_reqs[];
-extern arch_register_req_t const        *reg_reqs[];
-extern arch_register_req_t const        *rsp_reg_mem_reqs[];
-extern arch_register_req_t const        *xmm_reg_mem_reqs[];
-extern arch_register_req_t const        *amd64_reg_reg_reqs[];
-extern arch_register_req_t const        *amd64_xmm_xmm_reqs[];
-
+extern arch_register_req_t const *reg_reqs[];
+extern arch_register_req_t const *rsp_reg_mem_reqs[];
+extern arch_register_req_t const *xmm_reg_mem_reqs[];
+extern arch_register_req_t const *amd64_reg_reg_reqs[];
+extern arch_register_req_t const *amd64_xmm_xmm_reqs[];
 
 void amd64_init_transform(void);
 
@@ -45,11 +44,11 @@ ir_entity *create_float_const_entity(ir_tarval *const tv);
 void init_lconst_addr(x86_addr_t *addr, ir_entity *entity);
 
 /** Creates a tarval with the given mode and only
-  * the most-significant (first) bit set.
-  *
-  * @param mode The mode of the resulting tarval, which lso decides
-  * between 32 and 64 bit long tarval.
-  */
+ * the most-significant (first) bit set.
+ *
+ * @param mode The mode of the resulting tarval, which lso decides
+ * between 32 and 64 bit long tarval.
+ */
 ir_tarval *create_sign_tv(ir_mode *mode);
 
 #endif

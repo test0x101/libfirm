@@ -70,8 +70,9 @@ void amd64_lower_va_arg(ir_node *node);
  *
  * @return The memory value of the last generated node.
  */
-ir_node *amd64_initialize_va_list(dbg_info *dbgi, ir_node *block, x86_cconv_t *cconv,
-                                  ir_node *mem, ir_node *ap, ir_node *frame);
+ir_node *amd64_initialize_va_list(dbg_info *dbgi, ir_node *block,
+                                  x86_cconv_t *cconv, ir_node *mem, ir_node *ap,
+                                  ir_node *frame);
 
 /**
  * Insert prologue code to save the registers containing the variadic arguments.
@@ -80,7 +81,7 @@ ir_node *amd64_initialize_va_list(dbg_info *dbgi, ir_node *block, x86_cconv_t *c
  * @param cconv The calling convention in force for the current function
  * @param frame The current frame base
  */
-void amd64_save_vararg_registers(ir_graph *irg, x86_cconv_t const *cconv, ir_node *fp);
-
+void amd64_save_vararg_registers(ir_graph *irg, x86_cconv_t const *cconv,
+                                 ir_node *fp);
 
 #endif

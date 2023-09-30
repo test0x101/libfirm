@@ -5,7 +5,8 @@
 
 /**
  * @file
- * @brief    iropt --- optimizations intertwined with IR construction -- private header.
+ * @brief    iropt --- optimizations intertwined with IR construction -- private
+ * header.
  * @author   Martin Trapp, Christian Schaefer, Goetz Lindenmaier, Michael Beck
  */
 #ifndef FIRM_IR_IROPT_T_H
@@ -25,11 +26,11 @@
 unsigned ir_node_hash(const ir_node *node);
 
 /**
- * equivalent_node() returns a node equivalent to input n. It skips all nodes that
- * perform no actual computation, as, e.g., the Id nodes.  It does not create
- * new nodes.  It is therefore safe to free n if the node returned is not n.
- * If a node returns a Tuple we can not just skip it.  If the size of the
- * in array fits, we transform n into a tuple (e.g., Div).
+ * equivalent_node() returns a node equivalent to input n. It skips all nodes
+ * that perform no actual computation, as, e.g., the Id nodes.  It does not
+ * create new nodes.  It is therefore safe to free n if the node returned is not
+ * n. If a node returns a Tuple we can not just skip it.  If the size of the in
+ * array fits, we transform n into a tuple (e.g., Div).
  */
 ir_node *equivalent_node(ir_node *n);
 
@@ -91,10 +92,7 @@ void set_value_of_func(value_of_func func);
 /**
  * Returns the associated tarval of a node.
  */
-static inline ir_tarval *value_of(const ir_node *n)
-{
-	return value_of_ptr(n);
-}
+static inline ir_tarval *value_of(const ir_node *n) { return value_of_ptr(n); }
 
 /**
  * returns true if a value becomes zero when converted to mode @p mode

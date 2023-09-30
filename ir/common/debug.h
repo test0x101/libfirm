@@ -18,32 +18,35 @@
 #include <stdio.h>
 
 enum firm_dbg_level_t {
-	LEVEL_DEFAULT = 0, /**< Prints always. Use with DBG(). */
-	LEVEL_1 = 1,
-	LEVEL_2 = 2,
-	LEVEL_3 = 4,
-	LEVEL_4 = 8,
-	LEVEL_5 = 16,
+  LEVEL_DEFAULT = 0, /**< Prints always. Use with DBG(). */
+  LEVEL_1 = 1,
+  LEVEL_2 = 2,
+  LEVEL_3 = 4,
+  LEVEL_4 = 8,
+  LEVEL_5 = 16,
 
-	SET_LEVEL_0 = 0,   /**< use with firm_dbg_set_mask(). */
-	SET_LEVEL_1 = 1,
-	SET_LEVEL_2 = 3,
-	SET_LEVEL_3 = 7,
-	SET_LEVEL_4 = 15,
-	SET_LEVEL_5 = 31,
-	SET_LEVEL_ALL = SET_LEVEL_5
+  SET_LEVEL_0 = 0, /**< use with firm_dbg_set_mask(). */
+  SET_LEVEL_1 = 1,
+  SET_LEVEL_2 = 3,
+  SET_LEVEL_3 = 7,
+  SET_LEVEL_4 = 15,
+  SET_LEVEL_5 = 31,
+  SET_LEVEL_ALL = SET_LEVEL_5
 };
 
 typedef struct firm_dbg_module_t firm_dbg_module_t;
 
 /* Internal function to the debug module. */
-void *_firm_dbg_make_msg(const firm_dbg_module_t *mod, unsigned mask, const char *fmt, ...);
+void *_firm_dbg_make_msg(const firm_dbg_module_t *mod, unsigned mask,
+                         const char *fmt, ...);
 
 /* Internal function to the debug module. */
-void _firm_dbg_print_msg(const char *filename, int line, const char *func, void *data);
+void _firm_dbg_print_msg(const char *filename, int line, const char *func,
+                         void *data);
 
 /* Internal function to the debug module. */
-void _firm_dbg_print(const firm_dbg_module_t *mod, unsigned mask, const char *fmt, ...);
+void _firm_dbg_print(const firm_dbg_module_t *mod, unsigned mask,
+                     const char *fmt, ...);
 
 /**
  * Register a module to the firm debug facility.
@@ -99,29 +102,30 @@ void firm_dbg_set_file(firm_dbg_module_t *module, FILE *file);
  * DBG((my_mod, LEVEL_DEFAULT, "entity %e has type %t", ent, type))
  * @endcode
  */
-#define DBG(args) _firm_dbg_print_msg(__FILE__, __LINE__, __func__, _firm_dbg_make_msg args)
-#define DB(args)  _firm_dbg_print args
+#define DBG(args) \
+  _firm_dbg_print_msg(__FILE__, __LINE__, __func__, _firm_dbg_make_msg args)
+#define DB(args) _firm_dbg_print args
 
 /** create a debug handle in debug mode */
 #define FIRM_DBG_REGISTER(handle, name) handle = firm_dbg_register(name)
-#define DEBUG_ONLY(code)   code
+#define DEBUG_ONLY(code) code
 #define RELEASE_ONLY(code)
 
 #else /* ndef DEBUG_libfirm */
 
 /* DEBUG OUTPUT IS COMPLETELY DISABLED */
 
-#define DBG(x)   (void)0
-#define DB(x)    (void)0
+#define DBG(x) (void)0
+#define DB(x) (void)0
 
 /** create a debug handle in release mode */
-#define FIRM_DBG_REGISTER(handle, name)  (void)0
+#define FIRM_DBG_REGISTER(handle, name) (void)0
 #define DEBUG_ONLY(code)
 #define RELEASE_ONLY(code) code
 
-#define firm_dbg_set_mask(module, mask)  (void)0
-#define firm_dbg_get_mask(module)        (void)0
-#define firm_dbg_set_file(module, file)  (void)0
+#define firm_dbg_set_mask(module, mask) (void)0
+#define firm_dbg_get_mask(module) (void)0
+#define firm_dbg_set_file(module, file) (void)0
 
 #endif /* DEBUG_libfirm */
 

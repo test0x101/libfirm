@@ -5,7 +5,8 @@
 
 /**
  * @file
- * @brief       Implements function parameter lowering for the System V AMD64 ABI
+ * @brief       Implements function parameter lowering for the System V AMD64
+ * ABI
  * @author      Andreas Fried
  */
 #ifndef FIRM_BE_AMD64_AMD64_ABI_H
@@ -15,8 +16,8 @@
 #include "lower_calls.h"
 
 typedef struct amd64_abi_state {
-	unsigned integer_params;
-	unsigned sse_params;
+  unsigned integer_params;
+  unsigned sse_params;
 } amd64_abi_state;
 
 aggregate_spec_t amd64_lower_parameter(void *env, ir_type const *type);

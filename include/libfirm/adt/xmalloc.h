@@ -19,13 +19,13 @@
 
 /* Includes for alloca() */
 #ifndef alloca
-#	if defined(__GNUC__)
-#		define alloca(x)       __builtin_alloca(x)
-#	elif defined(__WIN32)
-#		include <malloc.h>
-#	else
-#		error do not know how to get alloca
-#	endif
+#if defined(__GNUC__)
+#define alloca(x) __builtin_alloca(x)
+#elif defined(__WIN32)
+#include <malloc.h>
+#else
+#error do not know how to get alloca
+#endif
 #endif
 
 #include "../begin.h"
@@ -58,12 +58,13 @@ FIRM_API char *xstrdup(const char *str);
 /**
  * Allocate n objects of a certain type
  */
-#define XMALLOCN(type, n) ((type*)xmalloc(sizeof(type) * (n)))
+#define XMALLOCN(type, n) ((type *)xmalloc(sizeof(type) * (n)))
 
 /**
  * Allocate n objects of a certain type and zero them
  */
-#define XMALLOCNZ(type, n) ((type*)memset(xmalloc(sizeof(type) * (n)), 0, sizeof(type) * (n)))
+#define XMALLOCNZ(type, n) \
+  ((type *)memset(xmalloc(sizeof(type) * (n)), 0, sizeof(type) * (n)))
 
 /**
  * Allocate one object of a certain type
@@ -78,43 +79,51 @@ FIRM_API char *xstrdup(const char *str);
 /**
  * Reallocate n objects of a certain type
  */
-#define XREALLOC(ptr, type, n) ((type*)xrealloc(ptr, sizeof(type) * (n)))
+#define XREALLOC(ptr, type, n) ((type *)xrealloc(ptr, sizeof(type) * (n)))
 
 /**
  * Allocate an object with n elements of a flexible array member
  */
-#define XMALLOCF(type, member, n) ((type*)xmalloc(offsetof(type, member) + sizeof(*((type*)0)->member) * (n)))
+#define XMALLOCF(type, member, n) \
+  ((type *)xmalloc(offsetof(type, member) + sizeof(*((type *)0)->member) * (n)))
 
 /**
  * Allocate an object with n elements of a flexible array member and zero the
  * whole object
  */
-#define XMALLOCFZ(type, member, n) ((type*)memset(XMALLOCF(type, member, (n)), 0, offsetof(type, member) + sizeof(*((type*)0)->member) * (n)))
+#define XMALLOCFZ(type, member, n)    \
+  ((type *)memset(                    \
+      XMALLOCF(type, member, (n)), 0, \
+      offsetof(type, member) + sizeof(*((type *)0)->member) * (n)))
 
 /**
  * Allocate n objects of a certain type on the stack
  */
-#define ALLOCAN(type, n) ((type*)alloca(sizeof(type) * (n)))
+#define ALLOCAN(type, n) ((type *)alloca(sizeof(type) * (n)))
 
 /**
  * Allocate n objects of a certain type on the stack and zero them
  */
-#define ALLOCANZ(type, n) ((type*)memset((type*)alloca(sizeof(type) * (n)), 0, sizeof(type) * (n)))
+#define ALLOCANZ(type, n) \
+  ((type *)memset((type *)alloca(sizeof(type) * (n)), 0, sizeof(type) * (n)))
 
 /**
  * Allocate an object with n elements of a flexible array member on the stack
  */
-#define ALLOCAF(type, member, n) ((type*)alloca(offsetof(type, member) + sizeof(*((type*)0)->member) * (n)))
+#define ALLOCAF(type, member, n) \
+  ((type *)alloca(offsetof(type, member) + sizeof(*((type *)0)->member) * (n)))
 
 /**
  * Allocate n objects of a certain type on the given obstack
  */
-#define OALLOCN(obst, type, n) ((type*)obstack_alloc((obst), sizeof(type) * (n)))
+#define OALLOCN(obst, type, n) \
+  ((type *)obstack_alloc((obst), sizeof(type) * (n)))
 
 /**
  * Allocate n objects of a certain type on the given obstack and zero them
  */
-#define OALLOCNZ(obst, type, n) ((type*)memset(OALLOCN((obst), type, (n)), 0, sizeof(type) * (n)))
+#define OALLOCNZ(obst, type, n) \
+  ((type *)memset(OALLOCN((obst), type, (n)), 0, sizeof(type) * (n)))
 
 /**
  * Allocate one object of a certain type on the given obstack
@@ -130,13 +139,18 @@ FIRM_API char *xstrdup(const char *str);
  * Allocate an object with n elements of a flexible array member on the given
  * obstack.
  */
-#define OALLOCF(obst, type, member, n) ((type*)obstack_alloc((obst), offsetof(type, member) + sizeof(*((type*)0)->member) * (n)))
+#define OALLOCF(obst, type, member, n) \
+  ((type *)obstack_alloc(              \
+      (obst), offsetof(type, member) + sizeof(*((type *)0)->member) * (n)))
 
 /**
  * Allocate an object with n elements of a flexible array member on the given
  * obstack and zero the whole object
  */
-#define OALLOCFZ(obst, type, member, n) ((type*)memset(OALLOCF((obst), type, member, (n)), 0, offsetof(type, member) + sizeof(*((type*)0)->member) * (n)))
+#define OALLOCFZ(obst, type, member, n)      \
+  ((type *)memset(                           \
+      OALLOCF((obst), type, member, (n)), 0, \
+      offsetof(type, member) + sizeof(*((type *)0)->member) * (n)))
 
 /** @} */
 

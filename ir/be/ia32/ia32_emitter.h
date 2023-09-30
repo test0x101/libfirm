@@ -36,8 +36,8 @@
  * %Sx  <node>                  source register x
  *
  * x starts at 0
- * # modifier for %ASx, %D, %R, and %S uses ls mode of node to alter register width
- * # modifier for %M for extend suffix
+ * # modifier for %ASx, %D, %R, and %S uses ls mode of node to alter register
+ * width # modifier for %M for extend suffix
  * * modifier does not prefix immediates with $, but AM with *
  * > modifier to output high 8bit register (ah, bh)
  * < modifier to output low 8bit register (al, bl)

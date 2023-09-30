@@ -30,10 +30,9 @@ typedef struct pmap pmap;
  * A key, value pair.
  */
 typedef struct {
-	void const *key;    /**< The key. */
-	void       *value;  /**< The value. */
+  void const *key; /**< The key. */
+  void *value;     /**< The value. */
 } pmap_entry;
-
 
 /** Creates a new empty map. */
 FIRM_API pmap *pmap_create(void);
@@ -64,7 +63,7 @@ FIRM_API void *pmap_get(pmap const *map, void const *key);
  * This is a wrapper for pmap_get(map, key); It allows to express the
  * intended type of the set elements (instead of weakly typed void*).
  */
-#define pmap_get(type, map, key) ((type*)pmap_get(map, key))
+#define pmap_get(type, map, key) ((type *)pmap_get(map, key))
 
 /** Return number of elements in the map */
 FIRM_API size_t pmap_count(pmap const *map);
@@ -83,7 +82,7 @@ FIRM_API pmap_entry *pmap_next(pmap *map);
  * Iterate over all elements in the map setting curr to the current element.
  */
 #define foreach_pmap(pmap, curr) \
-	for (pmap_entry *curr = pmap_first(pmap); curr; curr = pmap_next(pmap))
+  for (pmap_entry *curr = pmap_first(pmap); curr; curr = pmap_next(pmap))
 
 /** Breaks an iteration.
  *  Must be called, if a iteration ends before pmap_next() returns NULL. */

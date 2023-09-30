@@ -15,12 +15,12 @@
 #include "firm_types.h"
 
 typedef enum be_stat_tag_t {
-	BE_STAT_FIRST,
-	BE_STAT_PHIS = BE_STAT_FIRST, /**< phi count (excluding mem-phis) */
-	BE_STAT_MEM_PHIS,             /**< memory-phi count */
-	BE_STAT_COPIES,               /**< copies */
-	BE_STAT_PERMS,                /**< perms */
-	BE_STAT_COUNT
+  BE_STAT_FIRST,
+  BE_STAT_PHIS = BE_STAT_FIRST, /**< phi count (excluding mem-phis) */
+  BE_STAT_MEM_PHIS,             /**< memory-phi count */
+  BE_STAT_COPIES,               /**< copies */
+  BE_STAT_PERMS,                /**< perms */
+  BE_STAT_COUNT
 } be_stat_tag_t;
 ENUM_COUNTABLE(be_stat_tag_t)
 typedef unsigned long be_node_stats_t[BE_STAT_COUNT];

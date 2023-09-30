@@ -16,9 +16,8 @@
 #include "beinfo.h"
 #include "irdom.h"
 
-static sched_info_t *get_irn_sched_info(const ir_node *node)
-{
-	return &be_get_info(skip_Proj_const(node))->sched_info;
+static sched_info_t *get_irn_sched_info(const ir_node *node) {
+  return &be_get_info(skip_Proj_const(node))->sched_info;
 }
 
 /**
@@ -28,9 +27,8 @@ static sched_info_t *get_irn_sched_info(const ir_node *node)
  * @param irn The node.
  * @return 1, if the node is scheduled, 0 if not.
  */
-static inline bool sched_is_scheduled(const ir_node *irn)
-{
-	return get_irn_sched_info(irn)->next != NULL;
+static inline bool sched_is_scheduled(const ir_node *irn) {
+  return get_irn_sched_info(irn)->next != NULL;
 }
 
 /**
@@ -40,43 +38,37 @@ static inline bool sched_is_scheduled(const ir_node *irn)
  * @param irn The node.
  * @return The time step in the schedule.
  */
-static inline sched_timestep_t sched_get_time_step(const ir_node *irn)
-{
-	assert(sched_is_scheduled(irn));
-	return get_irn_sched_info(irn)->time_step;
+static inline sched_timestep_t sched_get_time_step(const ir_node *irn) {
+  assert(sched_is_scheduled(irn));
+  return get_irn_sched_info(irn)->time_step;
 }
 
-static inline bool sched_is_end(const ir_node *node)
-{
-	return is_Block(node);
-}
+static inline bool sched_is_end(const ir_node *node) { return is_Block(node); }
 
-static inline bool sched_is_begin(const ir_node *node)
-{
-	return is_Block(node);
+static inline bool sched_is_begin(const ir_node *node) {
+  return is_Block(node);
 }
 
 /**
  * Get the scheduling successor of a node.
  * @param irn The node.
- * @return The next ir node in the schedule or the block, if the node has no next node.
+ * @return The next ir node in the schedule or the block, if the node has no
+ * next node.
  */
-static inline ir_node *sched_next(const ir_node *irn)
-{
-	const sched_info_t *info = get_irn_sched_info(irn);
-	return info->next;
+static inline ir_node *sched_next(const ir_node *irn) {
+  const sched_info_t *info = get_irn_sched_info(irn);
+  return info->next;
 }
 
 /**
  * Get the scheduling predecessor of a node.
  * @param irn The node.
- * @return The next ir node in the schedule or the block, if the node has no predecessor.
- * predecessor.
+ * @return The next ir node in the schedule or the block, if the node has no
+ * predecessor. predecessor.
  */
-static inline ir_node *sched_prev(const ir_node *irn)
-{
-	const sched_info_t *info = get_irn_sched_info(irn);
-	return info->prev;
+static inline ir_node *sched_prev(const ir_node *irn) {
+  const sched_info_t *info = get_irn_sched_info(irn);
+  return info->prev;
 }
 
 /**
@@ -85,10 +77,9 @@ static inline ir_node *sched_prev(const ir_node *irn)
  * @return The first node in the schedule or the block itself
  *         if there is no node in the schedule.
  */
-static inline ir_node *sched_first(const ir_node *block)
-{
-	assert(is_Block(block) && "Need a block here");
-	return sched_next(block);
+static inline ir_node *sched_first(const ir_node *block) {
+  assert(is_Block(block) && "Need a block here");
+  return sched_next(block);
 }
 
 /**
@@ -97,10 +88,9 @@ static inline ir_node *sched_first(const ir_node *block)
  * @return The last ir node in a schedule, or the block itself
  *         if there is no node in the schedule.
  */
-static inline ir_node *sched_last(const ir_node *block)
-{
-	assert(is_Block(block) && "Need a block here");
-	return sched_prev(block);
+static inline ir_node *sched_last(const ir_node *block) {
+  assert(is_Block(block) && "Need a block here");
+  return sched_prev(block);
 }
 
 /**
@@ -110,7 +100,6 @@ static inline ir_node *sched_last(const ir_node *block)
  */
 void sched_add_before(ir_node *before, ir_node *irn);
 
-
 /**
  * Add a node to a block schedule.
  * @param irn The node to add.
@@ -118,12 +107,11 @@ void sched_add_before(ir_node *before, ir_node *irn);
  */
 void sched_add_after(ir_node *after, ir_node *irn);
 
-static inline void sched_init_block(ir_node *block)
-{
-	sched_info_t *info = get_irn_sched_info(block);
-	assert(info->next == NULL && info->time_step == 0);
-	info->next = block;
-	info->prev = block;
+static inline void sched_init_block(ir_node *block) {
+  sched_info_t *info = get_irn_sched_info(block);
+  assert(info->next == NULL && info->time_step == 0);
+  info->next = block;
+  info->prev = block;
 }
 
 /**
@@ -145,12 +133,11 @@ void sched_replace(ir_node *old, ir_node *irn);
  * @return    true, if a is in front of b in the schedule, false else.
  * @note      Both nodes must be in the same block.
  */
-static inline bool sched_comes_before(const ir_node *a, const ir_node *b)
-{
-	assert(get_block_const(a) == get_nodes_block(b));
-	sched_timestep_t const as = sched_get_time_step(a);
-	sched_timestep_t const bs = sched_get_time_step(b);
-	return as < bs;
+static inline bool sched_comes_before(const ir_node *a, const ir_node *b) {
+  assert(get_block_const(a) == get_nodes_block(b));
+  sched_timestep_t const as = sched_get_time_step(a);
+  sched_timestep_t const bs = sched_get_time_step(b);
+  return as < bs;
 }
 
 /**
@@ -161,55 +148,55 @@ static inline bool sched_comes_before(const ir_node *a, const ir_node *b)
  * @return true if a dominates b or if a == b.
  */
 static inline bool value_strictly_dominates(const ir_node *a,
-                                            const ir_node *b)
-{
-	/* if a and b are not in the same block, dominance is determined by the
-	 * dominance of the blocks. */
-	const ir_node *block_a = get_block_const(a);
-	const ir_node *block_b = get_block_const(b);
-	if (block_a != block_b)
-		return block_dominates(block_a, block_b);
+                                            const ir_node *b) {
+  /* if a and b are not in the same block, dominance is determined by the
+   * dominance of the blocks. */
+  const ir_node *block_a = get_block_const(a);
+  const ir_node *block_b = get_block_const(b);
+  if (block_a != block_b) return block_dominates(block_a, block_b);
 
-	/* Dominance is determined by schedule. */
-	return sched_comes_before(a, b);
+  /* Dominance is determined by schedule. */
+  return sched_comes_before(a, b);
 }
 
 #define sched_foreach_after(after, irn) \
-	for (ir_node *irn = (after); !sched_is_end(irn = sched_next(irn));)
+  for (ir_node *irn = (after); !sched_is_end(irn = sched_next(irn));)
 
 #define sched_foreach_reverse_before(before, irn) \
-	for (ir_node *irn = (before); !sched_is_begin(irn = sched_prev(irn));)
+  for (ir_node *irn = (before); !sched_is_begin(irn = sched_prev(irn));)
 
-#define sched_foreach_non_phi_reverse_before(before, irn) \
-	for (ir_node *irn = (before); !sched_is_begin(irn = sched_prev(irn));) \
-		if (is_Phi(irn)) break; else
+#define sched_foreach_non_phi_reverse_before(before, irn)                \
+  for (ir_node *irn = (before); !sched_is_begin(irn = sched_prev(irn));) \
+    if (is_Phi(irn))                                                     \
+      break;                                                             \
+    else
 
 /**
  * A shorthand macro for iterating over a schedule.
  * @param block The block.
  * @param irn A ir node pointer used as an iterator.
  */
-#define sched_foreach(block,irn) \
-	sched_foreach_after((assert(is_Block(block)), block), irn)
+#define sched_foreach(block, irn) \
+  sched_foreach_after((assert(is_Block(block)), block), irn)
 
-#define sched_foreach_phi(block, irn) \
-	sched_foreach(block, irn) \
-		if (!is_Phi(irn)) break; else
+#define sched_foreach_phi(block, irn)                \
+  sched_foreach(block, irn) if (!is_Phi(irn)) break; \
+  else
 
-#define sched_foreach_non_phi(block, irn) \
-	sched_foreach(block, irn) \
-		if (is_Phi(irn)) continue; else
+#define sched_foreach_non_phi(block, irn)              \
+  sched_foreach(block, irn) if (is_Phi(irn)) continue; \
+  else
 
 /**
  * A shorthand macro for reversely iterating over a schedule.
  * @param block The block.
  * @param irn A ir node pointer used as an iterator.
  */
-#define sched_foreach_reverse(block,irn) \
-	sched_foreach_reverse_before((assert(is_Block(block)), block), irn)
+#define sched_foreach_reverse(block, irn) \
+  sched_foreach_reverse_before((assert(is_Block(block)), block), irn)
 
 #define sched_foreach_non_phi_reverse(block, irn) \
-	sched_foreach_non_phi_reverse_before((assert(is_Block(block)), block), irn)
+  sched_foreach_non_phi_reverse_before((assert(is_Block(block)), block), irn)
 
 /**
  * A shorthand macro for iterating over a schedule while the current node may be
@@ -218,8 +205,10 @@ static inline bool value_strictly_dominates(const ir_node *a,
  * @param block  The block.
  * @param irn    A ir node pointer used as an iterator.
  */
-#define sched_foreach_safe(block, irn) \
-	for (ir_node *irn, *irn##__next = sched_first(block); !sched_is_end(irn = irn##__next) ? irn##__next = sched_next(irn), 1 : 0;)
+#define sched_foreach_safe(block, irn)                                   \
+  for (ir_node * irn, *irn##__next = sched_first(block);                 \
+       !sched_is_end(irn = irn##__next) ? irn##__next = sched_next(irn), \
+                      1                 : 0;)
 
 /**
  * A shorthand macro for reversely iterating over a schedule while the current
@@ -228,13 +217,15 @@ static inline bool value_strictly_dominates(const ir_node *a,
  * @param block  The block.
  * @param irn    A ir node pointer used as an iterator.
  */
-#define sched_foreach_reverse_safe(block, irn) \
-	for (ir_node *irn, *irn##__prev = sched_last(block); !sched_is_begin(irn = irn##__prev) ? irn##__prev = sched_prev(irn), 1 : 0;)
+#define sched_foreach_reverse_safe(block, irn)                             \
+  for (ir_node * irn, *irn##__prev = sched_last(block);                    \
+       !sched_is_begin(irn = irn##__prev) ? irn##__prev = sched_prev(irn), \
+                      1                   : 0;)
 
 /**
  * Type for a function scheduling a graph
  */
-typedef void (*schedule_func) (ir_graph *irg);
+typedef void (*schedule_func)(ir_graph *irg);
 
 /**
  * Register new scheduling algorithm

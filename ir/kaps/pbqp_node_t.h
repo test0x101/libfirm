@@ -15,11 +15,11 @@
 #include "pbqp_t.h"
 
 struct pbqp_node_t {
-	pbqp_edge_t **edges;
-	vector_t     *costs;
-	unsigned      bucket_index;
-	unsigned      solution;
-	unsigned      index;
+  pbqp_edge_t **edges;
+  vector_t *costs;
+  unsigned bucket_index;
+  unsigned solution;
+  unsigned index;
 };
 
 #endif

@@ -17,7 +17,7 @@
 extern pbqp_edge_t **edge_bucket;
 extern pbqp_node_t **node_buckets[4];
 extern pbqp_node_t **reduced_bucket;
-extern pbqp_node_t  *merged_node;
+extern pbqp_node_t *merged_node;
 
 void apply_edge(pbqp_t *pbqp);
 

@@ -23,7 +23,8 @@ pbqp_edge_t *edge_bucket_pop(pbqp_edge_bucket_t *bucket);
 
 int node_bucket_contains(pbqp_node_bucket_t bucket, pbqp_node_t *node);
 void node_bucket_copy(pbqp_node_bucket_t *dst, pbqp_node_bucket_t src);
-void node_bucket_deep_copy(pbqp_t *pbqp, pbqp_node_bucket_t *dst, pbqp_node_bucket_t src);
+void node_bucket_deep_copy(pbqp_t *pbqp, pbqp_node_bucket_t *dst,
+                           pbqp_node_bucket_t src);
 void node_bucket_free(pbqp_node_bucket_t *bucket);
 unsigned node_bucket_get_length(pbqp_node_bucket_t bucket);
 void node_bucket_init(pbqp_node_bucket_t *bucket);

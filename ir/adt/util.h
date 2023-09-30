@@ -21,7 +21,7 @@
  *
  * @param a    static array
  */
-#define ARRAY_SIZE(a) (sizeof(a)/sizeof((a)[0]))
+#define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 
 #undef MIN
 #undef MAX
@@ -50,32 +50,27 @@
 
 #define QSORT_ARR(base, cmp) QSORT((base), ARR_LEN((base)), (cmp))
 
-static inline void *safe_memcpy(void* const dst, void const* const src, size_t const n)
-{
-	/* Calling memcpy with a null pointer leads to undefined behavior,
-	 * even if we copy zero bytes (C99 7.21.1.p2). */
-	return n != 0 ? memcpy(dst, src, n) : dst;
+static inline void* safe_memcpy(void* const dst, void const* const src,
+                                size_t const n) {
+  /* Calling memcpy with a null pointer leads to undefined behavior,
+   * even if we copy zero bytes (C99 7.21.1.p2). */
+  return n != 0 ? memcpy(dst, src, n) : dst;
 }
 
-#define MEMCPY(dst, src, n) safe_memcpy((dst), (src), (n) * sizeof(*(1 ? (dst) : (src))))
+#define MEMCPY(dst, src, n) \
+  safe_memcpy((dst), (src), (n) * sizeof(*(1 ? (dst) : (src))))
 
-static inline bool is_digit(char const c)
-{
-	return '0' <= c && c <= '9';
+static inline bool is_digit(char const c) { return '0' <= c && c <= '9'; }
+
+static inline bool streq(char const* const a, char const* const b) {
+  return strcmp(a, b) == 0;
 }
 
-static inline bool streq(char const *const a, char const *const b)
-{
-	return strcmp(a, b) == 0;
-}
-
-static inline char const* strstart(char const* str, char const* start)
-{
-	do {
-		if (*start == '\0')
-			return str;
-	} while (*str++ == *start++);
-	return NULL;
+static inline char const* strstart(char const* str, char const* start) {
+  do {
+    if (*start == '\0') return str;
+  } while (*str++ == *start++);
+  return NULL;
 }
 
 #endif

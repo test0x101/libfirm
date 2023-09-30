@@ -45,23 +45,23 @@ FIRM_API int pset_default_ptr_cmp(void const *x, void const *y);
 typedef struct pset pset;
 
 /** Inserts into pointer set with default hash function. */
-#define pset_insert_ptr(set,key)  pset_insert(set, key, hash_ptr(key))
+#define pset_insert_ptr(set, key) pset_insert(set, key, hash_ptr(key))
 /** Inserts into pointer set with default hash function and return entry */
-#define pset_hinsert_ptr(set,key) pset_hinsert(set, key, hash_ptr(key))
+#define pset_hinsert_ptr(set, key) pset_hinsert(set, key, hash_ptr(key))
 /** Removes pointer from pointer set with default hash function */
-#define pset_remove_ptr(set,key)  pset_remove(set, key, hash_ptr(key))
+#define pset_remove_ptr(set, key) pset_remove(set, key, hash_ptr(key))
 /** Finds pointer in pointer set with default hash function */
-#define pset_find_ptr(set,key)    pset_find(set, key, hash_ptr(key))
+#define pset_find_ptr(set, key) pset_find(set, key, hash_ptr(key))
 /** Creates new pointer set with default compare function */
-#define pset_new_ptr(slots)       new_pset(pset_default_ptr_cmp, slots)
+#define pset_new_ptr(slots) new_pset(pset_default_ptr_cmp, slots)
 /** Creates new pointer set with default compare function and default size */
-#define pset_new_ptr_default()    pset_new_ptr(64)
+#define pset_new_ptr_default() pset_new_ptr(64)
 
 /** The entry of a pset, representing an element pointer in the set and its
  * meta-information */
 typedef struct {
   unsigned hash; /**< hash value of element */
-  void    *dptr; /**< pointer to element data */
+  void *dptr;    /**< pointer to element data */
 } pset_entry;
 
 /**
@@ -73,7 +73,7 @@ typedef struct {
  * @return
  *    0 if the elements are identically, non-zero else
  */
-typedef int (*pset_cmp_fun) (void const *elt, void const *key);
+typedef int (*pset_cmp_fun)(void const *elt, void const *key);
 
 /**
  * Creates a new pset.
@@ -183,7 +183,7 @@ FIRM_API void *pset_first(pset *pset);
  *
  * @return a pointer to the element or NULL if the set is empty
  */
-#define pset_first(type, pset) ((type*)pset_first((pset)))
+#define pset_first(type, pset) ((type *)pset_first((pset)))
 
 /**
  * Returns the next element of a pset.
@@ -206,7 +206,7 @@ FIRM_API void *pset_next(pset *pset);
  * @return a pointer to the next element or NULL if the
  *         iteration is finished
  */
-#define pset_next(type, pset) ((type*)pset_next((pset)))
+#define pset_next(type, pset) ((type *)pset_next((pset)))
 
 /**
  * Breaks the iteration of a set. Must be called before
@@ -224,7 +224,9 @@ FIRM_API void pset_break(pset *pset);
  * @param type   type of iterator variable
  * @param entry  the iterator
  */
-#define foreach_pset(pset, type, entry) for (type *entry = pset_first(type, pset); entry; entry = pset_next(type, pset))
+#define foreach_pset(pset, type, entry)             \
+  for (type *entry = pset_first(type, pset); entry; \
+       entry = pset_next(type, pset))
 
 /**
  * Inserts all elements of the pointer set src into
@@ -237,13 +239,13 @@ FIRM_API void pset_insert_pset_ptr(pset *target, pset *src);
 
 /** @cond PRIVATE */
 
-#define new_pset(cmp, slots) ((new_pset) ((cmp), (slots)))
+#define new_pset(cmp, slots) ((new_pset)((cmp), (slots)))
 #define pset_find(pset, key, hash) \
-  _pset_search ((pset), (key), (hash), _pset_find)
+  _pset_search((pset), (key), (hash), _pset_find)
 #define pset_insert(pset, key, hash) \
-  _pset_search ((pset), (key), (hash), _pset_insert)
+  _pset_search((pset), (key), (hash), _pset_insert)
 #define pset_hinsert(pset, key, hash) \
-  ((pset_entry *)_pset_search ((pset), (key), (hash), _pset_hinsert))
+  ((pset_entry *)_pset_search((pset), (key), (hash), _pset_hinsert))
 
 typedef enum { _pset_find, _pset_insert, _pset_hinsert } _pset_action;
 

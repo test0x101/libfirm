@@ -24,8 +24,8 @@ typedef uint8_t sc_word;
  * The output mode for integer values.
  */
 enum base_t {
-	SC_HEX, /**< hexadecimal output with BIG letters */
-	SC_DEC, /**< decimal output */
+  SC_HEX, /**< hexadecimal output with BIG letters */
+  SC_DEC, /**< decimal output */
 };
 
 /**
@@ -156,8 +156,8 @@ void sc_zero_extend(sc_word *buffer, unsigned from_bits);
  * create an value form a string representation
  * @return true if ok, false in case of parse error
  */
-bool sc_val_from_str(bool negative, unsigned base, const char *str,
-                     size_t len, sc_word *buffer);
+bool sc_val_from_str(bool negative, unsigned base, const char *str, size_t len,
+                     sc_word *buffer);
 
 /** create a value from a long */
 void sc_val_from_long(long l, sc_word *buffer);
@@ -245,10 +245,9 @@ void finish_strcalc(void);
 unsigned sc_get_precision(void);
 
 /** Return the bit at a given position. */
-static inline bool sc_get_bit_at(const sc_word *value, unsigned pos)
-{
-	unsigned nibble = pos / SC_BITS;
-	return (value[nibble] >> (pos % SC_BITS)) & 1;
+static inline bool sc_get_bit_at(const sc_word *value, unsigned pos) {
+  unsigned nibble = pos / SC_BITS;
+  return (value[nibble] >> (pos % SC_BITS)) & 1;
 }
 
 /** Set the bit at the specified position. */

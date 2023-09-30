@@ -40,10 +40,11 @@ FIRM_API void clear_backedges(ir_node *n);
 
 /** Loop elements: loop nodes and ir nodes */
 typedef union {
-	firm_kind *kind; /**< is either k_ir_node or k_ir_loop */
-	ir_node  *node;  /**< Pointer to an ir_node element */
-	ir_loop  *son;   /**< Pointer to an ir_loop element */
-	ir_graph *irg;   /**< Pointer to an ir_graph element (only callgraph loop trees) */
+  firm_kind *kind; /**< is either k_ir_node or k_ir_loop */
+  ir_node *node;   /**< Pointer to an ir_node element */
+  ir_loop *son;    /**< Pointer to an ir_loop element */
+  ir_graph
+      *irg; /**< Pointer to an ir_graph element (only callgraph loop trees) */
 } loop_element;
 
 /** Sets the outermost loop in ir graph as basic access to loop tree. */

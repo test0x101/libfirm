@@ -27,28 +27,28 @@
 
 /** The alias relation of two memory addresses. */
 typedef enum ir_alias_relation {
-	ir_no_alias,       /**< No alias. */
-	ir_may_alias,      /**< Unknown state, may alias. */
-	ir_sure_alias      /**< Sure alias. */
+  ir_no_alias,  /**< No alias. */
+  ir_may_alias, /**< Unknown state, may alias. */
+  ir_sure_alias /**< Sure alias. */
 } ir_alias_relation;
 
 /** The state of the entity usage flags. */
 typedef enum ir_entity_usage_computed_state {
-	ir_entity_usage_not_computed,
-	ir_entity_usage_computed
+  ir_entity_usage_not_computed,
+  ir_entity_usage_computed
 } ir_entity_usage_computed_state;
 
 /** Possible options for the memory disambiguator. */
 typedef enum ir_disambiguator_options {
-	aa_opt_none                = 0,       /**< no options, use defaults */
-	aa_opt_always_alias        = 1u << 0, /**< always assume aliasing */
-	/**< use type based alias analysis: strictly typed source language */
-	aa_opt_type_based          = 1u << 1,
-	/**< if type based analysis is enabled bytes types may alias other types */
-	aa_opt_byte_type_may_alias = 1u << 2,
-	aa_opt_no_alias            = 1u << 3, /**< different addresses NEVER alias */
-	/**< internal flag: options from a graph are inherited from global */
-	aa_opt_inherited           = 1u << 4,
+  aa_opt_none = 0,               /**< no options, use defaults */
+  aa_opt_always_alias = 1u << 0, /**< always assume aliasing */
+  /**< use type based alias analysis: strictly typed source language */
+  aa_opt_type_based = 1u << 1,
+  /**< if type based analysis is enabled bytes types may alias other types */
+  aa_opt_byte_type_may_alias = 1u << 2,
+  aa_opt_no_alias = 1u << 3, /**< different addresses NEVER alias */
+  /**< internal flag: options from a graph are inherited from global */
+  aa_opt_inherited = 1u << 4,
 } ir_disambiguator_options;
 ENUM_BITSET(ir_disambiguator_options)
 
@@ -69,9 +69,9 @@ FIRM_API const char *get_ir_alias_relation_name(ir_alias_relation rel);
  * @param type2   The type of the object found at @p addr2 ("object type").
  * @param size2   The size in bytes of the second memory access.
  */
-FIRM_API ir_alias_relation get_alias_relation(
-	const ir_node *addr1, const ir_type *type1, unsigned size1,
-	const ir_node *addr2, const ir_type *type2, unsigned size2);
+FIRM_API ir_alias_relation
+get_alias_relation(const ir_node *addr1, const ir_type *type1, unsigned size1,
+                   const ir_node *addr2, const ir_type *type2, unsigned size2);
 
 /**
  * Assure that the entity usage flags have been computed for the given graph.
@@ -86,17 +86,20 @@ FIRM_API void assure_irg_entity_usage_computed(ir_graph *irg);
 /**
  * Returns the current address taken state of the globals.
  */
-FIRM_API ir_entity_usage_computed_state get_irp_globals_entity_usage_state(void);
+FIRM_API ir_entity_usage_computed_state
+get_irp_globals_entity_usage_state(void);
 
 /**
  * Sets the current address taken state of the globals.
  *
  * @param state  the new state
  */
-FIRM_API void set_irp_globals_entity_usage_state(ir_entity_usage_computed_state state);
+FIRM_API void set_irp_globals_entity_usage_state(
+    ir_entity_usage_computed_state state);
 
 /**
- * Assure that the address taken flag is computed for the global and TLS entities (variables).
+ * Assure that the address taken flag is computed for the global and TLS
+ * entities (variables).
  *
  * This is an interprocedural analysis that computes the address_taken state
  * for all global and TLS variables.
@@ -114,7 +117,8 @@ FIRM_API void assure_irp_globals_entity_usage_computed(void);
  *
  * @param irg  the graph
  */
-FIRM_API ir_disambiguator_options get_irg_memory_disambiguator_options(const ir_graph *irg);
+FIRM_API ir_disambiguator_options
+get_irg_memory_disambiguator_options(const ir_graph *irg);
 
 /**
  * Sets the memory disambiguator options for a graph.
@@ -122,8 +126,8 @@ FIRM_API ir_disambiguator_options get_irg_memory_disambiguator_options(const ir_
  * @param irg      the graph
  * @param options  a set of options
  */
-FIRM_API void set_irg_memory_disambiguator_options(ir_graph *irg,
-                                                   ir_disambiguator_options options);
+FIRM_API void set_irg_memory_disambiguator_options(
+    ir_graph *irg, ir_disambiguator_options options);
 
 /**
  * Sets the global disambiguator options for all graphs not having local
@@ -131,7 +135,8 @@ FIRM_API void set_irg_memory_disambiguator_options(ir_graph *irg,
  *
  * @param options  a set of options
  */
-FIRM_API void set_irp_memory_disambiguator_options(ir_disambiguator_options options);
+FIRM_API void set_irp_memory_disambiguator_options(
+    ir_disambiguator_options options);
 
 /**
  * Mark all private methods, i.e. those of which all call sites are known.

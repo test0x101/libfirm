@@ -18,21 +18,22 @@
 
 /** For dominator information */
 typedef struct ir_dom_info {
-	ir_node *idom;   /**< immediate CFG dominator */
-	ir_node *next;   /**< The next node in the dominated list of @c idom. */
-	ir_node *first;  /**< The first node in the list of nodes
-	                      this nodes dominates immediately. */
-	unsigned tree_pre_num;         /**< The pre-order number from a dfs walk
-	                                    over the dominator tree. */
-	unsigned max_subtree_pre_num;  /**< The largest tree pre num found in the
-	                                    dominator subtree of this node. */
-	int pre_num;     /**< pre-order graph-walk number */
-	int dom_depth;   /**< depth in dominator-tree */
+  ir_node *idom;         /**< immediate CFG dominator */
+  ir_node *next;         /**< The next node in the dominated list of @c idom. */
+  ir_node *first;        /**< The first node in the list of nodes
+                              this nodes dominates immediately. */
+  unsigned tree_pre_num; /**< The pre-order number from a dfs walk
+                              over the dominator tree. */
+  unsigned max_subtree_pre_num; /**< The largest tree pre num found in the
+                                     dominator subtree of this node. */
+  int pre_num;                  /**< pre-order graph-walk number */
+  int dom_depth;                /**< depth in dominator-tree */
 } ir_dom_info;
 
 typedef struct ir_dom_front_info_t {
-	pmap *df_map;         /**< A map, mapping every block to a list of its dominance frontier blocks. */
-	struct obstack obst;  /**< An obstack holding all the frontier data. */
+  pmap *df_map; /**< A map, mapping every block to a list of its dominance
+                   frontier blocks. */
+  struct obstack obst; /**< An obstack holding all the frontier data. */
 } ir_dom_front_info_t;
 
 void set_Block_idom(ir_node *bl, ir_node *n);
@@ -63,9 +64,9 @@ void ir_free_dominance_frontiers(ir_graph *irg);
  * @param block  The block whose dominated blocks shall be iterated on.
  * @param curr   Name for an ir_node* iterator variable (will be declared)
  */
-#define dominates_for_each(block, curr) \
-	for(ir_node *curr = get_Block_dominated_first(block); curr != NULL; \
-	    curr = get_Block_dominated_next(curr))
+#define dominates_for_each(block, curr)                                \
+  for (ir_node *curr = get_Block_dominated_first(block); curr != NULL; \
+       curr = get_Block_dominated_next(curr))
 
 /**
  * Iterate over all nodes which are immediately post dominated by a given
@@ -73,8 +74,8 @@ void ir_free_dominance_frontiers(ir_graph *irg);
  * @param block The block whose post dominated blocks shall be iterated on.
  * @param curr  Name for an ir_node *iterator variable (will be declared)
  */
-#define postdominates_for_each(block, curr) \
-	for(ir_node *curr = get_Block_postdominated_first(block); curr != NULL; \
-	    curr = get_Block_postdominated_next(curr))
+#define postdominates_for_each(block, curr)                                \
+  for (ir_node *curr = get_Block_postdominated_first(block); curr != NULL; \
+       curr = get_Block_postdominated_next(curr))
 
 #endif

@@ -18,18 +18,19 @@
 /**
  * Callback which rematerializes (=duplicates) a machine node.
  */
-typedef ir_node * (*func_rematerialize) (ir_node *node, ir_node *after);
+typedef ir_node *(*func_rematerialize)(ir_node *node, ir_node *after);
 
 /**
  * Callback function that checks whether a node modifies the flags
  */
-typedef bool (*check_modifies_flags) (const ir_node *node);
+typedef bool (*check_modifies_flags)(const ir_node *node);
 
 /**
  * Callback function that checks whether consumers can use the
  * available flags instead of their original ones.
  */
-typedef bool (*try_replace_flags) (ir_node *consumers, ir_node *flags_needed, ir_node *available_flags);
+typedef bool (*try_replace_flags)(ir_node *consumers, ir_node *flags_needed,
+                                  ir_node *available_flags);
 
 /**
  * Walks the schedule and ensures that flags aren't destroyed between producer

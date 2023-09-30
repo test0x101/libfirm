@@ -5,7 +5,8 @@
 
 /**
  * @file
- * @brief      Implements the Firm interface to debug information -- private header.
+ * @brief      Implements the Firm interface to debug information -- private
+ * header.
  * @author     Goetz Lindenmaier
  * @date       2001
  * @brief
@@ -21,7 +22,8 @@
 
 /**
  * The default merge_pair_func implementation, simply copies the debug info
- * from the old Firm node to the new one if the new one does not have debug info yet.
+ * from the old Firm node to the new one if the new one does not have debug info
+ * yet.
  *
  * @param nw    The new Firm node.
  * @param old   The old Firm node.

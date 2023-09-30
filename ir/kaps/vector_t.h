@@ -17,17 +17,17 @@
 typedef struct vec_elem_t vec_elem_t;
 
 struct vec_elem_t {
-	num data;
+  num data;
 #if KAPS_ENABLE_VECTOR_NAMES
-	const char *name;
+  const char *name;
 #endif
 };
 
 typedef struct vector_t vector_t;
 
 struct vector_t {
-	unsigned   len;
-	vec_elem_t entries[];
+  unsigned len;
+  vec_elem_t entries[];
 };
 
 #endif

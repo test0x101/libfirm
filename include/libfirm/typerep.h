@@ -42,19 +42,20 @@
  *   - type:       The type of this entity.
  *   - name:       The string that represents this entity in the source program
  *   - linkage:    A flag indicating how the linker treats a symbol
- *   - offset:     The offset of the entity within the compound object in bytes.  Only set
- *                 if the owner in the state "layout_fixed".
- *   - offset_bits_remainder:   The offset bit remainder of a bitfield entity (in a compound)
- *                 in bits.  Only set if the owner in the state "layout_fixed".
- *   - overwrites: A list of entities overwritten by this entity.  This list is only
- *                 existent if the owner of this entity is a class.  The members in
- *                 this list must be entities of super classes.
- *   - overwrittenby: A list of entities that overwrite this entity.  This list is only
- *                 existent if the owner of this entity is a class.  The members in
- *                 this list must be entities of sub classes.
- *   - link:       A void* to associate some additional information with the entity.
- *   - irg:        If the entity is a method this is the ir graph that represents the
- *                 code of the method.
+ *   - offset:     The offset of the entity within the compound object in bytes.
+ * Only set if the owner in the state "layout_fixed".
+ *   - offset_bits_remainder:   The offset bit remainder of a bitfield entity
+ * (in a compound) in bits.  Only set if the owner in the state "layout_fixed".
+ *   - overwrites: A list of entities overwritten by this entity.  This list is
+ * only existent if the owner of this entity is a class.  The members in this
+ * list must be entities of super classes.
+ *   - overwrittenby: A list of entities that overwrite this entity.  This list
+ * is only existent if the owner of this entity is a class.  The members in this
+ * list must be entities of sub classes.
+ *   - link:       A void* to associate some additional information with the
+ * entity.
+ *   - irg:        If the entity is a method this is the ir graph that
+ * represents the code of the method.
  *   - visited:    visited flag.  Master flag is type_visited.
  *
  * These fields can only be accessed via access functions.
@@ -77,98 +78,98 @@
  * Visibility classes for entities.
  */
 typedef enum {
-	/**
-	 * The entity is visible across compilation units. It might have an
-	 * initializer/graph.
-	 * Note that entities with visibility_external without initializer are
-	 * assumed to be defined in another compilation unit (not like C variables
-	 * which are considered 'uninitialized' in this case).
-	 */
-	ir_visibility_external,
-	/**
-	 * The entity is visible across compilation units, but not across modules.
-	 * This is equivalent to __attribute__((visibility("hidden"))) in gcc.
-	 */
-	ir_visibility_external_private,
-	/**
-	 * The entity is visible across compilation units and modules and cannot be
-	 * overridden by other modules.
-	 * Equivalent to __attribute__((visible("protected"))) in gcc.
-	 */
-	ir_visibility_external_protected,
-	/**
-	 * The entity is local to the compilation unit.
-	 * A local entity is not visible in other compilation units.
-	 * Note that the entity might still be accessed indirectly from other units
-	 * through pointers.
-	 */
-	ir_visibility_local,
-	/**
-	 * This has the same semantic as visibility_local. Additionally the symbol
-	 * is completely hidden from the linker (it only appears in the assembly).
-	 * While visibility_local is probably still visible to debuggers,
-	 * visibility_private symbols aren't and probably won't appear in the object
-	 * files
-	 */
-	ir_visibility_private,
+  /**
+   * The entity is visible across compilation units. It might have an
+   * initializer/graph.
+   * Note that entities with visibility_external without initializer are
+   * assumed to be defined in another compilation unit (not like C variables
+   * which are considered 'uninitialized' in this case).
+   */
+  ir_visibility_external,
+  /**
+   * The entity is visible across compilation units, but not across modules.
+   * This is equivalent to __attribute__((visibility("hidden"))) in gcc.
+   */
+  ir_visibility_external_private,
+  /**
+   * The entity is visible across compilation units and modules and cannot be
+   * overridden by other modules.
+   * Equivalent to __attribute__((visible("protected"))) in gcc.
+   */
+  ir_visibility_external_protected,
+  /**
+   * The entity is local to the compilation unit.
+   * A local entity is not visible in other compilation units.
+   * Note that the entity might still be accessed indirectly from other units
+   * through pointers.
+   */
+  ir_visibility_local,
+  /**
+   * This has the same semantic as visibility_local. Additionally the symbol
+   * is completely hidden from the linker (it only appears in the assembly).
+   * While visibility_local is probably still visible to debuggers,
+   * visibility_private symbols aren't and probably won't appear in the object
+   * files
+   */
+  ir_visibility_private,
 } ir_visibility;
 
 /**
  * linkage specifies how the linker treats symbols
  */
 typedef enum ir_linkage {
-	IR_LINKAGE_DEFAULT         = 0,
-	/**
-	 * A symbol whose definition won't change in a program.
-	 * Optimization might replace loads from this entity with constants.
-	 * Also most linkers put such data in a constant segment which is shared
-	 * between multiple running instances of the same application.
-	 */
-	IR_LINKAGE_CONSTANT        = 1 << 0,
-	/**
-	 * The entity is a weak symbol.
-	 * A weak symbol is overridden by a non-weak symbol if one exists.
-	 * Most linkers only support the IR_LINKAGE_WEAK in combination with
-	 * IR_LINKAGE_MERGE.
-	 */
-	IR_LINKAGE_WEAK            = 1 << 1,
-	/**
-	 * The entity may be removed when it isn't referenced anywhere in the
-	 * compilation unit even if it is exported (non-local).
-	 * Typically used for C++ instantiated template code (,,COMDAT'' section).
-	 */
-	IR_LINKAGE_GARBAGE_COLLECT = 1 << 2,
-	/**
-	 * The linker will try to merge entities with same name from different
-	 * compilation units. This is the usual behaviour for global variables
-	 * without explicit initialisation in C (``COMMON'' symbols). It's also
-	 * typically used in C++ for instantiated template code (,,COMDAT'' section)
-	 */
-	IR_LINKAGE_MERGE           = 1 << 3,
-	/**
-	 * Some entity uses are potentially hidden from the compiler.
-	 * (For example because they happen in an asm("") statement. This flag
-	 *  should be set for __attribute__((used)) in C code).
-	 * Setting this flag prohibits that the compiler making assumptions about
-	 * read/write behaviour to global variables or changing calling conventions
-	 * from cdecl to fastcall.
-	 */
-	IR_LINKAGE_HIDDEN_USER     = 1 << 4,
-	/**
-	 * Do not generate code even if the entity has a graph or
-	 * initialization data attached.  The graph/data is only used for
-	 * inlining.  Otherwise the entity is regarded as a declaration of
-	 * an externally defined entity.
-	 * This linkage flag can be used to implement C99 "inline" or GNU89
-	 * "extern inline".
-	 */
-	IR_LINKAGE_NO_CODEGEN      = 1 << 5,
-	/**
-	 * The entity does not need to have an address that is different from other
-	 * entities. When this property is set the entity may be safely merged with
-	 * entities with the same content.
-	 */
-	IR_LINKAGE_NO_IDENTITY     = 1 << 6,
+  IR_LINKAGE_DEFAULT = 0,
+  /**
+   * A symbol whose definition won't change in a program.
+   * Optimization might replace loads from this entity with constants.
+   * Also most linkers put such data in a constant segment which is shared
+   * between multiple running instances of the same application.
+   */
+  IR_LINKAGE_CONSTANT = 1 << 0,
+  /**
+   * The entity is a weak symbol.
+   * A weak symbol is overridden by a non-weak symbol if one exists.
+   * Most linkers only support the IR_LINKAGE_WEAK in combination with
+   * IR_LINKAGE_MERGE.
+   */
+  IR_LINKAGE_WEAK = 1 << 1,
+  /**
+   * The entity may be removed when it isn't referenced anywhere in the
+   * compilation unit even if it is exported (non-local).
+   * Typically used for C++ instantiated template code (,,COMDAT'' section).
+   */
+  IR_LINKAGE_GARBAGE_COLLECT = 1 << 2,
+  /**
+   * The linker will try to merge entities with same name from different
+   * compilation units. This is the usual behaviour for global variables
+   * without explicit initialisation in C (``COMMON'' symbols). It's also
+   * typically used in C++ for instantiated template code (,,COMDAT'' section)
+   */
+  IR_LINKAGE_MERGE = 1 << 3,
+  /**
+   * Some entity uses are potentially hidden from the compiler.
+   * (For example because they happen in an asm("") statement. This flag
+   *  should be set for __attribute__((used)) in C code).
+   * Setting this flag prohibits that the compiler making assumptions about
+   * read/write behaviour to global variables or changing calling conventions
+   * from cdecl to fastcall.
+   */
+  IR_LINKAGE_HIDDEN_USER = 1 << 4,
+  /**
+   * Do not generate code even if the entity has a graph or
+   * initialization data attached.  The graph/data is only used for
+   * inlining.  Otherwise the entity is regarded as a declaration of
+   * an externally defined entity.
+   * This linkage flag can be used to implement C99 "inline" or GNU89
+   * "extern inline".
+   */
+  IR_LINKAGE_NO_CODEGEN = 1 << 5,
+  /**
+   * The entity does not need to have an address that is different from other
+   * entities. When this property is set the entity may be safely merged with
+   * entities with the same content.
+   */
+  IR_LINKAGE_NO_IDENTITY = 1 << 6,
 } ir_linkage;
 ENUM_BITSET(ir_linkage)
 
@@ -180,13 +181,14 @@ FIRM_API ir_visibility get_entity_visibility(const ir_entity *entity);
 /**
  * Sets visibility class of an entity
  */
-FIRM_API void set_entity_visibility(ir_entity *entity, ir_visibility visibility);
+FIRM_API void set_entity_visibility(ir_entity *entity,
+                                    ir_visibility visibility);
 
 /**
  * Returns 1 if the entity is visible outside the current compilation unit
  * or to unknown callers (like asm statements).
- * If invisible, the entity might still be accessible indirectly through pointers.
- * This is a convenience function and does the same as
+ * If invisible, the entity might still be accessible indirectly through
+ * pointers. This is a convenience function and does the same as
  * get_entity_visibility(entity) != ir_visibility_local ||
  * (get_entity_linkage(entity) & IR_LINKAGE_HIDDEN_USER)
  */
@@ -398,8 +400,8 @@ FIRM_API void set_entity_link(ir_entity *ent, void *l);
 
 /**
  * Return the method graph of a method entity.
- * @warning If the entity has IR_LINKAGE_WEAK, then this is not necessarily the final code
- *          bound to the entity. If you are writing an analysis use
+ * @warning If the entity has IR_LINKAGE_WEAK, then this is not necessarily the
+ * final code bound to the entity. If you are writing an analysis use
  *          get_entity_linktime_irg()!
  */
 FIRM_API ir_graph *get_entity_irg(const ir_entity *ent);
@@ -430,16 +432,15 @@ FIRM_API ir_label_t get_entity_label(const ir_entity *ent);
  * Bitfield type indicating the way an entity is used.
  */
 typedef enum {
-	ir_usage_none             = 0,      /**< This entity is unused. */
-	ir_usage_address_taken    = 1 << 0, /**< The address of this entity was taken. */
-	ir_usage_write            = 1 << 1, /**< The entity was written to. */
-	ir_usage_read             = 1 << 2, /**< The entity was read. */
-	ir_usage_reinterpret_cast = 1 << 3, /**< The entity was read but with a wrong mode
-	                                         (an implicit reinterpret cast) */
-	/** Unknown access */
-	ir_usage_unknown
-		= ir_usage_address_taken | ir_usage_write | ir_usage_read
-		| ir_usage_reinterpret_cast
+  ir_usage_none = 0,               /**< This entity is unused. */
+  ir_usage_address_taken = 1 << 0, /**< The address of this entity was taken. */
+  ir_usage_write = 1 << 1,         /**< The entity was written to. */
+  ir_usage_read = 1 << 2,          /**< The entity was read. */
+  ir_usage_reinterpret_cast = 1 << 3, /**< The entity was read but with a wrong
+                                         mode (an implicit reinterpret cast) */
+  /** Unknown access */
+  ir_usage_unknown = ir_usage_address_taken | ir_usage_write | ir_usage_read |
+                     ir_usage_reinterpret_cast
 } ir_entity_usage;
 
 /** Returns the entity usage */
@@ -470,7 +471,7 @@ FIRM_API void set_entity_dbg_info(ir_entity *ent, dbg_info *db);
  * Starting from this address you can walk the stack to find further
  * parameters.
  */
-#define IR_VA_START_PARAMETER_NUMBER  ((size_t)-1)
+#define IR_VA_START_PARAMETER_NUMBER ((size_t)-1)
 
 /**
  * returns true if a given entity is a parameter_entity representing the
@@ -494,18 +495,19 @@ FIRM_API void set_entity_parameter_number(ir_entity *entity, size_t n);
 
 /** the kind (type) of an initializer */
 typedef enum ir_initializer_kind_t {
-	/** initializer containing an ir_node from the const-code irg */
-	IR_INITIALIZER_CONST,
-	/** initializer containing a tarval */
-	IR_INITIALIZER_TARVAL,
-	/** initializes type with default values (usually 0) */
-	IR_INITIALIZER_NULL,
-	/** list of initializers used to initialize a compound or array type */
-	IR_INITIALIZER_COMPOUND
+  /** initializer containing an ir_node from the const-code irg */
+  IR_INITIALIZER_CONST,
+  /** initializer containing a tarval */
+  IR_INITIALIZER_TARVAL,
+  /** initializes type with default values (usually 0) */
+  IR_INITIALIZER_NULL,
+  /** list of initializers used to initialize a compound or array type */
+  IR_INITIALIZER_COMPOUND
 } ir_initializer_kind_t;
 
 /** Returns the kind of an initializer */
-FIRM_API ir_initializer_kind_t get_initializer_kind(const ir_initializer_t *initializer);
+FIRM_API ir_initializer_kind_t
+get_initializer_kind(const ir_initializer_t *initializer);
 
 /** Returns the name of the initializer kind. */
 FIRM_API const char *get_initializer_kind_name(ir_initializer_kind_t ini);
@@ -525,16 +527,19 @@ FIRM_API ir_initializer_t *create_initializer_const(ir_node *value);
 FIRM_API ir_initializer_t *create_initializer_tarval(ir_tarval *tv);
 
 /** Returns the value contained in a const initializer */
-FIRM_API ir_node *get_initializer_const_value(const ir_initializer_t *initializer);
+FIRM_API ir_node *get_initializer_const_value(
+    const ir_initializer_t *initializer);
 
 /** Returns the value contained in a tarval initializer */
-FIRM_API ir_tarval *get_initializer_tarval_value(const ir_initializer_t *initialzier);
+FIRM_API ir_tarval *get_initializer_tarval_value(
+    const ir_initializer_t *initialzier);
 
 /** Creates a compound initializer which holds @p n_entries entries */
 FIRM_API ir_initializer_t *create_initializer_compound(size_t n_entries);
 
 /** Returns the number of entries in a compound initializer */
-FIRM_API size_t get_initializer_compound_n_entries(const ir_initializer_t *initializer);
+FIRM_API size_t
+get_initializer_compound_n_entries(const ir_initializer_t *initializer);
 
 /** Sets entry with index @p index to the initializer @p value */
 FIRM_API void set_initializer_compound_value(ir_initializer_t *initializer,
@@ -543,12 +548,13 @@ FIRM_API void set_initializer_compound_value(ir_initializer_t *initializer,
 
 /** Returns the value with index @p index of a compound initializer */
 FIRM_API ir_initializer_t *get_initializer_compound_value(
-		const ir_initializer_t *initializer, size_t index);
+    const ir_initializer_t *initializer, size_t index);
 
 /** @} */
 
 /** Sets the initializer of an entity. */
-FIRM_API void set_entity_initializer(ir_entity *entity, ir_initializer_t *initializer);
+FIRM_API void set_entity_initializer(ir_entity *entity,
+                                     ir_initializer_t *initializer);
 
 /** Returns the initializer of an entity. */
 FIRM_API ir_initializer_t *get_entity_initializer(const ir_entity *entity);
@@ -629,7 +635,8 @@ FIRM_API int entity_has_additional_properties(const ir_entity *entity);
  * set_entity_additional_properties() or
  * set_entity_additional_property().
  */
-FIRM_API mtp_additional_properties get_entity_additional_properties(const ir_entity *ent);
+FIRM_API mtp_additional_properties
+get_entity_additional_properties(const ir_entity *ent);
 
 /** Sets the mask of the additional graph properties. */
 FIRM_API void set_entity_additional_properties(ir_entity *ent,
@@ -663,12 +670,13 @@ FIRM_API int is_unknown_entity(const ir_entity *entity);
 
 /** Encodes how a pointer parameter is accessed. */
 typedef enum ptr_access_kind {
-	ptr_access_none  = 0,                                 /**< no access */
-	ptr_access_read  = 1,                                 /**< read access */
-	ptr_access_write = 2,                                 /**< write access */
-	ptr_access_rw    = ptr_access_read|ptr_access_write,  /**< read AND write access */
-	ptr_access_store = 4,                                 /**< the pointer is stored */
-	ptr_access_all   = ptr_access_rw|ptr_access_store     /**< all possible access */
+  ptr_access_none = 0,  /**< no access */
+  ptr_access_read = 1,  /**< read access */
+  ptr_access_write = 2, /**< write access */
+  ptr_access_rw =
+      ptr_access_read | ptr_access_write, /**< read AND write access */
+  ptr_access_store = 4,                   /**< the pointer is stored */
+  ptr_access_all = ptr_access_rw | ptr_access_store /**< all possible access */
 } ptr_access_kind;
 ENUM_BITSET(ptr_access_kind)
 
@@ -700,18 +708,18 @@ ENUM_BITSET(ptr_access_kind)
  *  For each type kind exists a typecode to identify it.
  */
 typedef enum tp_opcode {
-	tpo_uninitialized = 0,   /* not a type opcode */
-	tpo_struct,              /**< A struct type. */
-	tpo_union,               /**< A union type. */
-	tpo_class,               /**< A class type. */
-	tpo_segment,             /**< A segment type. */
-	tpo_method,              /**< A method type. */
-	tpo_array,               /**< An array type. */
-	tpo_pointer,             /**< A pointer type. */
-	tpo_primitive,           /**< A primitive type. */
-	tpo_code,                /**< a piece of code (a basic block) */
-	tpo_unknown,             /**< Special code for the Unknown type. */
-	tpo_last = tpo_unknown   /* not a type opcode */
+  tpo_uninitialized = 0, /* not a type opcode */
+  tpo_struct,            /**< A struct type. */
+  tpo_union,             /**< A union type. */
+  tpo_class,             /**< A class type. */
+  tpo_segment,           /**< A segment type. */
+  tpo_method,            /**< A method type. */
+  tpo_array,             /**< An array type. */
+  tpo_pointer,           /**< A pointer type. */
+  tpo_primitive,         /**< A primitive type. */
+  tpo_code,              /**< a piece of code (a basic block) */
+  tpo_unknown,           /**< Special code for the Unknown type. */
+  tpo_last = tpo_unknown /* not a type opcode */
 } tp_opcode;
 
 /**
@@ -762,7 +770,7 @@ FIRM_API int is_overwritten_by(ir_entity *high, ir_entity *low);
  *  dynamic type are given.
  *  Searches downwards in overwritten tree. */
 FIRM_API ir_entity *resolve_ent_polymorphy(ir_type *dynamic_class,
-                                           ir_entity* static_ent);
+                                           ir_entity *static_ent);
 
 /* ----------------------------------------------------------------------- */
 /* The transitive closure of the subclass/superclass and                   */
@@ -783,21 +791,24 @@ FIRM_API ir_entity *resolve_ent_polymorphy(ir_type *dynamic_class,
  * The state of the transitive closure.
  */
 typedef enum {
-	inh_transitive_closure_none,       /**<  Closure is not computed, can not be accessed. */
-	inh_transitive_closure_valid,      /**<  Closure computed and valid. */
-	inh_transitive_closure_invalid,    /**<  Closure invalid, but can be accessed. */
-	inh_transitive_closure_max         /**<  Invalid value. */
+  inh_transitive_closure_none,    /**<  Closure is not computed, can not be
+                                     accessed. */
+  inh_transitive_closure_valid,   /**<  Closure computed and valid. */
+  inh_transitive_closure_invalid, /**<  Closure invalid, but can be accessed. */
+  inh_transitive_closure_max      /**<  Invalid value. */
 } inh_transitive_closure_state;
 
 /** Sets the transitive closure of sub/superclass state for the
  * whole program. */
-FIRM_API void set_irp_inh_transitive_closure_state(inh_transitive_closure_state s);
+FIRM_API void set_irp_inh_transitive_closure_state(
+    inh_transitive_closure_state s);
 /** Sets the transitive closure of sub/superclass state for the
  * whole program to #inh_transitive_closure_invalid */
 FIRM_API void invalidate_irp_inh_transitive_closure_state(void);
 /** Returns the transitive closure of sub/superclass state for the
  * whole program. */
-FIRM_API inh_transitive_closure_state get_irp_inh_transitive_closure_state(void);
+FIRM_API inh_transitive_closure_state
+get_irp_inh_transitive_closure_state(void);
 
 /** Compute transitive closure of the subclass/superclass and
  * overwrites/overwrittenby relation.
@@ -848,7 +859,6 @@ FIRM_API ir_entity *get_entity_trans_overwrites_first(const ir_entity *ent);
  */
 FIRM_API ir_entity *get_entity_trans_overwrites_next(const ir_entity *ent);
 
-
 /**
  * Checks a type for memory corruption, dangling pointers and consistency.
  *
@@ -888,18 +898,18 @@ FIRM_API void ir_print_type(char *buffer, size_t buffer_size,
 
 /** The state of the type layout. */
 typedef enum {
-	layout_undefined,    /**< The layout of this type is not defined.
-	                          Address computation to access fields is not
-	                          possible, fields must be accessed by Sel
-	                          nodes.
-	                          This is the default value except for
-	                          pointer, primitive and method types. */
-	layout_fixed         /**< The layout is fixed, all component/member entities
-	                          have an offset assigned. Size of the type is
-	                          known. Arrays can be accessed by explicit address
-	                          computation.
-	                          Default for pointer, primitive and method types.
-	                          */
+  layout_undefined, /**< The layout of this type is not defined.
+                         Address computation to access fields is not
+                         possible, fields must be accessed by Sel
+                         nodes.
+                         This is the default value except for
+                         pointer, primitive and method types. */
+  layout_fixed      /**< The layout is fixed, all component/member entities
+                         have an offset assigned. Size of the type is
+                         known. Arrays can be accessed by explicit address
+                         computation.
+                         Default for pointer, primitive and method types.
+                         */
 } ir_type_state;
 
 /** Returns a human readable string for the enum entry. */
@@ -957,10 +967,10 @@ FIRM_API void set_type_link(ir_type *tp, void *l);
 
 /** Increments type visited reference counter by one.
  * @see @ref visited_counters, mark_type_visited(), type_visited() */
-FIRM_API void         inc_master_type_visited(void);
+FIRM_API void inc_master_type_visited(void);
 /** Sets type visited reference counter.
  * @see @ref visited_counters */
-FIRM_API void         set_master_type_visited(ir_visited_t val);
+FIRM_API void set_master_type_visited(ir_visited_t val);
 /** Returns type visited reference counter.
  * @see @ref visited_counters */
 FIRM_API ir_visited_t get_master_type_visited(void);
@@ -996,14 +1006,14 @@ FIRM_API long get_type_nr(const ir_type *tp);
  *  Furthermore, a class can inherit from and bequest to other classes.
  *
  *  The following attributes are private to this type kind:
- *  - member:     All entities belonging to this class.  These are method entities
- *                which have type kind type_method or fields that can have any of the
+ *  - member:     All entities belonging to this class.  These are method
+ * entities which have type kind type_method or fields that can have any of the
  *                following type kinds: type_class, type_struct, type_union,
  *                type_array, type_pointer, type_primitive.
  *
- *  The following two are dynamic lists that can be grown with add_class_subtype() and
- *  add_class_supertype() respectively but not shrunk (remove_class_subtype() and
- *  remove_class_supertype() will not free memory):
+ *  The following two are dynamic lists that can be grown with
+ * add_class_subtype() and add_class_supertype() respectively but not shrunk
+ * (remove_class_subtype() and remove_class_supertype() will not free memory):
  *
  *  - subtypes:    A list of direct subclasses.
  *
@@ -1082,7 +1092,8 @@ FIRM_API ir_type *get_class_supertype(const ir_type *clss, size_t pos);
  *
  *  Does not set the corresponding subtype relation for supertype: this might
  *  be at a different position! */
-FIRM_API void set_class_supertype(ir_type *clss, ir_type *supertype, size_t pos);
+FIRM_API void set_class_supertype(ir_type *clss, ir_type *supertype,
+                                  size_t pos);
 
 /** Finds supertype in the list of supertypes and removes it */
 FIRM_API void remove_class_supertype(ir_type *clss, ir_type *supertype);
@@ -1197,7 +1208,9 @@ FIRM_API int is_Union_type(const ir_type *uni);
  * The arrays for the parameter and result types are not populated by
  * the constructor.
  */
-FIRM_API ir_type *new_type_method(size_t n_param, size_t n_res, int is_variadic, unsigned cc_mask, mtp_additional_properties property_mask);
+FIRM_API ir_type *new_type_method(size_t n_param, size_t n_res, int is_variadic,
+                                  unsigned cc_mask,
+                                  mtp_additional_properties property_mask);
 
 /** Returns the number of parameters of this method. */
 FIRM_API size_t get_method_n_params(const ir_type *method);
@@ -1219,64 +1232,70 @@ FIRM_API void set_method_res_type(ir_type *method, size_t pos, ir_type *tp);
 FIRM_API int is_method_variadic(ir_type const *method);
 
 /** Returns the mask of the additional graph properties. */
-FIRM_API mtp_additional_properties get_method_additional_properties(const ir_type *method);
+FIRM_API mtp_additional_properties
+get_method_additional_properties(const ir_type *method);
 
 /**
  * Calling conventions: lower 24 bits are the number of register parameters,
  * upper 8 encode the calling conventions.
  */
 typedef enum {
-	cc_reg_param           = 0x01000000, /**< Transmit parameters in registers, else the stack is used.
-	                                          This flag may be set as default on some architectures. */
-	cc_last_on_top         = 0x02000000, /**< The last non-register parameter is transmitted on top of
-	                                          the stack. This is equivalent to the pascal
-	                                          calling convention. If this flag is not set, the first
-	                                          non-register parameter is used (stdcall or cdecl
-	                                          calling convention) */
-	cc_callee_clear_stk    = 0x04000000, /**< The callee clears the stack. This forbids variadic
-	                                          function calls (stdcall). */
-	cc_this_call           = 0x08000000, /**< The first parameter is a this pointer and is transmitted
-	                                          in a special way. */
-	cc_compound_ret        = 0x10000000, /**< The method returns a compound type. */
-	cc_frame_on_caller_stk = 0x20000000, /**< The method did not allocate an own stack frame, instead the
-	                                          caller must reserve size on its own stack. */
-	cc_fpreg_param         = 0x40000000, /**< Transmit floating point parameters in registers, else the stack is used. */
+  cc_reg_param =
+      0x01000000, /**< Transmit parameters in registers, else the stack is used.
+                       This flag may be set as default on some architectures. */
+  cc_last_on_top =
+      0x02000000, /**< The last non-register parameter is transmitted on top of
+                       the stack. This is equivalent to the pascal
+                       calling convention. If this flag is not set, the first
+                       non-register parameter is used (stdcall or cdecl
+                       calling convention) */
+  cc_callee_clear_stk =
+      0x04000000, /**< The callee clears the stack. This forbids variadic
+                       function calls (stdcall). */
+  cc_this_call = 0x08000000, /**< The first parameter is a this pointer and is
+                                transmitted in a special way. */
+  cc_compound_ret = 0x10000000, /**< The method returns a compound type. */
+  cc_frame_on_caller_stk =
+      0x20000000, /**< The method did not allocate an own stack frame, instead
+                     the caller must reserve size on its own stack. */
+  cc_fpreg_param = 0x40000000, /**< Transmit floating point parameters in
+                                  registers, else the stack is used. */
 } calling_convention;
 
 /**< The calling convention bits. */
 #define cc_bits (0xFF000000)
 
 /** cdecl calling convention */
-#define cc_cdecl_set    (0)
+#define cc_cdecl_set (0)
 /** stdcall calling convention */
-#define cc_stdcall_set  cc_callee_clear_stk
+#define cc_stdcall_set cc_callee_clear_stk
 /** fastcall calling convention */
-#define cc_fastcall_set (cc_reg_param|cc_callee_clear_stk)
+#define cc_fastcall_set (cc_reg_param | cc_callee_clear_stk)
 
 /**
  * check for the CDECL calling convention
  */
-#define IS_CDECL(cc_mask)     (((cc_mask) & cc_bits) == cc_cdecl_set)
+#define IS_CDECL(cc_mask) (((cc_mask)&cc_bits) == cc_cdecl_set)
 
 /**
  * check for the STDCALL calling convention
  */
-#define IS_STDCALL(cc_mask)   (((cc_mask) & cc_bits) == cc_stdcall_set)
+#define IS_STDCALL(cc_mask) (((cc_mask)&cc_bits) == cc_stdcall_set)
 
 /**
  * check for the FASTCALL calling convention
  */
-#define IS_FASTCALL(cc_mask)  (((cc_mask) & cc_bits) == cc_fastcall_set)
+#define IS_FASTCALL(cc_mask) (((cc_mask)&cc_bits) == cc_fastcall_set)
 
 /**
  * Sets the CDECL convention bits.
  */
-#define SET_CDECL(cc_mask)    (((cc_mask) & ~cc_bits) | cc_cdecl_set)
+#define SET_CDECL(cc_mask) (((cc_mask) & ~cc_bits) | cc_cdecl_set)
 
 /**
  * Sets the STDCALL convention bits.
  */
-#define SET_STDCALL(cc_mask)  (((cc_mask) & ~cc_bits) | cc_stdcall_set)
+#define SET_STDCALL(cc_mask) (((cc_mask) & ~cc_bits) | cc_stdcall_set)
 
 /**
  * Sets the FASTCALL convention bits.
@@ -1377,10 +1396,10 @@ FIRM_API int is_code_type(const ir_type *tp);
  *  This type is an auxiliary type dedicated to support type analyses.
  *
  *  The unknown type represents that there could be a type, but it is not
- *  known.  This type can be used to initialize fields before an analysis (not known
- *  yet) or to represent the top of a lattice (could not be determined).  There exists
- *  exactly one type unknown. This type is not on the type list in ir_prog.  It is
- *  allocated when initializing the type module.
+ *  known.  This type can be used to initialize fields before an analysis (not
+ * known yet) or to represent the top of a lattice (could not be determined).
+ * There exists exactly one type unknown. This type is not on the type list in
+ * ir_prog.  It is allocated when initializing the type module.
  *
  *  The following values are set:
  *    - mode:  mode_ANY
@@ -1517,7 +1536,7 @@ FIRM_API int is_segment_type(const ir_type *tp);
  *   @param tp1  The first type to compare.
  *   @param tp2  The second type to compare.
  */
-typedef int (compare_types_func_t)(const void *tp1, const void *tp2);
+typedef int(compare_types_func_t)(const void *tp1, const void *tp2);
 
 /** Type of argument functions for type walkers.
  *

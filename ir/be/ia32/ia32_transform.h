@@ -5,7 +5,8 @@
 
 /**
  * @file
- * @brief       This file implements the IR transformation from firm into ia32-Firm.
+ * @brief       This file implements the IR transformation from firm into
+ * ia32-Firm.
  * @author      Christian Wuerdig, Matthias Braun
  */
 #ifndef FIRM_BE_IA32_IA32_TRANSFORM_H
@@ -28,12 +29,12 @@ void ia32_transform_graph(ir_graph *irg);
  * Generated on demand.
  */
 typedef enum {
-	ia32_SSIGN,          /**< SSE2 single precision sign */
-	ia32_DSIGN,          /**< SSE2 double precision sign */
-	ia32_SABS,           /**< SSE2 single precision ABS mask */
-	ia32_DABS,           /**< SSE2 double precision ABS mask */
-	ia32_ULLBIAS,        /**< x87 ULL->float bias */
-	ia32_known_const_max /**< last constant */
+  ia32_SSIGN,          /**< SSE2 single precision sign */
+  ia32_DSIGN,          /**< SSE2 double precision sign */
+  ia32_SABS,           /**< SSE2 single precision ABS mask */
+  ia32_DABS,           /**< SSE2 double precision ABS mask */
+  ia32_ULLBIAS,        /**< x87 ULL->float bias */
+  ia32_known_const_max /**< last constant */
 } ia32_known_const_t;
 
 /**
@@ -52,10 +53,9 @@ const arch_register_t *ia32_get_clobber_register(const char *clobber);
 ir_node *ia32_create_Immediate_full(ir_graph *irg, const x86_imm32_t *imm);
 
 static inline ir_node *ia32_create_Immediate(ir_graph *const irg,
-                                             int32_t const val)
-{
-	x86_imm32_t imm = { .offset = val };
-	return ia32_create_Immediate_full(irg, &imm);
+                                             int32_t const val) {
+  x86_imm32_t imm = {.offset = val};
+  return ia32_create_Immediate_full(irg, &imm);
 }
 
 #endif

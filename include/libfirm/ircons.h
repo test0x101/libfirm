@@ -76,8 +76,8 @@
  *
  *      The fields of an ir_node:
  *
- *      kind             A firm_kind tag containing k_ir_node.  This is useful for
- *                       dynamically checking the type of a node.
+ *      kind             A firm_kind tag containing k_ir_node.  This is useful
+ * for dynamically checking the type of a node.
  *
  *      *op              This ir_op gives the opcode as a tag and a string
  *                       and the number of attributes of an ir_node.  There is
@@ -92,16 +92,15 @@
  *
  *      **in             An array with pointers to the node's predecessors.
  *
- *      *link            A pointer to an ir_node.  With this pointer all Phi nodes
- *                       are attached to a Block, i.e. a Block points to its
- *                       first Phi node, this node points to the second Phi node
- *                       in the Block and so forth.  Used in mature_immBlock
- *                       to find all Phi nodes to be matured.  It's also used to
+ *      *link            A pointer to an ir_node.  With this pointer all Phi
+ * nodes are attached to a Block, i.e. a Block points to its first Phi node,
+ * this node points to the second Phi node in the Block and so forth.  Used in
+ * mature_immBlock to find all Phi nodes to be matured.  It's also used to
  *                       annotate a node with a better, optimized version of it.
  *
- *      attr             An attr struct containing the attributes of the nodes. The
- *                       attributes depend on the opcode of the node.  The number
- *                       of these attributes is given in op.
+ *      attr             An attr struct containing the attributes of the nodes.
+ * The attributes depend on the opcode of the node.  The number of these
+ * attributes is given in op.
  *
  *    The struct ir_op
  *    ----------------
@@ -136,13 +135,13 @@
  *    This library supplies several interfaces to construct a FIRM graph for
  *    a program:
  *    - A "comfortable" interface generating SSA automatically.  Automatically
- *      computed predecessors of nodes need not be specified in the constructors.
- *      (new_<Node> constructurs and a set of additional routines.)
+ *      computed predecessors of nodes need not be specified in the
+ * constructors. (new_<Node> constructurs and a set of additional routines.)
  *    - A less comfortable interface where all predecessors except the block
  *      an operation belongs to need to be specified.  SSA must be constructed
  *      by hand.  (new_<Node> constructors and set_cur_block()).  This interface
- *      is called "block oriented".  It automatically calles the local optimizations
- *      for each new node.
+ *      is called "block oriented".  It automatically calles the local
+ * optimizations for each new node.
  *    - An even less comfortable interface where the block needs to be specified
  *      explicitly.  This is called the "raw" interface. (new_r_<Node>
  *      constructors).
@@ -206,8 +205,8 @@
  *    with two predecessors stored in variables cf_pred1 and cf_pred2,
  *    containing the code
  *      a = a div a;
- *    and finally jumping to an other block.  The variable a got the local_val_nr
- *    42 by the front end.
+ *    and finally jumping to an other block.  The variable a got the
+ * local_val_nr 42 by the front end.
  *
  *    ir_node *example(ir_node *cf_pred1, ir_node *cf_pred2)
  *    {
@@ -315,8 +314,8 @@
  * @param mode   The mode of the operands and results.
  * @param value  A value from which the tarval is made.
  */
-FIRM_API ir_node *new_rd_Const_long(dbg_info *db, ir_graph *irg,
-                                    ir_mode *mode, long value);
+FIRM_API ir_node *new_rd_Const_long(dbg_info *db, ir_graph *irg, ir_mode *mode,
+                                    long value);
 
 /** Constructor for a Const node.
  *
@@ -359,8 +358,8 @@ FIRM_API ir_node *new_Const_long(ir_mode *mode, long value);
  */
 
 /** Constructor for memory Phi with keep-alive edge. */
-FIRM_API ir_node *new_rd_Phi_loop(dbg_info *db, ir_node *block,
-                                      int arity, ir_node *in[]);
+FIRM_API ir_node *new_rd_Phi_loop(dbg_info *db, ir_node *block, int arity,
+                                  ir_node *in[]);
 
 /** Constructor for memory Phi with keep-alive edge. */
 FIRM_API ir_node *new_r_Phi_loop(ir_node *block, int arity, ir_node *in[]);
@@ -397,8 +396,8 @@ FIRM_API ir_node *new_rd_DivRL(dbg_info *db, ir_node *block, ir_node *memop,
  * @param op2     The second operand.
  * @param pinned  Whether the node is pinned in its block.
  */
-FIRM_API ir_node *new_r_DivRL(ir_node *block, ir_node *memop,
-                              ir_node *op1, ir_node *op2, int pinned);
+FIRM_API ir_node *new_r_DivRL(ir_node *block, ir_node *memop, ir_node *op1,
+                              ir_node *op2, int pinned);
 
 /** Constructor for a remainderless Div node.
  *
@@ -410,8 +409,8 @@ FIRM_API ir_node *new_r_DivRL(ir_node *block, ir_node *memop,
  * @param op2     The second operand.
  * @param pinned  Whether the node is pinned in its block.
  */
-FIRM_API ir_node *new_d_DivRL(dbg_info *db, ir_node *memop,
-                              ir_node *op1, ir_node *op2, int pinned);
+FIRM_API ir_node *new_d_DivRL(dbg_info *db, ir_node *memop, ir_node *op1,
+                              ir_node *op2, int pinned);
 
 /** Constructor for a remainderless Div node.
  *
@@ -597,7 +596,7 @@ FIRM_API void verify_new_node(ir_node *node);
  * variable is requested.
  */
 FIRM_API void ir_set_uninitialized_local_variable_func(
-		uninitialized_local_variable_func_t *func);
+    uninitialized_local_variable_func_t *func);
 
 /** @} */
 

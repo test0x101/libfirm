@@ -22,10 +22,10 @@
 #include "firm_types.h"
 #include "bechordal.h"
 
-typedef int(*cost_fct_t)(const ir_node *node, int input);
+typedef int (*cost_fct_t)(const ir_node *node, int input);
 
 typedef struct {
-	int (*copyopt)(copy_opt_t *co); /**< function ptr to run copyopt */
+  int (*copyopt)(copy_opt_t *co); /**< function ptr to run copyopt */
 } co_algo_info;
 
 /**

@@ -78,8 +78,9 @@ FIRM_API void lower_CopyB(ir_graph *irg, unsigned max_small_size,
                           unsigned min_large_size, int allow_misalignments);
 
 /**
- * Lowers all Switches (Cond nodes with non-boolean mode) depending on spare_size.
- * They will either remain the same or be converted into if-cascades.
+ * Lowers all Switches (Cond nodes with non-boolean mode) depending on
+ * spare_size. They will either remain the same or be converted into
+ * if-cascades.
  *
  * @param irg        The ir graph to be lowered.
  * @param small_switch  If switch has <= cases then change it to an if-cascade.
@@ -119,7 +120,7 @@ FIRM_API void lower_const_code(void);
  * @param mux  The mux node that may be lowered.
  * @return     A non-zero value indicates that the mux should be lowered.
  */
-typedef int lower_mux_callback(ir_node* mux);
+typedef int lower_mux_callback(ir_node *mux);
 
 /**
  * Lowers all mux nodes in the given graph. A callback function may be
@@ -137,40 +138,40 @@ FIRM_API void lower_mux(ir_graph *irg, lower_mux_callback *cb_func);
  * @param node   the IR-node that will be mapped
  * @return  non-zero if the call was mapped
  */
-typedef int (i_mapper_func)(ir_node *node);
+typedef int(i_mapper_func)(ir_node *node);
 
 /** kind of an instruction record
  * @see #i_record */
 enum ikind {
-	INTRINSIC_CALL  = 0,  /**< the record represents an intrinsic call */
-	INTRINSIC_INSTR       /**< the record represents an intrinsic instruction */
+  INTRINSIC_CALL = 0, /**< the record represents an intrinsic call */
+  INTRINSIC_INSTR     /**< the record represents an intrinsic instruction */
 };
 
 /**
  * An intrinsic call record.
  */
 typedef struct i_call_record {
-	enum ikind    kind;       /**< must be INTRINSIC_CALL */
-	ir_entity     *i_ent;     /**< the entity representing an intrinsic call */
-	i_mapper_func *i_mapper;  /**< the mapper function to call */
+  enum ikind kind;         /**< must be INTRINSIC_CALL */
+  ir_entity *i_ent;        /**< the entity representing an intrinsic call */
+  i_mapper_func *i_mapper; /**< the mapper function to call */
 } i_call_record;
 
 /**
  * An intrinsic instruction record.
  */
 typedef struct i_instr_record {
-	enum ikind    kind;       /**< must be INTRINSIC_INSTR */
-	ir_op         *op;        /**< the opcode that must be mapped. */
-	i_mapper_func *i_mapper;  /**< the mapper function to call */
+  enum ikind kind;         /**< must be INTRINSIC_INSTR */
+  ir_op *op;               /**< the opcode that must be mapped. */
+  i_mapper_func *i_mapper; /**< the mapper function to call */
 } i_instr_record;
 
 /**
  * An intrinsic record.
  */
 typedef union i_record {
-	enum ikind     kind;     /**< kind of record */
-	i_call_record  i_call;   /**< used for call records */
-	i_instr_record i_instr;  /**< used for isnstruction records */
+  enum ikind kind;        /**< kind of record */
+  i_call_record i_call;   /**< used for call records */
+  i_instr_record i_instr; /**< used for isnstruction records */
 } i_record;
 
 typedef struct ir_intrinsics_map ir_intrinsics_map;
@@ -224,7 +225,8 @@ FIRM_API int i_mapper_sqrt(ir_node *call);
 FIRM_API int i_mapper_cbrt(ir_node *call);
 
 /**
- * A mapper for the floating point pow(a, b): floattype pow(floattype a, floattype b);
+ * A mapper for the floating point pow(a, b): floattype pow(floattype a,
+ * floattype b);
  *
  * @return 1 if the pow call was removed, 0 else.
  */
@@ -336,21 +338,24 @@ FIRM_API int i_mapper_cosh(ir_node *call);
 FIRM_API int i_mapper_tanh(ir_node *call);
 
 /**
- * A mapper for the strcmp-Function: inttype strcmp(char pointer a, char pointer b);
+ * A mapper for the strcmp-Function: inttype strcmp(char pointer a, char pointer
+ * b);
  *
  * @return 1 if the strcmp call was removed, 0 else.
  */
 FIRM_API int i_mapper_strcmp(ir_node *call);
 
 /**
- * A mapper for the strncmp-Function: inttype strncmp(char pointer a, char pointer b, inttype len);
+ * A mapper for the strncmp-Function: inttype strncmp(char pointer a, char
+ * pointer b, inttype len);
  *
  * @return 1 if the strncmp call was removed, 0 else.
  */
 FIRM_API int i_mapper_strncmp(ir_node *call);
 
 /**
- * A mapper for the strcpy-Function: char pointer strcpy(char pointer a, char pointer b);
+ * A mapper for the strcpy-Function: char pointer strcpy(char pointer a, char
+ * pointer b);
  *
  * @return 1 if the strcpy call was removed, 0 else.
  */
@@ -364,28 +369,32 @@ FIRM_API int i_mapper_strcpy(ir_node *call);
 FIRM_API int i_mapper_strlen(ir_node *call);
 
 /**
- * A mapper for the memcpy-Function: void pointer memcpy(void pointer d, void pointer s, inttype c);
+ * A mapper for the memcpy-Function: void pointer memcpy(void pointer d, void
+ * pointer s, inttype c);
  *
  * @return 1 if the memcpy call was removed, 0 else.
  */
 FIRM_API int i_mapper_memcpy(ir_node *call);
 
 /**
- * A mapper for the memmove-Function: void pointer memmove(void pointer d, void pointer s, inttype c);
+ * A mapper for the memmove-Function: void pointer memmove(void pointer d, void
+ * pointer s, inttype c);
  *
  * @return 1 if the memmove call was removed, 0 else.
  */
 FIRM_API int i_mapper_memmove(ir_node *call);
 
 /**
- * A mapper for the memset-Function: void pointer memset(void pointer d, inttype C, inttype len);
+ * A mapper for the memset-Function: void pointer memset(void pointer d, inttype
+ * C, inttype len);
  *
  * @return 1 if the memset call was removed, 0 else.
  */
 FIRM_API int i_mapper_memset(ir_node *call);
 
 /**
- * A mapper for the strncmp-Function: inttype memcmp(void pointer a, void pointer b, inttype len);
+ * A mapper for the strncmp-Function: inttype memcmp(void pointer a, void
+ * pointer b, inttype len);
  *
  * @return 1 if the strncmp call was removed, 0 else.
  */

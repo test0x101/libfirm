@@ -19,15 +19,15 @@
 #include "firm_types.h"
 
 typedef struct stack_pointer_state_t {
-	/** Misalignment of stack pointer when offset == 0 */
-	unsigned misalign;
-	/** Target alignment for stack pointer in log 2. */
-	unsigned p2align;
-	/** Offset of stack pointer value to value at function begin. */
-	int      offset;
-	/** Extra bytes allocated to keep the stack pointer alignment. */
-	unsigned align_padding;
-	bool     no_change;
+  /** Misalignment of stack pointer when offset == 0 */
+  unsigned misalign;
+  /** Target alignment for stack pointer in log 2. */
+  unsigned p2align;
+  /** Offset of stack pointer value to value at function begin. */
+  int offset;
+  /** Extra bytes allocated to keep the stack pointer alignment. */
+  unsigned align_padding;
+  bool no_change;
 } stack_pointer_state_t;
 
 /**

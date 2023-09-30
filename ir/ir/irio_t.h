@@ -12,37 +12,37 @@
 #include <stdio.h>
 
 typedef struct delayed_initializer_t {
-	ir_initializer_t *initializer;
-	long              node_nr;
+  ir_initializer_t *initializer;
+  long node_nr;
 } delayed_initializer_t;
 
 typedef struct delayed_pred_t {
-	ir_node *node;
-	int      n_preds;
-	long     preds[];
+  ir_node *node;
+  int n_preds;
+  long preds[];
 } delayed_pred_t;
 
 typedef struct read_env_t {
-	int            c;           /**< currently read char */
-	FILE          *file;
-	const char    *inputname;
-	unsigned       line;
+  int c; /**< currently read char */
+  FILE *file;
+  const char *inputname;
+  unsigned line;
 
-	ir_graph      *irg;
-	set           *idset;       /**< id_entry set, which maps from file ids to
-	                                 new Firm elements */
-	ir_type      **fixedtypes;
-	bool           read_errors;
-	struct obstack obst;
-	struct obstack preds_obst;
-	delayed_initializer_t *delayed_initializers;
-	const delayed_pred_t **delayed_preds;
+  ir_graph *irg;
+  set *idset; /**< id_entry set, which maps from file ids to
+                   new Firm elements */
+  ir_type **fixedtypes;
+  bool read_errors;
+  struct obstack obst;
+  struct obstack preds_obst;
+  delayed_initializer_t *delayed_initializers;
+  const delayed_pred_t **delayed_preds;
 } read_env_t;
 
 typedef struct write_env_t {
-	FILE *file;
-	deq_t write_queue;
-	deq_t entity_queue;
+  FILE *file;
+  deq_t write_queue;
+  deq_t entity_queue;
 } write_env_t;
 
 void write_align(write_env_t *env, ir_align align);
@@ -98,7 +98,7 @@ ir_relation read_relation(read_env_t *env);
 ir_tarval *read_tarval_ref(read_env_t *env);
 ir_volatility read_volatility(read_env_t *env);
 
-typedef ir_node* read_node_func(read_env_t *env);
+typedef ir_node *read_node_func(read_env_t *env);
 void register_node_reader(char const *const name, read_node_func *const func);
 
 typedef void write_node_func(write_env_t *env, ir_node const *node);

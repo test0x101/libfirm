@@ -24,24 +24,25 @@
 
 /** Type of a value range */
 enum range_types {
-	VRP_UNDEFINED, /**< No information could be derived so far */
-	VRP_RANGE,     /**< bottom and top form a range, including both values */
-	VRP_ANTIRANGE, /**< range from bottom to top cannot be, but borders might
-	                    be */
-	VRP_VARYING    /**< information cannot be derived */
+  VRP_UNDEFINED, /**< No information could be derived so far */
+  VRP_RANGE,     /**< bottom and top form a range, including both values */
+  VRP_ANTIRANGE, /**< range from bottom to top cannot be, but borders might
+                      be */
+  VRP_VARYING    /**< information cannot be derived */
 };
 
 /** VRP information for a single node */
 typedef struct {
-	ir_tarval *bits_set;         /**< The bits which, by analysis, are
-	                                  definitely set:
-	                                  0: may be not set, 1: definitely set */
-	ir_tarval *bits_not_set;     /**< The bits which by analysis are definitely
-	                                  not set:
-	                                  1 for may be set, 0: definitely not set */
-	enum range_types range_type; /**< The range represented by range_top, range_bottom */
-	ir_tarval *range_bottom;     /**< lower end of the value range */
-	ir_tarval *range_top;        /**< upper end of the value range */
+  ir_tarval *bits_set;     /**< The bits which, by analysis, are
+                                definitely set:
+                                0: may be not set, 1: definitely set */
+  ir_tarval *bits_not_set; /**< The bits which by analysis are definitely
+                                not set:
+                                1 for may be set, 0: definitely not set */
+  enum range_types
+      range_type; /**< The range represented by range_top, range_bottom */
+  ir_tarval *range_bottom; /**< lower end of the value range */
+  ir_tarval *range_top;    /**< upper end of the value range */
 } vrp_attr;
 
 /**

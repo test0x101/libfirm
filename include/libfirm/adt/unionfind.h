@@ -32,11 +32,10 @@
  * @param data    The array (you have to allocate it yourself)
  * @param n_elems number of elements handled by the data structure
  */
-static inline void uf_init(int *const data, size_t const n_elems)
-{
-	for (size_t i = 0; i < n_elems; ++i) {
-		data[i] = -1;
-	}
+static inline void uf_init(int *const data, size_t const n_elems) {
+  for (size_t i = 0; i < n_elems; ++i) {
+    data[i] = -1;
+  }
 }
 
 /**
@@ -48,26 +47,24 @@ static inline void uf_init(int *const data, size_t const n_elems)
  * @param set2  Representative of set2
  * @return      the new representative of the set (which is set1 or set2)
  */
-static inline int uf_union(int *const data, int const set1, int const set2)
-{
-	if (set1 == set2)
-		return set1;
+static inline int uf_union(int *const data, int const set1, int const set2) {
+  if (set1 == set2) return set1;
 
-	/* need 2 set representatives */
-	int const d1 = data[set1];
-	int const d2 = data[set2];
-	assert(d1 < 0 && d2 < 0);
+  /* need 2 set representatives */
+  int const d1 = data[set1];
+  int const d2 = data[set2];
+  assert(d1 < 0 && d2 < 0);
 
-	int const newcount = d1 + d2;
-	if (d1 > d2) {
-		data[set1] = set2;
-		data[set2] = newcount;
-		return set2;
-	} else {
-		data[set2] = set1;
-		data[set1] = newcount;
-		return set1;
-	}
+  int const newcount = d1 + d2;
+  if (d1 > d2) {
+    data[set1] = set2;
+    data[set2] = newcount;
+    return set2;
+  } else {
+    data[set2] = set1;
+    data[set1] = newcount;
+    return set1;
+  }
 }
 
 /**
@@ -80,23 +77,22 @@ static inline int uf_union(int *const data, int const set1, int const set2)
  * @param e     The element
  * @return      The representative of the set that contains @p e
  */
-static inline int uf_find(int *const data, int const e)
-{
-	/* go through list to find representative */
-	int repr = e;
-	while (data[repr] >= 0) {
-		repr = data[repr];
-	}
+static inline int uf_find(int *const data, int const e) {
+  /* go through list to find representative */
+  int repr = e;
+  while (data[repr] >= 0) {
+    repr = data[repr];
+  }
 
-	/* update list to point to new representative (path compression) */
-	int t = e;
-	while (t != repr) {
-		int const next = data[t];
-		data[t] = repr;
-		t = next;
-	}
+  /* update list to point to new representative (path compression) */
+  int t = e;
+  while (t != repr) {
+    int const next = data[t];
+    data[t] = repr;
+    t = next;
+  }
 
-	return repr;
+  return repr;
 }
 
 /** @} */
